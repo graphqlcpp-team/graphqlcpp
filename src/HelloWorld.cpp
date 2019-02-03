@@ -20,12 +20,14 @@ using namespace ast;
 
 void testGraphQlParser();
 
+/**
 int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	//return 0;
 	testGraphQlParser();
 	return 0;
 }
+*/
 
 void testGraphQlParser(){
 	const char* x = "{me{name}}";
