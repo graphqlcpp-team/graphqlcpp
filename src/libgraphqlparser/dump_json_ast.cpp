@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
+/*
 #include "AstNode.h"
 #include "GraphQLParser.h"
 #include "c/GraphQLAstToJSON.h"
@@ -23,8 +23,7 @@ using std::fopen;
 using std::fclose;
 using std::free;
 
-
-/*int main(int argc, char **argv) {
+int main(int argc, char **argv) {
   const char *error;
   FILE * in;
   if (argc > 1) {
@@ -47,4 +46,6 @@ using std::free;
   free((void *)json);
 
   return 0;
-}*/
+}
+
+*/
