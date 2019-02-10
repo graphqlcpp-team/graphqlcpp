@@ -10,8 +10,8 @@
 #include "GraphqlCppApi.h"
 #include "libgraphqlparser/c/GraphQLAstToJSON.h"
 
-namespace graphqlcppapi {
-
+namespace graphqlcpp {
+namespace api {
 using namespace facebook::graphql;
 
 GraphqlCppApi::GraphqlCppApi() {
@@ -33,5 +33,5 @@ const char* GraphqlCppApi::printSchemaAsJson() {
 
 bool GraphqlCppApi::checkIfRequestValid(const char* request) {
 }
-
+}
 } /* namespace graphqlcppapi */
