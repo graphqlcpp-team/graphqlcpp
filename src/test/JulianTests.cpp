@@ -12,21 +12,6 @@ using namespace facebook::graphql;
 using namespace facebook::graphql::ast;
 
 #include <stdio.h>  /* defines FILENAME_MAX */
-#define WINDOWS  /* uncomment this line to use it for windows.*/
-#ifdef WINDOWS
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-#include <unistd.h>
-#define GetCurrentDir getcwd
-#endif
-
-std::string GetCurrentWorkingDir( void ) {
-  char buff[FILENAME_MAX];
-  GetCurrentDir( buff, FILENAME_MAX );
-  std::string current_working_dir(buff);
-  return current_working_dir;
-}
 
 
 
@@ -51,12 +36,6 @@ TEST(julianstests, openfile){
 	 ASSERT_NE(nullptr, pFile);
 }
 
-TEST(julianstests, dir){
-	string s = GetCurrentWorkingDir();
-	cout << s;
-}
-
-
 
 TEST(julianstests, dumpAstAsJson){
 	const char* jsonAST = "{\"kind\":\"Document\",\"loc\":{\"start\": {\"line\": 1,\"column\":1}, \"end\": {\"line\":1,\"column\":16}},\"definitions\":[{\"kind\":\"OperationDefinition\",\"loc\":{\"start\": {\"line\": 1,\"column\":1}, \"end\": {\"line\":1,\"column\":16}},\"operation\":\"query\",\"name\":null,\"variableDefinitions\":null,\"directives\":null,\"selectionSet\":{\"kind\":\"SelectionSet\",\"loc\":{\"start\": {\"line\": 1,\"column\":1}, \"end\": {\"line\":1,\"column\":16}},\"selections\":[{\"kind\":\"Field\",\"loc\":{\"start\": {\"line\": 1,\"column\":3}, \"end\": {\"line\":1,\"column\":14}},\"alias\":null,\"name\":{\"kind\":\"Name\",\"loc\":{\"start\": {\"line\": 1,\"column\":3}, \"end\": {\"line\":1,\"column\":5}},\"value\":\"me\"},\"arguments\":null,\"directives\":null,\"selectionSet\":{\"kind\":\"SelectionSet\",\"loc\":{\"start\": {\"line\": 1,\"column\":6}, \"end\": {\"line\":1,\"column\":14}},\"selections\":[{\"kind\":\"Field\",\"loc\":{\"start\": {\"line\": 1,\"column\":8}, \"end\": {\"line\":1,\"column\":12}},\"alias\":null,\"name\":{\"kind\":\"Name\",\"loc\":{\"start\": {\"line\": 1,\"column\":8}, \"end\": {\"line\":1,\"column\":12}},\"value\":\"name\"},\"arguments\":null,\"directives\":null,\"selectionSet\":null}]}}]}}]}";
@@ -66,5 +45,5 @@ TEST(julianstests, dumpAstAsJson){
 	const char* json = dumpJson(simpleSchema);
 	cout << json << endl;
 	ASSERT_TRUE(json!=nullptr);
-	//ASSERT_EQ(jsonAST, json);
+
 }
