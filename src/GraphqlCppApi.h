@@ -23,7 +23,7 @@ private:
 	SchemaValidator* schemaValidator;
 
 public:
-	GraphqlCppApi();
+	GraphqlCppApi(SchemaValidator* sValidator);
 	void setSchema(const char* schema);
 	const char* printSchemaAsJson();
 	bool checkIfRequestValid(const char* request);

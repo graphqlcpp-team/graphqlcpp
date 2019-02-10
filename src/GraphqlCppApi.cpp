@@ -14,15 +14,18 @@ namespace graphqlcpp {
 namespace api {
 using namespace facebook::graphql;
 
-GraphqlCppApi::GraphqlCppApi() {
-	// TODO Auto-generated constructor stub
+GraphqlCppApi::GraphqlCppApi(SchemaValidator* sValidator) {
+	schemaValidator = sValidator;
 
 }
 
 void GraphqlCppApi::setSchema(const char* schema) {
 	const char* err = "";
 	auto sAst = parseString(schema, &err);
-	schemaAst = sAst.get();
+	Node* rootNode = sAst.get();
+	if(schemaValidator->checkIfSchemaIsValid(rootNode)){
+		schemaAst = sAst.get();
+	}
 
 }
 
