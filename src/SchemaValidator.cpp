@@ -13,6 +13,13 @@ namespace validators{
 SchemaValidator::SchemaValidator() {
 	// TODO Auto-generated constructor stub
 
+
+}
+bool SchemaValidator::checkIfSchemaIsValid(
+		Node* schemaAst) {
+	return true;
 }
 }
-} /* namespace graphqlcppvalidators */
+}
+
+
