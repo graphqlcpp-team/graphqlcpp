@@ -11,15 +11,16 @@
 #include "libgraphqlparser/Ast.h"
 #include "SchemaValidator.h"
 
-namespace graphqlcppapi {
-
+namespace graphqlcpp {
+namespace api {
 using namespace facebook::graphql::ast;
+using namespace validators;
 
 class GraphqlCppApi {
 private:
 	int test;
 	Node* schemaAst;
-	//SchemaValidator* schemaValidator;
+	SchemaValidator* schemaValidator;
 
 public:
 	GraphqlCppApi();
@@ -29,5 +30,5 @@ public:
 };
 
 } /* namespace graphqlcppapi */
-
+}
 #endif /* GRAPHQLCPPAPI_H_ */

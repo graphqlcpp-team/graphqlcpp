@@ -8,13 +8,18 @@
 #ifndef SCHEMAVALIDATOR_H_
 #define SCHEMAVALIDATOR_H_
 
-namespace graphqlcppvalidators {
+#include "libgraphqlparser/Ast.h"
+
+namespace graphqlcpp {
+namespace validators{
+using namespace facebook::graphql::ast;
 
 class SchemaValidator {
 public:
 	SchemaValidator();
+	bool checkIfSchemaIsValid(Node* schemaAst);
 };
 
 } /* namespace graphqlcppvalidators */
-
+}
 #endif /* SCHEMAVALIDATOR_H_ */

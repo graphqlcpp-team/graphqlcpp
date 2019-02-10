@@ -7,11 +7,12 @@
 
 #include "SchemaValidator.h"
 
-namespace graphqlcppvalidators {
+namespace graphqlcpp{
+namespace validators{
 
 SchemaValidator::SchemaValidator() {
 	// TODO Auto-generated constructor stub
 
 }
-
+}
 } /* namespace graphqlcppvalidators */
