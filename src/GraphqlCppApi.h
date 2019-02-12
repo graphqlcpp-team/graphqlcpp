@@ -18,9 +18,8 @@ using namespace validators;
 
 class GraphqlCppApi {
 private:
-	int test;
-	Node* schemaAst;
-	SchemaValidator* schemaValidator;
+	Node* schemaAst = nullptr;
+	SchemaValidator* schemaValidator = nullptr;
 
 public:
 	GraphqlCppApi(SchemaValidator* sValidator);

@@ -17,9 +17,9 @@ GraphqlCppApi* ApiFactory::createApi() {
 	//TODO checken wegen destruktur
 	//Evtl pointer gegen referenzen tauschen
 
-	SchemaValidator sValidator;
-	GraphqlCppApi api(&sValidator);
-	return &api;
+	SchemaValidator* sValidator = new SchemaValidator();
+	GraphqlCppApi* api = new GraphqlCppApi(sValidator);
+	return api;
 }
 } /* namespace api */
 } /* namespace graphqlcpp */
