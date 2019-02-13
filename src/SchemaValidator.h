@@ -15,6 +15,8 @@ namespace validators{
 using namespace facebook::graphql::ast;
 
 class SchemaValidator {
+private:
+	int test = 1;
 public:
 	SchemaValidator();
 	bool checkIfSchemaIsValid(Node* schemaAst);
