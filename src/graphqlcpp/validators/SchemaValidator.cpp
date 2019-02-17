@@ -21,5 +21,3 @@ bool SchemaValidator::checkIfSchemaIsValid(
 }
 }
 }
-
-

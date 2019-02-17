@@ -11,7 +11,7 @@
 #include "../../libgraphqlparser/Ast.h"
 
 namespace graphqlcpp {
-namespace api {
+namespace validators {
 
 using namespace facebook::graphql::ast;
 
@@ -19,6 +19,7 @@ class QueryValidator {
 public:
 	QueryValidator();
 	bool isQueryValid(Node* rootNodeSchema, Node* rootNodeQuery);
+	const char* getOperation(Node* rootNodeQuery);
 };
 
 } /* namespace api */
