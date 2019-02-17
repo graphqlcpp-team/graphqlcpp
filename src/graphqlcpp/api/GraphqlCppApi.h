@@ -22,15 +22,17 @@ using namespace graphqlcpp::exceptions;
 
 class GraphqlCppApi {
 private:
-	Node* schemaAst = nullptr;
+	SchemaAstWraper* schemaWraper = nullptr;
 	SchemaValidator* schemaValidator = nullptr;
 	QueryValidator* queryValidator = nullptr;
 
 public:
-	GraphqlCppApi(SchemaValidator* sValidator, QueryValidator* queryValidator);
+	GraphqlCppApi();
+	~GraphqlCppApi();
 	void setSchema(const char* schema);
 	const char* printSchemaAsJson();
 	const char* executeQuery(const char* query);
+
 private:
 	bool checkIfRequestValid(Node* rootNodeRequest);
 	Node* parseStringToAst(const char* str);

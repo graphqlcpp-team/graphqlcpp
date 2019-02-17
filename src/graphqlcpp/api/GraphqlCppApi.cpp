@@ -17,32 +17,23 @@ namespace api {
 using namespace facebook::graphql;
 using namespace graphqlcpp::exceptions;
 
-GraphqlCppApi::GraphqlCppApi(SchemaValidator* sValidator,
-		QueryValidator* queryValidator) {
-	this->schemaValidator = sValidator;
-	this->queryValidator = queryValidator;
-
+GraphqlCppApi::GraphqlCppApi() {
+	this->schemaValidator = new SchemaValidator();
 }
 
 void GraphqlCppApi::setSchema(const char* schema) {
 	auto rootNode = parseStringToAst(schema);
 	if (schemaValidator->checkIfSchemaIsValid(rootNode)) {
-		schemaAst = rootNode;
+		schemaWraper = new SchemaAstWraper(rootNode);
+		queryValidator = new QueryValidator(schemaWraper);
 	} else {
 		throw InvalidSchemaException();
 	}
-
-}
-
-const char* GraphqlCppApi::printSchemaAsJson() {
-	const char *json = graphql_ast_to_json(
-			(const struct GraphQLAstNode *) schemaAst);
-	return json;
 }
 
 bool GraphqlCppApi::checkIfRequestValid(Node* rootNodeRequest) {
-	if (schemaAst != nullptr) {
-		return this->queryValidator->isQueryValid(schemaAst, rootNodeRequest);
+	if (queryValidator != nullptr) {
+		return this->queryValidator->isQueryValid(rootNodeRequest);
 	}
 	throw NoSchemaSetException();
 }
@@ -54,13 +45,27 @@ const char* GraphqlCppApi::executeQuery(const char* query) {
 	}
 	return "";
 }
+
 Node* GraphqlCppApi::parseStringToAst(const char* str) {
+	//TODO check error string
 	const char* err = "";
 	auto sAst = parseString(str, &err);
 	Node* rootNode = sAst.get();
 	return rootNode;
 }
+
+const char* GraphqlCppApi::printSchemaAsJson() {
+	if(schemaWraper!=nullptr){
+		return schemaWraper->printSchemaAsJson();
+	}
+	throw NoSchemaSetException();
+}
+
+GraphqlCppApi::~GraphqlCppApi() {
+	delete schemaWraper;
+	delete schemaValidator;
+	delete queryValidator;
+}
 }
 } /* namespace graphqlcppapi */
-
 

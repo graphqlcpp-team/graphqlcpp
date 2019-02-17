@@ -8,17 +8,21 @@
 #ifndef QUERYVALIDATOR_H_
 #define QUERYVALIDATOR_H_
 
+#include "SchemaAstWraper.h"
 #include "../../libgraphqlparser/Ast.h"
 
+
 namespace graphqlcpp {
-namespace api {
+namespace validators {
 
 using namespace facebook::graphql::ast;
 
 class QueryValidator {
+private:
+	SchemaAstWraper* schemaWrapper;
 public:
-	QueryValidator();
-	bool isQueryValid(Node* rootNodeSchema, Node* rootNodeQuery);
+	QueryValidator(SchemaAstWraper* schemaWrapper);
+	bool isQueryValid(Node* rootNodeQuery);
 };
 
 } /* namespace api */

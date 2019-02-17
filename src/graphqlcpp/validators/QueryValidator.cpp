@@ -8,16 +8,15 @@
 #include "QueryValidator.h"
 
 namespace graphqlcpp {
-namespace api {
+namespace validators {
 
-QueryValidator::QueryValidator() {
-	// TODO Auto-generated constructor stub
+QueryValidator::QueryValidator(SchemaAstWraper* schemaWrapper) {
+	this->schemaWrapper = schemaWrapper;
 
+}
+bool QueryValidator::isQueryValid(Node* rootNodeQuery) {
 }
 
 } /* namespace api */
 } /* namespace graphqlcpp */
 
-bool graphqlcpp::api::QueryValidator::isQueryValid(Node* rootNodeSchema,
-		Node* rootNodeQuery) {
-}
