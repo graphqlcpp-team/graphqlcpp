@@ -25,11 +25,9 @@ GraphqlCppApi::GraphqlCppApi(SchemaValidator* sValidator,
 }
 
 void GraphqlCppApi::setSchema(const char* schema) {
-	const char* err = "";
-	auto sAst = parseString(schema, &err);
-	Node* rootNode = sAst.get();
+	auto rootNode = parseStringToAst(schema);
 	if (schemaValidator->checkIfSchemaIsValid(rootNode)) {
-		schemaAst = sAst.get();
+		schemaAst = rootNode;
 	} else {
 		throw InvalidSchemaException();
 	}
