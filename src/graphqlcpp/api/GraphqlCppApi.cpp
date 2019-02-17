@@ -50,7 +50,19 @@ bool GraphqlCppApi::checkIfRequestValid(Node* rootNodeRequest) {
 }
 
 const char* GraphqlCppApi::executeQuery(const char* query) {
+	Node* requestAst = parseStringToAst(query);
+	if(checkIfRequestValid(requestAst)){
+		return "request valid";
+	}
 	return "";
+}
+Node* GraphqlCppApi::parseStringToAst(const char* str) {
+	const char* err = "";
+	auto sAst = parseString(str, &err);
+	Node* rootNode = sAst.get();
+	return rootNode;
 }
 }
 } /* namespace graphqlcppapi */
+
+

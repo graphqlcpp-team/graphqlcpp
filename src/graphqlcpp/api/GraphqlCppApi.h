@@ -33,6 +33,7 @@ public:
 	const char* executeQuery(const char* query);
 private:
 	bool checkIfRequestValid(Node* rootNodeRequest);
+	Node* parseStringToAst(const char* str);
 };
 
 } /* namespace graphqlcppapi */
