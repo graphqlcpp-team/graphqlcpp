@@ -6,7 +6,7 @@
  */
 
 #include "ApiFactory.h"
-#include "GraphqlCppApi.h"
+#include "api/GraphqlCppApi.h"
 
 namespace graphqlcpp {
 namespace api {
@@ -18,7 +18,8 @@ GraphqlCppApi* ApiFactory::createApi() {
 	//Evtl pointer gegen referenzen tauschen
 
 	SchemaValidator* sValidator = new SchemaValidator();
-	GraphqlCppApi* api = new GraphqlCppApi(sValidator);
+	QueryValidator* queryValidator = new QueryValidator();
+	GraphqlCppApi* api = new GraphqlCppApi(sValidator, queryValidator);
 	return api;
 }
 } /* namespace api */

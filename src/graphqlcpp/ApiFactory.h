@@ -8,7 +8,7 @@
 #ifndef APIFACTORY_H_
 #define APIFACTORY_H_
 
-#include "GraphqlCppApi.h"
+#include "api/GraphqlCppApi.h"
 
 namespace graphqlcpp {
 namespace api {

@@ -8,7 +8,7 @@
 #ifndef SCHEMAVALIDATOR_H_
 #define SCHEMAVALIDATOR_H_
 
-#include "libgraphqlparser/Ast.h"
+#include "../../libgraphqlparser/Ast.h"
 
 namespace graphqlcpp {
 namespace validators{

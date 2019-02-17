@@ -8,24 +8,31 @@
 #ifndef GRAPHQLCPPAPI_H_
 #define GRAPHQLCPPAPI_H_
 
-#include "libgraphqlparser/Ast.h"
-#include "SchemaValidator.h"
+#include "../../libgraphqlparser/Ast.h"
+#include "../validators/SchemaValidator.h"
+#include "../validators/QueryValidator.h"
+#include "../exceptions/NoSchemaSetException.h"
+#include "../exceptions/InvalidSchemaException.h"
 
 namespace graphqlcpp {
 namespace api {
 using namespace facebook::graphql::ast;
 using namespace validators;
+using namespace graphqlcpp::exceptions;
 
 class GraphqlCppApi {
 private:
 	Node* schemaAst = nullptr;
 	SchemaValidator* schemaValidator = nullptr;
+	QueryValidator* queryValidator = nullptr;
 
 public:
-	GraphqlCppApi(SchemaValidator* sValidator);
+	GraphqlCppApi(SchemaValidator* sValidator, QueryValidator* queryValidator);
 	void setSchema(const char* schema);
 	const char* printSchemaAsJson();
-	bool checkIfRequestValid(const char* request);
+	const char* executeQuery(const char* query);
+private:
+	bool checkIfRequestValid(Node* rootNodeRequest);
 };
 
 } /* namespace graphqlcppapi */
