@@ -20,6 +20,7 @@ using namespace facebook::graphql::ast;
 class QueryValidator {
 private:
 	SchemaAstWraper* schemaWrapper;
+	const char* getOperation(Node* rootNodeQuery);
 public:
 	QueryValidator(SchemaAstWraper* schemaWrapper);
 	bool isQueryValid(Node* rootNodeQuery);
