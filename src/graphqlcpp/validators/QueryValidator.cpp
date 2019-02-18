@@ -13,17 +13,14 @@
 namespace graphqlcpp {
 namespace validators {
 
-QueryValidator::QueryValidator() {
-	// TODO Auto-generated constructor stub
+QueryValidator::QueryValidator(SchemaAstWraper* schemaWrapper) {
+	this->schemaWrapper = schemaWrapper;
 
+}
+bool QueryValidator::isQueryValid(Node* rootNodeQuery) {
 }
 
 
-bool QueryValidator::isQueryValid(Node* rootNodeSchema,
-		Node* rootNodeQuery) {
-	getOperation(rootNodeQuery);
-	return false;
-}
 
 using namespace std;
 using namespace facebook::graphql;
