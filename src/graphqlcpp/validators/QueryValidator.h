@@ -10,7 +10,7 @@
 
 #include "SchemaAstWraper.h"
 #include "../../libgraphqlparser/Ast.h"
-
+#include "../../libgraphqlparser/c/GraphQLAst.h"
 
 namespace graphqlcpp {
 namespace validators {
@@ -20,8 +20,10 @@ using namespace facebook::graphql::ast;
 class QueryValidator {
 private:
 	SchemaAstWraper* schemaWrapper;
-	const char* getOperation(Node* rootNodeQuery);
+	void iterateThroughAST(Node* rootNodeQuery);
+	const GraphQLAstSelectionSet* getSelectionSet(Node* rootNodeQuery);
 public:
+	const char* getOperation(Node* rootNodeQuery);
 	QueryValidator(SchemaAstWraper* schemaWrapper);
 	bool isQueryValid(Node* rootNodeQuery);
 };
