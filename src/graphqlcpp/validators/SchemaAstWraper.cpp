@@ -9,6 +9,9 @@
 #include "../../libgraphqlparser/c/GraphQLAstToJSON.h"
 #include "../../libgraphqlparser/Ast.h"
 #include "../exceptions/NoSchemaSetException.h"
+#include "../../libgraphqlparser/c/GraphQLAst.h"
+#include "../exceptions/WrongOperationException.h"
+#include <vector>
 
 namespace graphqlcpp {
 namespace validators {
@@ -30,6 +33,28 @@ const char* SchemaAstWraper::printSchemaAsJson() {
 }
 
 
+
+bool SchemaAstWraper::nodeExsitstsAsChildOf() {
+	//uebergabe parameter zwei knoten father, child
+	//durch schema gehen und prüfen ob knoten child ein kind von father ist
+//	const GraphQLAstDocument* graphQlAstDocument =
+//				(const struct GraphQLAstDocument *) this->schema;
+//	const Document *realNode = (const Document *) graphQlAstDocument;
+//	const std::vector<std::unique_ptr<Definition>>& x =
+//			realNode->getDefinitions();
+//	std::unique_ptr<Definition, default_delete<Definition>>::pointer operationDefinitioNotCasted =
+//			x[0].get();
+//	const GraphQLAstOperationDefinition * operationDefinitionCasted =
+//			(const GraphQLAstOperationDefinition *) operationDefinitioNotCasted;
+//	const OperationDefinition *realNodeOpDef =
+//			(const OperationDefinition *) operationDefinitionCasted;
+//	const char* operation = realNodeOpDef->getOperation();
+	//	return operation;
+
+	return true;
+}
+
 } /* namespace validators */
 } /* namespace graphqlcpp */
+
 
