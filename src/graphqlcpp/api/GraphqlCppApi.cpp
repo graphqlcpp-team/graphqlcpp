@@ -41,9 +41,16 @@ bool GraphqlCppApi::checkIfRequestValid(Node* rootNodeRequest) {
 const char* GraphqlCppApi::executeQuery(const char* query) {
 	Node* requestAst = parseStringToAst(query);
 	if(checkIfRequestValid(requestAst)){
-		return "request valid";
+		return parintSchemaAsJson(requestAst);
 	}
-	return "";
+	return "request failed";
+}
+
+const char* GraphqlCppApi::parintSchemaAsJson(Node* schema) {
+	const char *json = graphql_ast_to_json(
+			(const struct GraphQLAstNode *) schema);
+	return json;
+
 }
 
 Node* GraphqlCppApi::parseStringToAst(const char* str) {

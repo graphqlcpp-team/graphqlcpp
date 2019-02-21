@@ -36,6 +36,7 @@ public:
 private:
 	bool checkIfRequestValid(Node* rootNodeRequest);
 	Node* parseStringToAst(const char* str);
+	const char* parintSchemaAsJson(Node* schema);
 };
 
 } /* namespace graphqlcppapi */
