@@ -22,7 +22,7 @@ private:
 public:
 	SchemaAstWraper(Node* schemaAstRootNode);
 	const char* printSchemaAsJson();
-	bool nodeExsitstsAsChildOf();
+	bool nodeExsitstsAsChildOf(const char* fieldName, const char* oldFieldName);
 };
 
 } /* namespace validators */
