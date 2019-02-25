@@ -32,6 +32,13 @@ const char* SchemaAstWraper::printSchemaAsJson() {
 	throw NoSchemaSetException();
 }
 
+bool SchemaAstWraper::nodeExsitstsAsChildOf(const char* fieldName, const char* oldFieldName) {
+	cout << fieldName << endl;
+	cout << oldFieldName << endl;
+	return true;
+
+}
+
 
 
 bool SchemaAstWraper::nodeExsitstsAsChildOf() {

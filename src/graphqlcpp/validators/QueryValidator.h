@@ -21,7 +21,10 @@ class QueryValidator {
 private:
 	SchemaAstWraper* schemaWrapper;
 	void iterateThroughAST(Node* rootNodeQuery);
-	const GraphQLAstSelectionSet* getSelectionSet(Node* rootNodeQuery);
+	bool iterateThroughSelectionSetsAndValidate(const SelectionSet* selectionSet, const char* oldFieldName);
+	const SelectionSet* getSelectionSet(Node* rootNodeQuery);
+	const OperationDefinition* getOperationDefinition(Node *rootNodeQuery);
+	bool iterateThroughArgumentsOfOneFiledAndValidate(const Field* field);
 public:
 	const char* getOperation(Node* rootNodeQuery);
 	QueryValidator(SchemaAstWraper* schemaWrapper);
