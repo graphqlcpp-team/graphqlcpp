@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/julian/projects/graphqlcpp-vmtest/tests/test_all.cpp
+iostream
+-
+../gtest/gtest.h
+/home/julian/projects/graphqlcpp-vmtest/gtest/gtest.h
+

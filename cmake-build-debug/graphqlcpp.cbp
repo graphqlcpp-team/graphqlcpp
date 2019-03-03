@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="graphqlcpp"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\tests\;CMake Files\tests\lib\;CMake Files\tests\lib\googletest\;CMake Files\tests\lib\googletest\cmake\;CMake Files\tests\basic_tests\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="graphqlcpp">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/libgraphqlcpp.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 graphqlcpp"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="graphqlcpp/fast">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/libgraphqlcpp.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 graphqlcpp/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/include"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/include"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/include"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/include"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="runTests">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/runTests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/include"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 runTests"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="runTests/fast">
+				<Option output="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/runTests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/include"/>
+					<Add directory="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 runTests/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/julian/projects/graphqlcpp-vmtest/cmake-build-debug/tests/basic_tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/ApiFactory.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/ApiFactory.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/GraphqlCppApi.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/GraphqlCppApi.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/InvalidSchemaException.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/NoSchemaSetException.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/QueryValidator.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/QueryValidator.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaValidator.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaValidator.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/Ast.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/Ast.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/AstNode.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/AstVisitor.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/GraphQLParser.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/GraphQLParser.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/JsonVisitor.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/JsonVisitor.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAst.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAst.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstForEachConcreteType.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstNode.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstNode.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstToJSON.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstToJSON.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstVisitor.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstVisitor.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLParser.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLParser.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/dump_json_ast.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/lexer.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/lexer.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/location.hh">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/parser.tab.cpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/parser.tab.hpp">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/position.hh">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/stack.hh">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/syntaxdefs.h">
+			<Option target="graphqlcpp"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/GraphqlCppApiTest.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/JsonVisitorTests.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/JulianTests.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/ParserTests.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/QueryValidatorTests.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/SchemaAstWrapperTest.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/test_all.cpp">
+			<Option target="runTests"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\src\"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\tests\"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\tests\lib\googletest\"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/lib/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\tests\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/julian/projects/graphqlcpp-vmtest/tests/basic_tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\tests\basic_tests\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

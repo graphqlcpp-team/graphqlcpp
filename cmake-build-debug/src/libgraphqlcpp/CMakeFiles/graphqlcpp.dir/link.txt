@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgraphqlcpp.a  CMakeFiles/graphqlcpp.dir/GraphqlCppApi.cpp.o CMakeFiles/graphqlcpp.dir/validators/QueryValidator.cpp.o CMakeFiles/graphqlcpp.dir/validators/SchemaAstWraper.cpp.o CMakeFiles/graphqlcpp.dir/validators/SchemaValidator.cpp.o CMakeFiles/graphqlcpp.dir/ApiFactory.cpp.o
+/usr/bin/ranlib libgraphqlcpp.a
