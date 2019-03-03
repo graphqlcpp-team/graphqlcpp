@@ -5,6 +5,7 @@
  *      Author: julian2
  */
 
+#include "exceptions/NoSchemaSetException.h"
 #include "SchemaAstWraper.h"
 #include "../../libgraphqlparser/c/GraphQLAstToJSON.h"
 

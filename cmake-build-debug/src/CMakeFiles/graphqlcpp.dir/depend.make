@@ -43,12 +43,10 @@ src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/QueryValidator.cpp.o: ../
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/QueryValidator.cpp.o: ../src/libgraphqlparser/position.hh
 
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlcpp/exceptions/NoSchemaSetException.h
-src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlcpp/exceptions/WrongOperationException.h
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlcpp/validators/SchemaAstWraper.cpp
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlcpp/validators/SchemaAstWraper.h
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlparser/Ast.h
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlparser/AstNode.h
-src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlparser/c/GraphQLAst.h
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlparser/c/GraphQLAstToJSON.h
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlparser/location.hh
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o: ../src/libgraphqlparser/position.hh

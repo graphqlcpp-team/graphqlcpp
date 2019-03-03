@@ -1,8 +1,7 @@
 #include"gtest/gtest.h"
-#include <cstdlib>
 #include <fstream>
-#include <sstream>
-#include <iostream>
+
+#define GetCurrentDir getcwd
 #include "../../src/libgraphqlparser/Ast.h"
 #include "../../src/libgraphqlparser/GraphQLParser.h"
 #include "../../src/libgraphqlparser/c/GraphQLAstToJSON.h"
@@ -10,9 +9,6 @@
 using namespace std;
 using namespace facebook::graphql;
 using namespace facebook::graphql::ast;
-
-#include <stdio.h>  /* defines FILENAME_MAX */
-
 
 
 static const char* dumpJson(const char* graqhqlquery){
@@ -49,6 +45,10 @@ TEST(julianstests, dumpAstAsJson){
 }
 
 TEST(LibTests, SchemaToAst) {
+    char buff[FILENAME_MAX];
+    GetCurrentDir(buff, FILENAME_MAX);
+    std::string current_working_dir(buff);
+    std::cout << current_working_dir;
 	FILE *pFile;
  	pFile = fopen("schema-test-user.graphql", "r");
 	ASSERT_TRUE(pFile != NULL);

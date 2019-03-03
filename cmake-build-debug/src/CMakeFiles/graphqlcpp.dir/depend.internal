@@ -43,13 +43,11 @@ src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/QueryValidator.cpp.o
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/location.hh
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/position.hh
 src/CMakeFiles/graphqlcpp.dir/libgraphqlcpp/validators/SchemaAstWraper.cpp.o
- /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/NoSchemaSetException.h
- /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/WrongOperationException.h
+ ../src/libgraphqlcpp/exceptions/NoSchemaSetException.h
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.cpp
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.h
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/Ast.h
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/AstNode.h
- /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAst.h
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstToJSON.h
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/location.hh
  /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/position.hh

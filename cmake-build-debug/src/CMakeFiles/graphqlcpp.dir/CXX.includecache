@@ -6,29 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/NoSchemaSetException.h
-stdexcept
--
-
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/WrongOperationException.h
+../src/libgraphqlcpp/exceptions/NoSchemaSetException.h
 stdexcept
 -
 
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.cpp
+exceptions/NoSchemaSetException.h
+/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/exceptions/NoSchemaSetException.h
 SchemaAstWraper.h
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.h
 ../../libgraphqlparser/c/GraphQLAstToJSON.h
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstToJSON.h
-../../libgraphqlparser/Ast.h
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/Ast.h
-../exceptions/NoSchemaSetException.h
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/NoSchemaSetException.h
-../../libgraphqlparser/c/GraphQLAst.h
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAst.h
-../exceptions/WrongOperationException.h
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/exceptions/WrongOperationException.h
-vector
--
 
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlcpp/validators/SchemaAstWraper.h
 ../../libgraphqlparser/Ast.h
@@ -49,8 +37,6 @@ vector
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/AstNode.h
 location.hh
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/location.hh
-
-/home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAst.h
 
 /home/julian/projects/graphqlcpp-vmtest/src/libgraphqlparser/c/GraphQLAstToJSON.h
 
