@@ -1,0 +1,14 @@
+schema {
+	query: Query1,
+	mutation: Mutation
+}
+
+type Query {
+	user(id: ID!): User
+}
+
+type User {
+	id: ID!
+	name: string!
+	age: Int
+}

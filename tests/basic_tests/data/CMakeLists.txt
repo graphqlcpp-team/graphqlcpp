@@ -1,0 +1,1 @@
+configure_file(./schema-test-user.graphql ${CMAKE_CURRENT_BINARY_DIR}/schema-test-user.graphql COPYONLY)
