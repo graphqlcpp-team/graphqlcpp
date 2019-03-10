@@ -45,4 +45,12 @@ set(SOURCE_FILES libgraphqlparser/c/GraphQLAst.cpp
         libgraphqlcpp/ApiFactory.cpp
         libgraphqlcpp/ApiFactory.h)
 
-add_library(graphqlcpp STATIC ${SOURCE_FILES})
+add_library(graphqlcpplib STATIC ${SOURCE_FILES})
+
+target_include_directories(graphqlcpplib PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+        $<INSTALL_INTERFACE:include>)
+
+install(TARGETS graphqlcpplib
+        INCLUDES DESTINATION include
+        ARCHIVE DESTINATION lib)

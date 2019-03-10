@@ -1,4 +1,9 @@
+### output form build script
+build/
+
 cmake-build-debug/
+
+**/CMakeFiles/
 
 
 ### Eclipse ###
