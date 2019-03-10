@@ -4,9 +4,7 @@ include_directories(libgraphqlcpp)
 include_directories(libgraphqlcpp/exceptions)
 include_directories(libgraphqlcpp/validators)
 
-
-add_library(graphqlcpp STATIC
-        libgraphqlparser/c/GraphQLAst.cpp
+set(SOURCE_FILES libgraphqlparser/c/GraphQLAst.cpp
         libgraphqlparser/c/GraphQLAst.h
         libgraphqlparser/c/GraphQLAstForEachConcreteType.h
         libgraphqlparser/c/GraphQLAstNode.cpp
@@ -46,3 +44,5 @@ add_library(graphqlcpp STATIC
         libgraphqlcpp/validators/SchemaValidator.h
         libgraphqlcpp/ApiFactory.cpp
         libgraphqlcpp/ApiFactory.h)
+
+add_library(graphqlcpp STATIC ${SOURCE_FILES})
