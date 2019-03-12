@@ -44,25 +44,14 @@ TEST(julianstests, dumpAstAsJson){
 
 }
 
-
-TEST(LibTests, OpenFile) {
-    char buff[FILENAME_MAX];
-    GetCurrentDir(buff, FILENAME_MAX);
-    std::string current_working_dir(buff);
-    std::cout << "current path: " << current_working_dir << endl;
-    FILE *pFile;
-    pFile = fopen("data/schema-test-user.graphql", "r");
-    ASSERT_TRUE(pFile != NULL);
-}
-
 TEST(LibTests, SchemaToAst) {
     char buff[FILENAME_MAX];
     GetCurrentDir(buff, FILENAME_MAX);
     std::string current_working_dir(buff);
     std::cout << current_working_dir;
 	FILE *pFile;
-    pFile = fopen("data/schema-test-user.graphql", "r");
-    ASSERT_TRUE(pFile != NULL);
+ 	pFile = fopen("schema-test-user.graphql", "r");
+	ASSERT_TRUE(pFile != NULL);
 	const char *error = nullptr;
 	std::unique_ptr<Node> ast;
 	ast = parseFileWithExperimentalSchemaSupport(pFile, &error);
