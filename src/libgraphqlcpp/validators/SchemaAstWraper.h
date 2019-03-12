@@ -19,11 +19,20 @@ class SchemaAstWraper {
 private:
 	Node* schema = nullptr;
 
+
 public:
 	SchemaAstWraper(Node* schemaAstRootNode);
 	const char* printSchemaAsJson();
+	bool nodeExsitstsAsChildOf(const char* childFieldName, const char* fatherFieldName);
+	bool isOperationValid(const char* operation);
 
-	bool nodeExsitstsAsChildOf(const char *fieldName, const char *oldFieldName);
+private:
+    const Document* getDocument();
+    const char* getOperationName(int index);
+    const SchemaDefinition* getSchemaDefinition();
+    //const std::vector<std::unique_ptr<Definition>> getOperationDefinition();
+	void iterateThoughAst();
+
 };
 
 } /* namespace validators */
