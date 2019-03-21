@@ -207,7 +207,7 @@ namespace graphqlcpp {
          * is located in the operation definition.
          * In both ways the operation definition must be determined.
          * @param rootNodeQuery The root node of the query AST.
-         * @return The operation defintion.
+         * @return The operation definition.
          */
         const OperationDefinition *QueryValidator::getOperationDefinition(
                 Node *rootNodeQuery) {

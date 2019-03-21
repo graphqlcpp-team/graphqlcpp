@@ -21,10 +21,19 @@ namespace graphqlcpp {
         using namespace std;
         using namespace facebook::graphql::ast;
 
+        /**
+         * Constructor of the class schemaAstNode.          *
+         * @param schemaAstRootNode The root node of the schema AST.
+         */
         SchemaAstWraper::SchemaAstWraper(Node *schemaAstRootNode) {
             this->schema = schemaAstRootNode;
         }
 
+        /**
+         * This method convert the schema AST to the json format.
+         * @return The schema as a JSON string.
+         * @throw NoSchemaSetException if no schema was set.
+         */
         const char *SchemaAstWraper::printSchemaAsJson() {
             if (schema != nullptr) {
                 const char *json = graphql_ast_to_json(
@@ -34,6 +43,13 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
+        /**
+         * This method checks if the operation is a operation which is set in the schema.
+         * Iterates through every operation set in the schema AST. If the transfered operation does not exists
+         * in the operation types it is not a valid operation.
+         * @param operation The oepration which schould be validate against the schema AST.
+         * @return True, if the operation is valid. Otherwise false.
+         */
         bool SchemaAstWraper::isOperationValid(const char *operation) {
             const SchemaDefinition *schemaDefinition = getSchemaDefinition();
             const vector<unique_ptr<OperationTypeDefinition>> &operationTypes = schemaDefinition->getOperationTypes();
@@ -50,6 +66,12 @@ namespace graphqlcpp {
             return false;
         }
 
+        /**
+         * This method gets the schema definition of the schema.
+         * The schema definition is necessary to get the operation set in the schema.
+         * The schema AST is an array and the first element is a schema definition.
+         * @return The schema definition of the schema AST.
+         */
         const SchemaDefinition *SchemaAstWraper::getSchemaDefinition() {
             const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
             std::unique_ptr<Definition, default_delete<Definition>>::pointer schemaDefinitioNotCasted =
@@ -62,20 +84,30 @@ namespace graphqlcpp {
 
         }
 
+        /**
+         * This method gets the document. This is the root element of the schema AST.
+         * @return The document.
+         */
         const Document *SchemaAstWraper::getDocument() {
-            const GraphQLAstDocument *graphQlAstDocument = (const struct GraphQLAstDocument *) this->schema;
-            const Document *document = (const Document *) graphQlAstDocument;
-            return document;
+            if (schema != nullptr) {
+                const GraphQLAstDocument *graphQlAstDocument = (const struct GraphQLAstDocument *) this->schema;
+                const Document *document = (const Document *) graphQlAstDocument;
+                return document;
+            }
+            throw NoSchemaSetException();
         }
 
-        /*const std::vector<std::unique_ptr<Definition>> SchemaAstWraper::getOperationDefinition() {
-            const GraphQLAstDocument *graphQlAstDocument = (const struct GraphQLAstDocument *) this->schema;
-            const Document *document = (const Document *) graphQlAstDocument;
-            const std::vector<std::unique_ptr<Definition>> &operationDefintion = document->getDefinitions();
-            return operationDefintion;
-        }*/
-
-
+        /**
+         * This method validate if a node exists as the child of the root node.
+         * Must make a difference whether the father node is the operation or not. That's because the types of the
+         * nodes differ.
+         * First the field name is searched in the fields. If the name was found, the node name is extracted out of
+         * the AST. This name can be searched in the other nodes, if a field with this name exists. If this is the
+         * case the child field name exists as a child of the father node.
+         * @param childFieldName The name of the child field.
+         * @param fatherFieldName The name of the father field.
+         * @return True, if the node exists as child ot the father node.
+         */
         bool SchemaAstWraper::nodeExsitstsAsChildOf(const char *childFieldName, const char *fatherFieldName) {
 
             cout << childFieldName << endl;
@@ -85,7 +117,8 @@ namespace graphqlcpp {
             const char *fatherNodeName = nullptr;
 
             if (strcmp(fatherFieldName, "query") == 0 || strcmp(fatherFieldName, "mutation") == 0) {
-                //Special treatement if father element is the operation, because the structure of this part of the AST differs
+                //Special treatment if father element is the operation,
+                // because the structure of this part of the AST differs
 
                 const SchemaDefinition *schemaDefinition = getSchemaDefinition();
                 const vector<unique_ptr<OperationTypeDefinition>> &operationTypes = schemaDefinition->getOperationTypes();
@@ -118,9 +151,6 @@ namespace graphqlcpp {
                     for (auto i = fields.begin(); i != fields.end(); ++i) {
                         const char *fieldName = fields[indexFields].get()->getName().getValue();
                         if (strcmp(fatherFieldName, fieldName) == 0) {
-                            //fields[indexFields].get()->getType()
-                            //const GraphQLAstNamedType* graphQLAstType = (GraphQLAstNamedType*) fields[indexFields].get();
-                            //const NamedType* namedType = (const NamedType*) graphQLAstType;
                             const Type *type = &fields[indexFields].get()->getType();
                             const NamedType *namedType = (NamedType *) type;
                             fatherNodeName = namedType->getName().getValue();
@@ -174,11 +204,6 @@ namespace graphqlcpp {
             //it does not exists as child of
             return false;
         }
-
-        void iterateThoughAst() {
-
-        }
-
     } /* namespace validators */
 } /* namespace graphqlcpp */
 
