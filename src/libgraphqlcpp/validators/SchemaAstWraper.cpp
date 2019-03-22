@@ -108,7 +108,7 @@ namespace graphqlcpp {
          * @param fatherFieldName The name of the father field.
          * @return True, if the node exists as child ot the father node.
          */
-        bool SchemaAstWraper::nodeExsitstsAsChildOf(const char *childFieldName, const char *fatherFieldName) {
+        bool SchemaAstWraper::nodeExistsAsChildOf(const char *childFieldName, const char *fatherFieldName) {
 
             cout << childFieldName << endl;
             cout << fatherFieldName << endl;
@@ -203,6 +203,34 @@ namespace graphqlcpp {
 
             //it does not exists as child of
             return false;
+        }
+
+        bool SchemaAstWraper::isArgumentValid(char* name, Value value, char* fieldName) {
+
+            const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
+            const char *fatherNodeName = nullptr;
+
+            if (strcmp(fieldName, "query") == 0 || strcmp(fieldName, "mutation") == 0) {
+                //Special treatment if father element is the operation,
+                // because the structure of this part of the AST differs
+
+                const SchemaDefinition *schemaDefinition = getSchemaDefinition();
+                const vector<unique_ptr<OperationTypeDefinition>> &operationTypes = schemaDefinition->getOperationTypes();
+
+                int index = 0;
+                for (auto j = operationTypes.begin(); j != operationTypes.end(); ++j) {
+                    const char *operationTyp = operationTypes[index].get()->getOperation();
+                    if (strcmp(fieldName, operationTyp) == 0) {
+                        break;
+                    }
+                    index++;
+                }
+                if (fatherNodeName == nullptr) {
+                    //thow some exception, this part of code should never be reached!!!
+                    return false;
+                }
+            } else {
+            }
         }
     } /* namespace validators */
 } /* namespace graphqlcpp */

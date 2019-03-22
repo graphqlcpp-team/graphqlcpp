@@ -101,7 +101,7 @@ namespace graphqlcpp {
                     const char *name = namePointer->getValue();
 
                     //call method which will validate if the node exists as child of the father node.
-                    if (!this->schemaWrapper->nodeExsitstsAsChildOf(name,
+                    if (!this->schemaWrapper->nodeExistsAsChildOf(name,
                                                                     fatherFieldName)) {
                         return false;
                     }

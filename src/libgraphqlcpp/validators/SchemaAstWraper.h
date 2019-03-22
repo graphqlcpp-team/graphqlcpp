@@ -23,8 +23,9 @@ private:
 public:
 	SchemaAstWraper(Node* schemaAstRootNode);
 	const char* printSchemaAsJson();
-	bool nodeExsitstsAsChildOf(const char* childFieldName, const char* fatherFieldName);
+	bool nodeExistsAsChildOf(const char* childFieldName, const char* fatherFieldName);
 	bool isOperationValid(const char* operation);
+	bool isArgumentValid(char* name, Value value, char* fieldName);
 
 private:
     const Document* getDocument();
