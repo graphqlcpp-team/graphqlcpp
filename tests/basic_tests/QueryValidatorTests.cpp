@@ -3,13 +3,13 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "../../src/libgraphqlparser/Ast.h"
-#include "../../src/libgraphqlparser/GraphQLParser.h"
-#include "../../src/libgraphqlparser/c/GraphQLAstToJSON.h"
-#include "../../src/libgraphqlcpp/validators/QueryValidator.h"
-#include "../../src/libgraphqlcpp/validators/SchemaAstWraper.h"
-#include "../../src/libgraphqlcpp/exceptions/WrongOperationException.h"
-#include "../../src/libgraphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlparser/Ast.h"
+#include "../../src/graphqlparser/GraphQLParser.h"
+#include "../../src/graphqlparser/c/GraphQLAstToJSON.h"
+#include "../../include/graphqlcpp/validators/QueryValidator.h"
+#include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
+#include "../../include/graphqlcpp/exceptions/WrongOperationException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidQueryException.h"
 
 using namespace std;
 using namespace facebook::graphql;

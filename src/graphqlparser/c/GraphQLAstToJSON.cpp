@@ -12,7 +12,7 @@
 #include <string.h>
 
 #include "../JsonVisitor.h"
-#include "../AstNode.h"
+#include "../../../include/graphqlparser/AstNode.h"
 
 
 const char *graphql_ast_to_json(const struct GraphQLAstNode *node)

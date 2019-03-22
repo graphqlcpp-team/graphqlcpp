@@ -8,11 +8,12 @@
 #ifndef GRAPHQLCPPAPI_H_
 #define GRAPHQLCPPAPI_H_
 
-#include "../libgraphqlparser/Ast.h"
-#include "validators/SchemaValidator.h"
-#include "validators/QueryValidator.h"
 #include "exceptions/NoSchemaSetException.h"
 #include "exceptions/InvalidSchemaException.h"
+#include "validators/QueryValidator.h"
+#include "validators/SchemaValidator.h"
+#include "validators/SchemaAstWraper.h"
+#include "../graphqlparser/Ast.h"
 
 namespace graphqlcpp {
 namespace api {

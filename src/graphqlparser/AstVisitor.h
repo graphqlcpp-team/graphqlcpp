@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "Ast.h"
+#include "../../../include/graphqlparser/Ast.h"
 
 namespace facebook {
 namespace graphql {

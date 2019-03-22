@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include "position.hh"
+#include "../../../include/graphqlparser/position.hh"
 #include "JsonVisitor.h"
 
 #include <assert.h>

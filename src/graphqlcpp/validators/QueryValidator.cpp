@@ -5,11 +5,11 @@
  *      Author: amelie
  */
 
-#include "QueryValidator.h"
-#include "../../libgraphqlparser/c/GraphQLAst.h"
-#include "../../libgraphqlparser/Ast.h"
-#include "../exceptions/WrongOperationException.h"
-#include "../exceptions/InvalidQueryException.h"
+#include "../../../include/graphqlcpp/validators/QueryValidator.h"
+#include "../../graphqlparser/c/GraphQLAst.h"
+#include "../../../include/graphqlparser/Ast.h"
+#include "../../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
 #include <vector>
 #include <memory>
 #include <cstring>
