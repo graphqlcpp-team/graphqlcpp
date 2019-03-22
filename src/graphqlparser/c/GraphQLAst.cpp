@@ -9,7 +9,7 @@
 /** @generated */
 
 #include "GraphQLAst.h"
-#include "../Ast.h"
+#include "../../../include/graphqlparser/Ast.h"
 
 using namespace facebook::graphql::ast;
 

@@ -5,11 +5,11 @@
  *      Author: julian2
  */
 
-#include "SchemaAstWraper.h"
-#include "../../libgraphqlparser/c/GraphQLAstToJSON.h"
-#include "../../libgraphqlparser/Ast.h"
-#include "../../libgraphqlparser/c/GraphQLAst.h"
-#include "../exceptions/NoSchemaSetException.h"
+#include "../../../include/graphqlcpp/validators/SchemaAstWraper.h"
+#include "../../graphqlparser/c/GraphQLAstToJSON.h"
+#include "../../../include/graphqlparser/Ast.h"
+#include "../../graphqlparser/c/GraphQLAst.h"
+#include "../../../include/graphqlcpp/exceptions/NoSchemaSetException.h"
 #include <cstring>
 
 

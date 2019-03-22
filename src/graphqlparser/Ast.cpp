@@ -8,7 +8,7 @@
  */
 /** @generated */
 
-#include "Ast.h"
+#include "../../include/graphqlparser/Ast.h"
 #include "AstVisitor.h"
 
 namespace facebook {

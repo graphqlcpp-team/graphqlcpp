@@ -1,10 +1,11 @@
 #include"gtest/gtest.h"
+#include "../../include/graphqlparser/Ast.h"
+#include "../../src/graphqlparser/GraphQLParser.h"
+#include "../../src/graphqlparser/c/GraphQLAstToJSON.h"
 #include <fstream>
 
 #define GetCurrentDir getcwd
-#include "../../src/libgraphqlparser/Ast.h"
-#include "../../src/libgraphqlparser/GraphQLParser.h"
-#include "../../src/libgraphqlparser/c/GraphQLAstToJSON.h"
+
 
 using namespace std;
 using namespace facebook::graphql;

@@ -9,8 +9,7 @@
 #define QUERYVALIDATOR_H_
 
 #include "SchemaAstWraper.h"
-#include "../../libgraphqlparser/Ast.h"
-#include "../../libgraphqlparser/c/GraphQLAst.h"
+#include "../../graphqlparser/Ast.h"
 
 namespace graphqlcpp {
 namespace validators {

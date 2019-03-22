@@ -8,7 +8,7 @@
  */
 
 #include "GraphQLAstNode.h"
-#include "../AstNode.h"
+#include "../../../include/graphqlparser/AstNode.h"
 
 using facebook::graphql::ast::Node;
 

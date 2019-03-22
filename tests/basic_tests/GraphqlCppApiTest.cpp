@@ -3,11 +3,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "../../src/libgraphqlparser/Ast.h"
-#include "../../src/libgraphqlparser/GraphQLParser.h"
-#include "../../src/libgraphqlparser/c/GraphQLAstToJSON.h"
-#include "../../src/libgraphqlcpp/GraphqlCppApi.h"
-#include "../../src/libgraphqlcpp/ApiFactory.h"
+
+#include "../../include/graphqlcpp/GraphqlCppApi.h"
+#include "../../include/graphqlcpp/ApiFactory.h"
 
 
 using namespace std;

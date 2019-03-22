@@ -561,8 +561,8 @@ static const flex_int16_t yy_chk[326] =
 #include <cctype>
 #include <cstdio>
 #include <vector>
-#include "location.hh"
-#include "position.hh"
+#include "../../include/graphqlparser/location.hh"
+#include "../../include/graphqlparser/position.hh"
 #include "parser.tab.hpp"
 #include "syntaxdefs.h"
 

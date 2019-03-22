@@ -5,12 +5,12 @@
  *      Author: admin
  */
 
-#include "../libgraphqlparser/Ast.h"
-#include "../libgraphqlparser/GraphQLParser.h"
-#include "GraphqlCppApi.h"
-#include "../libgraphqlparser/c/GraphQLAstToJSON.h"
-#include "NoSchemaSetException.h"
-#include "InvalidSchemaException.h"
+
+#include "../graphqlparser/GraphQLParser.h"
+#include "../../include/graphqlcpp/GraphqlCppApi.h"
+#include "../graphqlparser/c/GraphQLAstToJSON.h"
+#include "../../include/graphqlcpp/exceptions/NoSchemaSetException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidSchemaException.h"
 
 namespace graphqlcpp {
 namespace api {
