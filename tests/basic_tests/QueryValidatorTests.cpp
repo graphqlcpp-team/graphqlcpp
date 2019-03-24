@@ -51,14 +51,14 @@ TEST(QueryValidatorTests, IsQueryValidThrowsExecptionWhenWrongOperation) {
 
 TEST(QueryValidatorTests, IsQueryValidWithValidQueryExpectNoError) {
 	const char * error = nullptr;
-	const char * query = "query{user(id:1) {name}}";
+	const char * query = "query{user(id:la) {name}}";
 	std::unique_ptr<Node> queryAst;
 	queryAst = parseString(query, &error);
 	ASSERT_TRUE(query);
 	ASSERT_FALSE(error);
 
 	error = nullptr;
-	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
+	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Boolean!): User} type User { id: String! name: string!	age: Int}";
 	std::unique_ptr<Node> schemaAst;
 	schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
 	ASSERT_TRUE(schemaAst);
@@ -102,15 +102,4 @@ TEST(QueryValidatorTests, IsQueryValidWithNotValidQueryExpectError) {
 	//bool operation = qv->isQueryValid(queryAst.get());
 
 	ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
-	/*Node* nodeQueryAst = queryAst.get();
-	cout << "Checking if Query is valid at: ";
-	auto start = std::chrono::system_clock::now();
-	qv->isQueryValid(nodeQueryAst);
-	auto end = std::chrono::system_clock::now();
-
-	std::chrono::duration<double> elapsed_seconds = end-start;
-	std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-
-	std::cout << "finished computation at " << std::ctime(&end_time)
-			  << "elapsed time: " << elapsed_seconds.count() << "s\n";*/
 }

@@ -27,7 +27,6 @@ using namespace graphqlcpp::exceptions;
 #include <stdio.h>  /* defines FILENAME_MAX */
 
 
-
 TEST(SchemaAstWrapperTest, IsOperationValid) {
 	const char *error = nullptr;
 	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
@@ -59,10 +58,18 @@ TEST(SchemaAstWrapperTest, IterateThroughSchemaAst) {
 	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "user"));
 	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "name"));
 	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "query"));
+}
 
+TEST(SchemaAstWrapperTest, CheckIfArgumentValid) {
 
+    const char *error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} "
+                         "type User { id: ID! name: Name age: Int} type Name {vorname: String name: String}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+    //const char *jsonSchemaString = graphql_ast_to_json((const struct GraphQLAstNode *)ast.get());
 
-//	printf(saw->printSchemaAsJson());
-
-//	saw->nodeExsitstsAsChildOf();
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
 }

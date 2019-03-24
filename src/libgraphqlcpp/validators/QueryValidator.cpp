@@ -164,6 +164,9 @@ namespace graphqlcpp {
                 const char *nameAr = nameA->getValue();
                 const Value &valueA = argument->getValue();
                 const Value *pointerA = &valueA;
+                if(!this->schemaWrapper->isArgumentValid(nameAr, pointerA, field->getName().getValue())) {
+                    return false;
+                }
                 //call method to validate the argument
 
                 cout << "Name Argument: " << nameAr << endl;
