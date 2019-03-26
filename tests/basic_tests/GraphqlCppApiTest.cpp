@@ -14,7 +14,7 @@ using namespace facebook::graphql::ast;
 using namespace graphqlcpp::api;
 
 TEST(GraphQlApiTest, dumpAstAsJson){
-	const char * query = "query{user(id:1) {name}}";
+	const char * query = "query{user {name}}";
 	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
 	GraphqlCppApi* api = ApiFactory::createApi();
