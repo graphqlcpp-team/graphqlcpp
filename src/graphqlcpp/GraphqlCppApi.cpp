@@ -48,9 +48,12 @@ const char* GraphqlCppApi::executeQuery(const char* query) {
 
 Node* GraphqlCppApi::parseStringToAst(const char* str) {
 	//TODO check error string
-	const char* err = "";
-	auto sAst = parseString(str, &err);
-	Node* rootNode = sAst.get();
+	const char * error = nullptr;
+	std::unique_ptr<Node> queryAst;
+	queryAst = parseString(str, &error);
+	//const char* err = "";
+	//auto sAst = parseString(str, &err);
+	Node* rootNode = queryAst.release();
 	return rootNode;
 }
 
@@ -59,7 +62,7 @@ Node* GraphqlCppApi::parseStringToAst(const char* str) {
 		const char* err = "";
 		std::unique_ptr<Node> schemaAst;
 		schemaAst = parseStringWithExperimentalSchemaSupport(schema, &err);
-		Node* rootNode = schemaAst.get();
+		Node* rootNode = schemaAst.release();
 		return rootNode;
 	}
 
