@@ -8,6 +8,8 @@
 #ifndef SCHEMAASTWRAPER_H_
 #define SCHEMAASTWRAPER_H_
 
+#include <memory>
+#include <vector>
 #include "../../graphqlparser/Ast.h"
 
 namespace graphqlcpp {
@@ -23,15 +25,18 @@ private:
 public:
 	SchemaAstWraper(Node* schemaAstRootNode);
 	const char* printSchemaAsJson();
-	bool nodeExsitstsAsChildOf(const char* childFieldName, const char* fatherFieldName);
+	bool nodeExistsAsChildOf(const char* childFieldName, const char* fatherFieldName);
 	bool isOperationValid(const char* operation);
+	bool isArgumentValid(const char* name, const Value* value, const char* fieldName);
 
 private:
     const Document* getDocument();
     const char* getOperationName(int index);
     const SchemaDefinition* getSchemaDefinition();
     //const std::vector<std::unique_ptr<Definition>> getOperationDefinition();
-	void iterateThoughAst();
+	bool iterateThroughArgumentsAndValidate(const std::vector <std::unique_ptr<InputValueDefinition>>* arguments,
+	        const char* argumentName, const Value* value);
+	bool validateArgument(const std::unique_ptr <InputValueDefinition> * argument, const Value* value);
 
 };
 
