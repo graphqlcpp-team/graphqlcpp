@@ -41,9 +41,9 @@ bool GraphqlCppApi::checkIfRequestValid(Node* rootNodeRequest) {
 const char* GraphqlCppApi::executeQuery(const char* query) {
 	Node* requestAst = parseStringToAst(query);
 	if(checkIfRequestValid(requestAst)){
-		return "request valid";
+		return schemaWraper->printSchemaAsJson();
 	}
-	return "";
+	return "query was invalid";
 }
 
 Node* GraphqlCppApi::parseStringToAst(const char* str) {
