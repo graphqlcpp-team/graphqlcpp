@@ -19,6 +19,8 @@ TEST(GraphQlApiTest, dumpAstAsJson){
 
 	GraphqlCppApi* api = ApiFactory::createApi();
 	api->setSchema(schema);
+
+
 	const char * result;
 	result = api->executeQuery(query);
 

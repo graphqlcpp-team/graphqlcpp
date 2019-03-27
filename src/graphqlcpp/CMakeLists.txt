@@ -1,6 +1,5 @@
 include_directories(validators)
 
-
 set(SOURCE_FILES
         GraphqlCppApi.cpp
         validators/QueryValidator.cpp
@@ -10,7 +9,15 @@ set(SOURCE_FILES
 
 
 add_library(graphqlcpp STATIC ${SOURCE_FILES})
+
+
 target_link_libraries(graphqlcpp graphqlparser)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JSONCPP jsoncpp)
+link_libraries(${JSONCPP_LIBRARIES})
+target_link_libraries(graphqlcpp ${JSONCPP_LIBRARIES})
+
 target_include_directories(graphqlcpp
         PUBLIC
         $<INSTALL_INTERFACE:include>
