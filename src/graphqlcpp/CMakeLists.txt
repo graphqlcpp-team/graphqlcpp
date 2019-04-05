@@ -5,7 +5,7 @@ set(SOURCE_FILES
         validators/QueryValidator.cpp
         validators/SchemaAstWraper.cpp
         validators/SchemaValidator.cpp
-        ApiFactory.cpp)
+        ApiFactory.cpp Serializer.cpp Serializer.h IGraphQlDTO.cpp IGraphQlDTO.h)
 
 
 add_library(graphqlcpp STATIC ${SOURCE_FILES})
