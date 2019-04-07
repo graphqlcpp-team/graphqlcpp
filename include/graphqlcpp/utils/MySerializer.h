@@ -1,0 +1,46 @@
+//
+// Created by julian on 05.04.19.
+//
+
+#ifndef MYSERIALIZER_H_
+#define MYSERIALIZER_H_
+
+#include "../IGraphQlDTO.h"
+#include "../../graphqlparser/AstNode.h"
+#include "../../graphqlparser/Ast.h"
+#include "MyWriter.h"
+
+namespace graphqlcpp {
+    namespace api {
+        class IGraphQlDTO;
+    }
+    namespace utils {
+        using namespace facebook::graphql::ast;
+        using namespace graphqlcpp::api;
+
+        class MySerializer {
+        private:
+            bool wasFieldRequested(char *fieldName);
+
+            MyWriter *writer;
+            SelectionSet *selectionSetOfCurrentLevel;
+        public:
+            MySerializer(SelectionSet *selectionSetOfCurrentLevel);
+
+            virtual ~MySerializer();
+
+            void setVal(char *name, int val);
+
+            void setVal(char *name, char *val);
+
+            void setVal(char *name, bool val);
+
+            void setVal(char *name, IGraphQlDTO *val);
+
+            MyWriter *createJson();
+        };
+    }
+}
+
+
+#endif //MYSERIALIZER_H_

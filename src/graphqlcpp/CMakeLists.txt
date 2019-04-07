@@ -5,18 +5,13 @@ set(SOURCE_FILES
         validators/QueryValidator.cpp
         validators/SchemaAstWraper.cpp
         validators/SchemaValidator.cpp
-        ApiFactory.cpp Serializer.cpp Serializer.h IGraphQlDTO.cpp IGraphQlDTO.h)
+        ApiFactory.cpp utils/MySerializer.cpp utils/MyWriter.cpp)
 
 
 add_library(graphqlcpp STATIC ${SOURCE_FILES})
 
 
 target_link_libraries(graphqlcpp graphqlparser)
-
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(JSONCPP jsoncpp)
-link_libraries(${JSONCPP_LIBRARIES})
-target_link_libraries(graphqlcpp ${JSONCPP_LIBRARIES})
 
 target_include_directories(graphqlcpp
         PUBLIC
