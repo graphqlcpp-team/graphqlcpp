@@ -65,7 +65,7 @@ set(HEADER_FILES libgraphqlcpp/GraphqlCppApi.h
         libgraphqlparser/parser.tab.hpp
         libgraphqlparser/position.hh
         libgraphqlparser/stack.hh
-        libgraphqlparser/syntaxdefs.h)
+        libgraphqlparser/syntaxdefs.h libgraphqlcpp/exceptions/ArgumentNotValidException.h)
 
 add_library(graphqlcpplib STATIC ${SOURCE_FILES} ${HEADER_FILES} ${SOURCE_LIBGRAPHQLPARSER})
 

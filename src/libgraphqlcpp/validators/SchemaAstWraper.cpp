@@ -10,6 +10,7 @@
 #include "../../libgraphqlparser/Ast.h"
 #include "../../libgraphqlparser/c/GraphQLAst.h"
 #include "../exceptions/NoSchemaSetException.h"
+#include "../exceptions/ArgumentNotValidException.h"
 #include <cstring>
 
 
@@ -87,6 +88,7 @@ namespace graphqlcpp {
         /**
          * This method gets the document. This is the root element of the schema AST.
          * @return The document.
+         * @throw NoSchemaSetException if the schema is not set.
          */
         const Document *SchemaAstWraper::getDocument() {
             if (schema != nullptr) {
@@ -110,36 +112,91 @@ namespace graphqlcpp {
          */
         bool SchemaAstWraper::nodeExistsAsChildOf(const char *childFieldName, const char *fatherFieldName) {
 
-            cout << childFieldName << endl;
-            cout << fatherFieldName << endl;
-
             const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
             const char *fatherNodeName = nullptr;
 
             if (strcmp(fatherFieldName, "query") == 0 || strcmp(fatherFieldName, "mutation") == 0) {
-                //Special treatment if father element is the operation,
-                // because the structure of this part of the AST differs
-
-                const SchemaDefinition *schemaDefinition = getSchemaDefinition();
-                const vector<unique_ptr<OperationTypeDefinition>> &operationTypes = schemaDefinition->getOperationTypes();
-
-                int index = 0;
-                for (auto j = operationTypes.begin(); j != operationTypes.end(); ++j) {
-                    const char *operationTyp = operationTypes[index].get()->getOperation();
-                    if (strcmp(fatherFieldName, operationTyp) == 0) {
-                        fatherNodeName = operationTypes[index].get()->getType().getName().getValue();
-                        break;
-                    }
-                    index++;
-                }
+                fatherNodeName = getFatherFieldNameIfFatherIsOperatiom(fatherFieldName);
                 if (fatherNodeName == nullptr) {
-                    //thow some exception, this part of code should never be reached!!!
+                    //this part of code should never be reached!!!
                     return false;
                 }
             } else {
-                //serch father node in normal case
-                int index = 1;
-                for (auto j = operationDefintion.begin() + 1; j != operationDefintion.end(); ++j) {
+                fatherNodeName = getFatherNodeNameIfFatherIsNotOperation(fatherFieldName, operationDefintion);
+                if (fatherNodeName == nullptr) {
+                    //this part of code should never be reached!!!
+                    return false;
+                }
+            }
+
+            //now the father node name as it is set in the Schema is known and can be compared to other AST nodes
+
+            bool fieldExistsAsChild = fieldExistsAsChildOfFatherNode(childFieldName, operationDefintion, fatherNodeName);
+            if(fieldExistsAsChild)
+                return true;
+
+            //it does not exists as child of
+            return false;
+        }
+
+        /**
+         * It's conna be check if the field name of the child from the query exists as a child of the node.
+         * Therefor there is an iteration through the child fields of the father node set in the query.
+         * To get to the father node there is a iteration through the AST necessary, this is the first for-loop.
+         * If we have the father node we can iterate thorugh its fields (the second for-loop).
+         * If a child node with the name of the child name set in the query is there, the function returns true.
+         * @param childFieldName The child field name set in the query. This is exactly the name as in the query.
+         * @param operationDefintion The start point of the schema AST.
+         * @param fatherNodeName The father node name. This has to be extracted out of the AST.
+         * @return True if the field exists as child of the father node, otherwise false.
+         */
+        bool SchemaAstWraper::fieldExistsAsChildOfFatherNode(const char *childFieldName,
+                                                             const std::vector<std::unique_ptr<facebook::graphql::ast::Definition>> &operationDefintion,
+                                                             const char *fatherNodeName) {
+            int index = 1;
+            for (auto j = operationDefintion.begin() + 1; j != operationDefintion.end(); ++j) {
+                auto operationDefinition = operationDefintion[index].get();
+                const GraphQLAstObjectTypeDefinition *graphQLAstObjectTypeDefinition =
+                        (const GraphQLAstObjectTypeDefinition *) operationDefinition;
+                const ObjectTypeDefinition *objectTypeDefinition =
+                        (const ObjectTypeDefinition *) graphQLAstObjectTypeDefinition;
+                const char *typeDefinitionName = objectTypeDefinition->getName().getValue();
+
+                if (strcmp(typeDefinitionName, fatherNodeName) == 0) {
+                    //in this AST node the child node must be located
+
+                    const vector<unique_ptr<FieldDefinition>> &fields = objectTypeDefinition->getFields();
+
+                    int indexFields = 0;
+                    for (auto i = fields.begin(); i != fields.end(); ++i) {
+                        const char *fieldName = fields[indexFields].get()->getName().getValue();
+                        if (strcmp(childFieldName, fieldName) == 0) {
+                            //the child node exists as node of father node
+                            return true;
+                        }
+                        indexFields++;
+                    }
+                }
+                index++;
+            }
+            return false;
+        }
+
+        /**
+         * This function will get the fathers node name from the field name.
+         * This function should be called if the father node name is not an operation as query or mutation.
+         * It is necessary to get the node name to find the father node in the AST. It is not possible to get the fathers
+         * node with only the field name. The fathers node is necessary to get the child fields.
+         * @param fatherFieldName The name of the father field as set in the query. This is exactly the name as in the query.
+         * @param operationDefintion The start point of the schema AST.
+         * @return The father node name.
+         */
+        const char * SchemaAstWraper::getFatherNodeNameIfFatherIsNotOperation(const char *fatherFieldName,
+                const std::vector<std::unique_ptr<facebook::graphql::ast::Definition>> &operationDefintion) {
+            int index = 1;
+            const char* fatherNodeName = nullptr;
+            //begin with 1 because the first element is the operation and is treated seperatly.
+            for (auto j = operationDefintion.begin() + 1; j != operationDefintion.end(); ++j) {
                     auto operationDefinition = operationDefintion[index].get();
                     const GraphQLAstObjectTypeDefinition *graphQLAstObjectTypeDefinition =
                             (const GraphQLAstObjectTypeDefinition *) operationDefinition;
@@ -165,56 +222,57 @@ namespace graphqlcpp {
                     }
                     index++;
                 }
-                if (fatherNodeName == nullptr) {
-                    //thow some exception, this part of code should never be reached!!!
-                    return false;
-                }
-            }
-
-            //now the father node name as it is set in the Schema is known and can be compared to other AST nodes
-
-            int index = 1;
-            for (auto j = operationDefintion.begin() + 1; j != operationDefintion.end(); ++j) {
-                auto operationDefinition = operationDefintion[index].get();
-                const GraphQLAstObjectTypeDefinition *graphQLAstObjectTypeDefinition =
-                        (const GraphQLAstObjectTypeDefinition *) operationDefinition;
-                const ObjectTypeDefinition *objectTypeDefinition =
-                        (const ObjectTypeDefinition *) graphQLAstObjectTypeDefinition;
-                const char *typeDefinitionName = objectTypeDefinition->getName().getValue();
-
-                if (strcmp(typeDefinitionName, fatherNodeName) == 0) {
-                    //in this AST node the child node must be located
-
-                    const vector<unique_ptr<FieldDefinition>> &fields = objectTypeDefinition->getFields();
-
-                    int indexFields = 0;
-                    for (auto i = fields.begin(); i != fields.end(); ++i) {
-                        const char *fieldName = fields[indexFields].get()->getName().getValue();
-                        if (strcmp(childFieldName, fieldName) == 0) {
-                            //the child node exists as node of father node
-                            return true;
-                        }
-                        indexFields++;
-                    }
-                }
-
-                index++;
-            }
-
-            //it does not exists as child of
-            return false;
+                return fatherNodeName;
         }
 
+        /**
+         * This function will get the fathers node name from the field name.
+         * This function should be called if the father node name is  an operation as query or mutation.
+         * There is a special treatment if the father field is an operation. This is because the structure of this
+         * part of the schema AST differs to the rest.
+         * It is necessary to get the node name to find the father node in the AST. It is not possible to get the fathers
+         * node with only the field name. The fathers node is necessary to get the child fields.
+         * @param fatherFieldName The name of the father field as set in the query. This is exactly the name as in the query.
+         * @return The father node name.
+         */
+        const char *SchemaAstWraper::getFatherFieldNameIfFatherIsOperatiom(const char *fatherFieldName) {
+
+            const char *fatherNodeName;
+            const SchemaDefinition *schemaDefinition = getSchemaDefinition();
+            const vector<unique_ptr<OperationTypeDefinition>> &operationTypes = schemaDefinition->getOperationTypes();
+
+            int index = 0;
+            for (auto j = operationTypes.begin(); j != operationTypes.end(); ++j) {
+                    const char *operationTyp = operationTypes[index].get()->getOperation();
+                    if (strcmp(fatherFieldName, operationTyp) == 0) {
+                        fatherNodeName = operationTypes[index].get()->getType().getName().getValue();
+                        break;
+                    }
+                    index++;
+                }
+            return fatherNodeName;
+        }
+
+        /**
+         * This function validates if the argument is valid.
+         * To get the arguments of the field it is necessary to get the field node. Therefor the for-loop iterates
+         * through the schema AST (for loop). The start index is not the first node because this is the operation
+         * node and at this there can't be a argument set.
+         * After having the field node the list of all arguments will be transfered to the function which validates
+         * the argument against a list of arguments.
+         * @param name The name of the argument. In the query it's the part in brackets in front of the equal sign.
+         * @param value The value of the argument. In the query it's the part in brackets behind the equal sign.
+         * @param fieldName The name of the field to which the argument will be executed.
+         * @return True if the argument is valid, otherwise false.
+         */
         bool SchemaAstWraper::isArgumentValid(const char *name, const Value *value, const char *fieldName) {
 
             const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
-            const char *fatherNodeName = nullptr;
 
             if (strcmp(fieldName, "query") == 0 || strcmp(fieldName, "mutation") == 0) {
-                //TODO throw exception: it is not allowed here to have arguments
                 return false;
             } else {
-                //serch father node in normal case
+                //search father node in normal case
                 int index = 1;
                 for (auto j = operationDefintion.begin() + 1; j != operationDefintion.end(); ++j) {
                     auto operationDefinition = operationDefintion[index].get();
@@ -242,6 +300,14 @@ namespace graphqlcpp {
             return false;
         }
 
+        /**
+         * Iterate through each argument of a field an check if the name of the argument is the same as in the query.
+         * If the name equals the function to validate the value of the argument will be called.
+         * @param arguments The list of the arguments of the field.
+         * @param argumentName The name of the argument set in the query. This is exactly the name as in the query.
+         * @param value The value of the argument set in the query.
+         * @return True if the argument exists and has the rigth type of value otherwise false.
+         */
         bool SchemaAstWraper::iterateThroughArgumentsAndValidate(
                 const std::vector<std::unique_ptr<facebook::graphql::ast::InputValueDefinition>> *arguments,
                 const char *argumentName, const Value *value) {
@@ -249,12 +315,7 @@ namespace graphqlcpp {
             for (auto j = arguments->begin(); j != arguments->end(); ++j) {
                 const unique_ptr<InputValueDefinition> *argument = arguments[indexArguments].data();
 
-                //const GraphQLAstInputValueDefinition* graphQLAstInputValueDefinition =
-                //      (const GraphQLAstInputValueDefinition*) argument;
                 const char *argumentNameLoop = argument->get()->getName().getValue();
-                //const InputValueDefinition* inputValueDefinition =
-                //     (const InputValueDefinition*) argument;
-                //const char* argumentNameLoop = inputValueDefinition->getName().getValue();
                 if (strcmp(argumentNameLoop, argumentName) == 0) {
                     //find argument with name
                     //now have to check the type and then convert the value
@@ -264,6 +325,20 @@ namespace graphqlcpp {
             return false;
         }
 
+        /**
+         * This function validates if the value of the argument has the right data type.
+         * The data type which the argument should have is taken from the schema AST.
+         * For each data type there is a seperate check. That's because in the query AST no data type is saved and
+         * most of the values are in the format string. Therefor int and float values are validate with an iteration
+         * through the string.
+         * The exception is the type boolean, the AST structure differs here. We can check if the argument is in the
+         * query of type boolean by checking the AST structure. In this case the query AST does not contains a pointer
+         * to the argument value, it only has the value itself at this part of the AST. By checking if there is a
+         * pointer or the value it is possible to check the data type.
+         * @param argument The pointer to the argument in the schema AST.
+         * @param value The pointer to the value of the query in the query AST.
+         * @return True, if the data type of the argument is as expected, otherwise false.
+         */
         bool SchemaAstWraper::validateArgument(const std::unique_ptr<InputValueDefinition> *argument,
                                                const facebook::graphql::ast::Value *value) {
             const Type &type = argument->get()->getType();
@@ -271,10 +346,6 @@ namespace graphqlcpp {
             const NamedType &nam = (NamedType &) nonNullType.getType();
 
             const char *valueType = nam.getName().getValue();
-            //const Type* typePointer = &type;
-            //const NamedType *namedType = (NamedType *) typePointer;
-            //const Name * nameType = &namedType->getName();
-            //const char * valueType = nameType->getValue();
 
             if (strcmp(valueType, "ID") == 0 || strcmp(valueType, "String") == 0 || strcmp(valueType, "string") == 0) {
                 try {

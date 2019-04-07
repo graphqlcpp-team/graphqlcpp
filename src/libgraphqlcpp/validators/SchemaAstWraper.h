@@ -38,6 +38,14 @@ private:
 	        const char* argumentName, const Value* value);
 	bool validateArgument(const std::unique_ptr <InputValueDefinition> * argument, const Value* value);
 
+    const char *getFatherFieldNameIfFatherIsOperatiom(const char *fatherFieldName);
+
+    const char *getFatherNodeNameIfFatherIsNotOperation(const char *fatherFieldName,
+            const std::vector<std::unique_ptr<Definition>> & definition);
+
+    bool fieldExistsAsChildOfFatherNode(const char *childFieldName,
+            const std::vector<std::unique_ptr < Definition>> & operationDefintion, const char* fatherNodeName);
+
 };
 
 } /* namespace validators */
