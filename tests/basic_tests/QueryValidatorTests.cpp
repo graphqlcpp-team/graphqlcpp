@@ -10,6 +10,7 @@
 #include "../../src/libgraphqlcpp/validators/SchemaAstWraper.h"
 #include "../../src/libgraphqlcpp/exceptions/WrongOperationException.h"
 #include "../../src/libgraphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../src/libgraphqlcpp/exceptions/ArgumentNotValidException.h"
 
 using namespace std;
 using namespace facebook::graphql;
@@ -50,23 +51,22 @@ TEST(QueryValidatorTests, IsQueryValidThrowsExecptionWhenWrongOperation) {
 }
 
 TEST(QueryValidatorTests, IsQueryValidWithValidQueryExpectNoError) {
-	const char * error = nullptr;
-	const char * query = "query{user(id:la) {name}}";
-	std::unique_ptr<Node> queryAst;
-	queryAst = parseString(query, &error);
-	ASSERT_TRUE(query);
-	ASSERT_FALSE(error);
+    const char * error = nullptr;
+    const char * query = "query{user(id:10) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
 
-	error = nullptr;
-	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Boolean!): User} type User { id: String! name: string!	age: Int}";
-	std::unique_ptr<Node> schemaAst;
-	schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
-	ASSERT_TRUE(schemaAst);
-	ASSERT_FALSE(error);
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
 
-	SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
-	QueryValidator* qv = new QueryValidator(saw);
-	//bool operation = qv->isQueryValid(queryAst.get());
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
 
 	ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
 	Node* nodeQueryAst = queryAst.get();
@@ -99,7 +99,110 @@ TEST(QueryValidatorTests, IsQueryValidWithNotValidQueryExpectError) {
 
 	SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
 	QueryValidator* qv = new QueryValidator(saw);
-	//bool operation = qv->isQueryValid(queryAst.get());
 
 	ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+}
+
+TEST(QueryValidatorTests, IsArgumentTypeBoolValidExpectNoError) {
+    const char * error = nullptr;
+    const char * query = "query{user(id:true) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Boolean!): User} type User { id: Boolean! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
+    ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
+}
+
+TEST(QueryValidatorTests, IsArgumentTypeIntValidExpectNoError) {
+    const char * error = nullptr;
+    const char * query = "query{user(id:100) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Int!): User} type User { id: Int! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
+    ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
+}
+
+TEST(QueryValidatorTests, IsArgumentTypeFloatValidExpectNoError) {
+    const char * error = nullptr;
+    const char * query = "query{user(id:100.07) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Float!): User} type User { id: Float! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
+    ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
+}
+
+TEST(QueryValidatorTests, IsArgumentTypeStringValidExpectNoError) {
+    const char * error = nullptr;
+    const char * query = "query{user(id:test) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: String!): User} type User { id: String! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
+    ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
+}
+
+TEST(QueryValidatorTests, IsArgumentTypeBooleanValidExpectError) {
+    const char * error = nullptr;
+    const char * query = "query{user(id:la) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Boolean!): User} type User { id: Boolean! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
 }
