@@ -23,9 +23,10 @@ namespace graphqlcpp {
             bool wasFieldRequested(char *fieldName);
 
             MyWriter *writer;
-            SelectionSet *selectionSetOfCurrentLevel;
+            const SelectionSet *selectionSetOfCurrentLevel;
+            const SelectionSet *selectionSetNextLevelOfCurrentField;
         public:
-            MySerializer(SelectionSet *selectionSetOfCurrentLevel);
+            MySerializer(const SelectionSet *selectionSetOfCurrentLevel);
 
             virtual ~MySerializer();
 

@@ -11,6 +11,7 @@ namespace graphqlcpp {
         }
 
         string MyWriter::getJson() {
+            data = data.substr(0, data.length() - 1);
             return data.append("}");
         }
 
@@ -21,6 +22,7 @@ namespace graphqlcpp {
             data.append("\"");
             data.append(":");
             data.append(to_string(val));
+            data.append(",");
         }
 
         void MyWriter::appendValue(char *name, bool val) {
@@ -33,6 +35,7 @@ namespace graphqlcpp {
             } else {
                 data.append("false");
             };
+            data.append(",");
         }
 
         void MyWriter::appendValue(char *name, char *val) {
@@ -43,6 +46,7 @@ namespace graphqlcpp {
             data.append("\"");
             data.append(val);
             data.append("\"");
+            data.append(",");
         }
 
         void MyWriter::appendValue(char *name, MyWriter *writer) {
@@ -51,6 +55,7 @@ namespace graphqlcpp {
             data.append("\"");
             data.append(":");
             data.append(writer->getJson());
+            data.append(",");
         }
     }
 }

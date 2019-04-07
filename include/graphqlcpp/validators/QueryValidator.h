@@ -21,10 +21,10 @@ private:
 	SchemaAstWraper* schemaWrapper;
 	void iterateThroughAST(Node* rootNodeQuery);
 	bool iterateThroughSelectionSetsAndValidate(const SelectionSet* selectionSet, const char* fatherFieldName);
-	const SelectionSet* getSelectionSet(Node* rootNodeQuery);
 	const OperationDefinition* getOperationDefinition(Node *rootNodeQuery);
 	bool iterateThroughArgumentsOfOneFiledAndValidate(const Field* field);
 public:
+	const SelectionSet* getSelectionSet(Node* rootNodeQuery);
 	const char* getOperation(Node* rootNodeQuery);
 	QueryValidator(SchemaAstWraper* schemaWrapper);
 	bool isQueryValid(Node* rootNodeQuery);
