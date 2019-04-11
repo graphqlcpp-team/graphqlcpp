@@ -53,25 +53,25 @@ namespace graphqlcpp {
             }
         }
 
-        void MySerializer::appendValue(char *name, vector<int> values){
+        void MySerializer::setVal(char *name, vector<int> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);
             }
         }
 
-        void MySerializer::appendValue(char *name, vector<string> values){
+        void MySerializer::setVal(char *name, vector<string> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);
             }
         }
 
-        void MySerializer::appendValue(char *name, vector<bool> values){
+        void MySerializer::setVal(char *name, vector<bool> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);
             }
         }
 
-        void MySerializer::appendVectorWritersValue(char *name, vector<MyWriter*> writers){
+        void MySerializer::setVectorWritersVal(char *name, vector<MyWriter*> writers){
             if (wasFieldRequested(name)) {
                 this->writer->appendVectorWritersValue(name, writers);
             }

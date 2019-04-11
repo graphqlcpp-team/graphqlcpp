@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../../include/graphqlcpp/utils/MySerializer.h";
-#include "../../include/graphqlcpp/IGraphQlDTO.h";
+#include "../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
 #include "../../include/graphqlcpp/validators/QueryValidator.h"
@@ -16,9 +16,9 @@ namespace demo {
     class City : public IGraphQlDTO {
     private:
         char *name;
-        int plz;
+        vector<int> plz;
     public:
-        City(char *name, int plz) {
+        City(char *name, vector<int> plz) {
             this->name = name;
             this->plz = plz;
         }
@@ -72,7 +72,8 @@ namespace demo {
     };
 
     Customer *createCustomer() {
-        City *c = new City("Nuernberg", 90429);
+        vector<int> plzs = {90, 80};
+        City *c = new City("Nuernberg", plzs);
         Address *a = new Address(c, "Fuertherstr.");
         Customer *cu = new Customer("Sven Steuermann", 34, a);
         return cu;
