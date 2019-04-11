@@ -140,11 +140,18 @@ TEST(QueryValidatorTests, IsArgumentTypeIntValidExpectNoError) {
     ASSERT_FALSE(error);
 
     error = nullptr;
-    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Int!): User} type User { id: Int! name: string!	age: Int}";
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Int): User} type User { id: Int name: string!	age: Int}";
     std::unique_ptr<Node> schemaAst;
     schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
     ASSERT_TRUE(schemaAst);
     ASSERT_FALSE(error);
+
+    const char* json = graphql_ast_to_json((const struct GraphQLAstNode *)schemaAst.get());
+    cout << json;
+    ofstream outputFile;
+    outputFile.open("./schema-test-user.json");
+    outputFile << json;
+    outputFile.close();
 
     SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
     QueryValidator* qv = new QueryValidator(saw);

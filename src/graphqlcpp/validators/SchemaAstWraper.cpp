@@ -342,10 +342,21 @@ namespace graphqlcpp {
         bool SchemaAstWraper::validateArgument(const std::unique_ptr<InputValueDefinition> *argument,
                                                const facebook::graphql::ast::Value *value) {
             const Type &type = argument->get()->getType();
-            const NonNullType &nonNullType = (const NonNullType &) type;
-            const NamedType &nam = (NamedType &) nonNullType.getType();
 
-            const char *valueType = nam.getName().getValue();
+            const char *valueType;
+
+            char* nonNullTypeString = "NonNullType";
+            auto typeOfType = typeid(type).name();
+            if(strstr(typeOfType, nonNullTypeString) != nullptr) {
+                //Non null type
+                const NonNullType &nonNullType = (const NonNullType &) type;
+                const NamedType &nam = (NamedType &) nonNullType.getType();
+                valueType = nam.getName().getValue();
+            } else {
+                const NamedType &nam = (NamedType &) type;
+                valueType = nam.getName().getValue();
+            }
+
 
             if (strcmp(valueType, "ID") == 0 || strcmp(valueType, "String") == 0 || strcmp(valueType, "string") == 0) {
                 try {
