@@ -6,6 +6,7 @@
 #define GRAPHQLCPP_RESOLVERMANAGER_H
 
 #include "IGraphQlResolver.h"
+#include "../IGraphQlDTO.h"
 #include <map>
 
 namespace graphqlcpp {
@@ -20,6 +21,8 @@ namespace graphqlcpp {
 
         public:
             void registerResolver(IGraphQlResolver* resolver);
+            IGraphQlDTO executeResolver(char* resolverName );
+
         };
 
 

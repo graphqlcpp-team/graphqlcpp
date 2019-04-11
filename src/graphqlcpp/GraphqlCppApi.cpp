@@ -86,8 +86,7 @@ namespace graphqlcpp {
         }
 
         void GraphqlCppApi::registerResolver(IGraphQlResolver *resolver) {
-        //    this->resolverManager->registerResolver(resolver);
-
+            this->resolverManager->registerResolver(resolver);
         }
     }
 } /* namespace graphqlcppapi */
