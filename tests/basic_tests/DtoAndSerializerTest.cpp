@@ -1,10 +1,4 @@
-//
-// Created by julian on 07.04.19.
-//
-
 #include <gtest/gtest.h>
-//#include "jsoncpp/json/value.h"
-//#include "jsoncpp/json/reader.h"
 #include "../../include/graphqlcpp/utils/MySerializer.h";
 #include "../../include/graphqlcpp/IGraphQlDTO.h";
 #include "../../include/graphqlcpp/utils/MyWriter.h"
@@ -15,7 +9,6 @@
 #include "../../src/graphqlparser/c/GraphQLAst.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
 
-//using namespace Json;
 using namespace std;
 using namespace graphqlcpp::api;
 
@@ -115,4 +108,63 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
     ser = c->serialize(ser);
     MyWriter *writer = ser->createJson();
     cout << writer->getJson();
+}
+
+
+TEST(DtoAndSerializerTest, intVectorTest) {
+    vector<int> array = {1, 2, 3,4, 5};
+    MyWriter *writer = new  MyWriter();
+    writer->appendValue("name", array);
+
+    EXPECT_TRUE(writer->getJson() ==  "{\"name\":[1,2,3,4,5]}");
+}
+
+TEST(DtoAndSerializerTest, stringVectorTest) {
+    vector<string> array = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
+    MyWriter *writer = new  MyWriter();
+    writer->appendValue("name", array);
+    EXPECT_TRUE(writer->getJson() ==  "{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]}");
+}
+TEST(DtoAndSerializerTest, multipleStringVectorTest) {
+    vector<string> array = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
+    vector<string> array2 = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
+    MyWriter *writer = new  MyWriter();
+    writer->appendValue("name", array);
+    writer->appendValue("name", array2);
+    EXPECT_TRUE(writer->getJson() ==  "{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"],\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]}");
+}
+
+TEST(DtoAndSerializerTest, boolVectorTest) {
+    vector<bool> array = {true, false, true, false, true};
+    MyWriter *writer = new  MyWriter();
+    writer->appendValue("name", array);
+    EXPECT_TRUE(writer->getJson() ==  "{\"name\":[true,false,true,false,true]}");
+}
+
+TEST(DtoAndSerializerTest, writerVectorTest) {
+    vector<bool> boolArray = {true, false, true, false, true};
+    MyWriter *boolWriter = new  MyWriter();
+    boolWriter->appendValue("name", boolArray);
+
+    vector<string> stringArray = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
+    MyWriter *stringWriter = new  MyWriter();
+    stringWriter->appendValue("name", stringArray);
+
+    vector<string> stringArray2 = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
+    MyWriter *stringWriter2 = new  MyWriter();
+    stringWriter2->appendValue("name", stringArray2);
+
+    vector<int> intArray = {1, 2, 3,4, 5};
+    MyWriter *intWriter = new  MyWriter();
+    intWriter->appendValue("name", intArray);
+
+    vector<MyWriter*> writerArray;
+    writerArray.push_back(stringWriter);
+    writerArray.push_back(boolWriter);
+    writerArray.push_back(intWriter);
+
+    MyWriter *writer = new  MyWriter();
+    writer->appendVectorWritersValue("name", writerArray);
+    cout << writer->getJson();
+    EXPECT_TRUE(writer->getJson() ==  "{\"name\":[{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]},{\"name\":[true,false,true,false,true]},{\"name\":[1,2,3,4,5]}]}");
 }

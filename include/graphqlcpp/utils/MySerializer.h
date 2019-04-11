@@ -38,6 +38,14 @@ namespace graphqlcpp {
 
             void setVal(char *name, IGraphQlDTO *val);
 
+            void appendValue(char *name, vector<int> values);
+
+            void appendValue(char *name, vector<string> values);
+
+            void appendValue(char *name, vector<bool> values);
+
+            void appendVectorWritersValue(char *name, vector<MyWriter*> writers);
+
             MyWriter *createJson();
         };
     }
