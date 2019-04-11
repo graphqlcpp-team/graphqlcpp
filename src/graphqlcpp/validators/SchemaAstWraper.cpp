@@ -312,15 +312,20 @@ namespace graphqlcpp {
                 const std::vector<std::unique_ptr<facebook::graphql::ast::InputValueDefinition>> *arguments,
                 const char *argumentName, const Value *value) {
             int indexArguments = 0;
-            for (auto j = arguments->begin(); j != arguments->end(); ++j) {
-                const unique_ptr<InputValueDefinition> *argument = arguments[indexArguments].data();
+            vector<std::unique_ptr<facebook::graphql::ast::InputValueDefinition, std::default_delete<facebook::graphql::ast::InputValueDefinition>>, std::allocator<std::unique_ptr<facebook::graphql::ast::InputValueDefinition, std::default_delete<facebook::graphql::ast::InputValueDefinition>>>>::const_iterator j;
+            for (j = arguments->begin(); j != arguments->end(); ++j) {
+                //const vector <unique_ptr<InputValueDefinition>> test = arguments[0];
+                //vector <unique_ptr<InputValueDefinition>> test;
+                //test = arguments[1];
+                const unique_ptr <InputValueDefinition> & argument = arguments->at(indexArguments);
 
-                const char *argumentNameLoop = argument->get()->getName().getValue();
+                const char *argumentNameLoop = argument->getName().getValue();
                 if (strcmp(argumentNameLoop, argumentName) == 0) {
                     //find argument with name
                     //now have to check the type and then convert the value
                     return validateArgument(argument, value);
                 }
+                indexArguments ++;
             }
             return false;
         }
@@ -339,9 +344,9 @@ namespace graphqlcpp {
          * @param value The pointer to the value of the query in the query AST.
          * @return True, if the data type of the argument is as expected, otherwise false.
          */
-        bool SchemaAstWraper::validateArgument(const std::unique_ptr<InputValueDefinition> *argument,
+        bool SchemaAstWraper::validateArgument(const unique_ptr <InputValueDefinition> &argument,
                                                const facebook::graphql::ast::Value *value) {
-            const Type &type = argument->get()->getType();
+            const Type &type = argument->getType();
 
             const char *valueType;
 

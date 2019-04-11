@@ -36,7 +36,7 @@ private:
     //const std::vector<std::unique_ptr<Definition>> getOperationDefinition();
 	bool iterateThroughArgumentsAndValidate(const std::vector <std::unique_ptr<InputValueDefinition>>* arguments,
 	        const char* argumentName, const Value* value);
-	bool validateArgument(const std::unique_ptr <InputValueDefinition> * argument, const Value* value);
+	bool validateArgument(const std::unique_ptr <InputValueDefinition> & argument, const Value* value);
 
     const char *getFatherFieldNameIfFatherIsOperatiom(const char *fatherFieldName);
 

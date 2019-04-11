@@ -133,14 +133,14 @@ TEST(QueryValidatorTests, IsArgumentTypeBoolValidExpectNoError) {
 
 TEST(QueryValidatorTests, IsArgumentTypeIntValidExpectNoError) {
     const char * error = nullptr;
-    const char * query = "query{user(id:100) {name}}";
+    const char * query = "query{user(id:100 name:x age: 5) {name}}";
     std::unique_ptr<Node> queryAst;
     queryAst = parseString(query, &error);
     ASSERT_TRUE(query);
     ASSERT_FALSE(error);
 
     error = nullptr;
-    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Int): User} type User { id: Int name: string!	age: Int}";
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Int name: String! age: Int): User} type User { id: Int name: string!	age: Int}";
     std::unique_ptr<Node> schemaAst;
     schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
     ASSERT_TRUE(schemaAst);
