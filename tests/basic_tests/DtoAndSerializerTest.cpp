@@ -1,3 +1,7 @@
+//
+// Created by julian on 07.04.19.
+//
+
 #include <gtest/gtest.h>
 #include "../../include/graphqlcpp/utils/MySerializer.h"
 #include "../../include/graphqlcpp/IGraphQlDTO.h"
@@ -8,6 +12,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../src/graphqlparser/c/GraphQLAst.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
+#include "TestData.cpp"
 
 using namespace std;
 using namespace graphqlcpp::api;
@@ -93,8 +98,12 @@ TEST(DtoAndSerializerTest, simpleSerializaiton) {
 
 }*/
 
+
+
+
+
 TEST(DtoAndSerializerTest, wasFieldRequested) {
-    Customer *c = createCustomer();
+    demo::Customer *c = demo::TestDataGenerator::createCustomer();
 
     const char * error = nullptr;
     const char * query = "query{name, address {city {plz, name}}}";
