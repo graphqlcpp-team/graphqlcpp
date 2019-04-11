@@ -21,6 +21,7 @@ TEST(GraphQlApiTest, dumpAstAsJson){
 	api->setSchema(schema);
 
 
+
 	const char * result;
 	result = api->executeQuery(query);
 
