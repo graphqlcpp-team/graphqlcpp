@@ -3,11 +3,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "../../src/libgraphqlparser/Ast.h"
-#include "../../src/libgraphqlparser/GraphQLParser.h"
-#include "../../src/libgraphqlparser/c/GraphQLAstToJSON.h"
-#include "../../src/libgraphqlcpp/GraphqlCppApi.h"
-#include "../../src/libgraphqlcpp/ApiFactory.h"
+
+#include "../../include/graphqlcpp/GraphqlCppApi.h"
+#include "../../include/graphqlcpp/ApiFactory.h"
 
 
 using namespace std;
@@ -16,14 +14,19 @@ using namespace facebook::graphql::ast;
 using namespace graphqlcpp::api;
 
 TEST(GraphQlApiTest, dumpAstAsJson){
-
-	const char* simpleSchema = "{ me { name } }";
+	const char * query = "query{user {name}}";
+	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
 	GraphqlCppApi* api = ApiFactory::createApi();
-	api->setSchema(simpleSchema);
-	//auto json = api->printSchemaAsJson();
-	//cout << json;
-	//ASSERT_NE(nullptr, json);
+	api->setSchema(schema);
 
+
+	const char * result;
+	result = api->executeQuery(query);
+
+	cout << result;
+
+	ASSERT_NE(nullptr, result);
 }
+
 

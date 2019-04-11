@@ -9,7 +9,7 @@
 
 #include "GraphQLParser.h"
 #include "../GraphQLParser.h"
-#include "../AstNode.h"
+#include "../../../include/graphqlparser/AstNode.h"
 
 #include <cstdlib>
 

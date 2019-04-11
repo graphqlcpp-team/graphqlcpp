@@ -5,7 +5,7 @@
  *      Author: admin
  */
 
-#include "SchemaValidator.h"
+#include "../../../include/graphqlcpp/validators/SchemaValidator.h"
 
 namespace graphqlcpp{
 namespace validators{

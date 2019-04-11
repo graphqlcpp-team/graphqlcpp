@@ -5,12 +5,12 @@
  *      Author: admin
  */
 
-#include "../libgraphqlparser/Ast.h"
-#include "../libgraphqlparser/GraphQLParser.h"
-#include "GraphqlCppApi.h"
-#include "../libgraphqlparser/c/GraphQLAstToJSON.h"
-#include "NoSchemaSetException.h"
-#include "InvalidSchemaException.h"
+
+#include "../graphqlparser/GraphQLParser.h"
+#include "../../include/graphqlcpp/GraphqlCppApi.h"
+#include "../graphqlparser/c/GraphQLAstToJSON.h"
+#include "../../include/graphqlcpp/exceptions/NoSchemaSetException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidSchemaException.h"
 
 namespace graphqlcpp {
 namespace api {
@@ -22,7 +22,7 @@ GraphqlCppApi::GraphqlCppApi() {
 }
 
 void GraphqlCppApi::setSchema(const char* schema) {
-	auto rootNode = parseStringToAst(schema);
+	auto rootNode = parseSchemaStringToSchemaAst(schema);
 	if (schemaValidator->checkIfSchemaIsValid(rootNode)) {
 		schemaWraper = new SchemaAstWraper(rootNode);
 		queryValidator = new QueryValidator(schemaWraper);
@@ -41,18 +41,31 @@ bool GraphqlCppApi::checkIfRequestValid(Node* rootNodeRequest) {
 const char* GraphqlCppApi::executeQuery(const char* query) {
 	Node* requestAst = parseStringToAst(query);
 	if(checkIfRequestValid(requestAst)){
-		return "request valid";
+		return schemaWraper->printSchemaAsJson();
 	}
-	return "";
+	return "query was invalid";
 }
 
 Node* GraphqlCppApi::parseStringToAst(const char* str) {
 	//TODO check error string
-	const char* err = "";
-	auto sAst = parseString(str, &err);
-	Node* rootNode = sAst.get();
+	const char * error = nullptr;
+	std::unique_ptr<Node> queryAst;
+	queryAst = parseString(str, &error);
+	//const char* err = "";
+	//auto sAst = parseString(str, &err);
+	Node* rootNode = queryAst.release();
 	return rootNode;
 }
+
+	Node* GraphqlCppApi::parseSchemaStringToSchemaAst(const char* schema) {
+		//TODO check error string
+		const char* err = "";
+		std::unique_ptr<Node> schemaAst;
+		schemaAst = parseStringWithExperimentalSchemaSupport(schema, &err);
+		Node* rootNode = schemaAst.release();
+		return rootNode;
+	}
+
 
 const char* GraphqlCppApi::printSchemaAsJson() {
 	if(schemaWraper!=nullptr){

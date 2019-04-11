@@ -10,7 +10,7 @@
 
 #include <memory>
 #include <vector>
-#include "../../libgraphqlparser/Ast.h"
+#include "../../graphqlparser/Ast.h"
 
 namespace graphqlcpp {
 namespace validators {

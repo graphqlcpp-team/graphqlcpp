@@ -5,8 +5,8 @@
  *      Author: amelie
  */
 
-#include "ApiFactory.h"
-#include "GraphqlCppApi.h"
+#include "../../include/graphqlcpp/ApiFactory.h"
+#include "../../include/graphqlcpp/GraphqlCppApi.h"
 
 namespace graphqlcpp {
 namespace api {

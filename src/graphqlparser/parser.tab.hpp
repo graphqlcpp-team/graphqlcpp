@@ -48,7 +48,7 @@
 #include <sstream>
 #include <string>
 
-#include "Ast.h"
+#include "../../../include/graphqlparser/Ast.h"
 
 using facebook::graphql::ast::Node;
 using facebook::graphql::ast::Name;
@@ -180,7 +180,7 @@ union yystype {                                         \
 # include <string>
 # include <vector>
 # include "stack.hh"
-# include "location.hh"
+# include "../../../include/graphqlparser/location.hh"
 
 
 #ifndef YY_ATTRIBUTE

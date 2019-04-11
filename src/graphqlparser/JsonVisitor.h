@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "AstNode.h"
+#include "../../../include/graphqlparser/AstNode.h"
 #include "AstVisitor.h"
 
 #include <sstream>
