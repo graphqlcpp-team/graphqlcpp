@@ -37,14 +37,22 @@ TEST(QueryValidatorTests, RightOperationType) {
 
 TEST(QueryValidatorTests, IsQueryValidThrowsExecptionWhenWrongOperation) {
 	const char * error = nullptr;
-	const char * query = "mutation{user(id:1) {name: hallo}}";
+	const char * query = "subscription{user(id:1) {name: hallo}}";
 	std::unique_ptr<Node> queryAst;
 	queryAst = parseString(query, &error);
 	ASSERT_TRUE(query);
 	ASSERT_FALSE(error);
 
-	SchemaAstWraper* saw = new SchemaAstWraper(queryAst.get());
-	QueryValidator* qv = new QueryValidator(saw);
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
 	//bool operation = qv->isQueryValid(queryAst.get());
 	ASSERT_THROW(qv->isQueryValid(queryAst.get()), WrongOperationException);
 }
