@@ -21,7 +21,7 @@ namespace graphqlcpp {
 
         public:
             void registerResolver(IGraphQlResolver* resolver);
-            IGraphQlDTO executeResolver(char* resolverName );
+//            IGraphQlDTO executeResolver(char* resolverName );
 
         };
 

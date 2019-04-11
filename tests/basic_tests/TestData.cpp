@@ -19,14 +19,13 @@
 using namespace std;
 using namespace graphqlcpp::api;
 
-
 namespace demo {
     class City : public IGraphQlDTO {
     private:
         char *name;
-        int plz;
+        vector<int> plz;
     public:
-        City(char *name, int plz) {
+        City(char *name, vector<int> plz) {
             this->name = name;
             this->plz = plz;
         }
@@ -82,7 +81,7 @@ namespace demo {
     class TestDataGenerator {
     public:
         static Customer *createCustomer() {
-            City *c = new City("Nuernberg", 90429);
+            City *c = new City("Nuernberg", {90429} );
             Address *a = new Address(c, "Fuertherstr.");
             Customer *cu = new Customer("Sven Steuermann", 34, a);
             return cu;

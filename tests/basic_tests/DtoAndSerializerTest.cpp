@@ -17,76 +17,8 @@
 using namespace std;
 using namespace graphqlcpp::api;
 
-namespace demo {
-    class City : public IGraphQlDTO {
-    private:
-        char *name;
-        vector<int> plz;
-    public:
-        City(char *name, vector<int> plz) {
-            this->name = name;
-            this->plz = plz;
-        }
-
-        MySerializer *serialize(MySerializer *serializer) override {
-            serializer->setVal("name", this->name);
-            serializer->setVal("plz", this->plz);
-            return serializer;
-        }
-    };
-
-    class Address : public IGraphQlDTO {
-    private:
-        City *city;
-        char *street;
-    public:
-        Address(City *city, char *street) {
-            this->city = city;
-            this->street = street;
-        }
-
-    private:
-        MySerializer *serialize(MySerializer *serializer) override {
-            serializer->setVal("city", this->city);
-            serializer->setVal("street", this->street);
-            return serializer;
-        }
-    };
 
 
-    class Customer : public IGraphQlDTO {
-    private:
-        char *name;
-        int age;
-        Address *address;
-    public:
-        Customer(char *name, int age, Address *address) {
-            this->name = name;
-            this->age = age;
-            this->address = address;
-        }
-
-
-        MySerializer *serialize(MySerializer *serializer) override {
-            //TODO prüfen ob key z.B name wieder freigegeben wird am ende -> lint / tools zur laufzeitanalyse von speicher
-            serializer->setVal("name", name);
-            serializer->setVal("age", age);
-            serializer->setVal("address", address);
-            return serializer;
-        }
-    };
-
-    Customer *createCustomer() {
-        vector<int> plzs = {90, 80};
-        City *c = new City("Nuernberg", plzs);
-        Address *a = new Address(c, "Fuertherstr.");
-        Customer *cu = new Customer("Sven Steuermann", 34, a);
-        return cu;
-
-    }
-}
-
-using namespace demo;
 
 /*
 TEST(DtoAndSerializerTest, simpleSerializaiton) {
