@@ -53,6 +53,30 @@ namespace graphqlcpp {
             }
         }
 
+        void MySerializer::setVal(char *name, vector<int> values){
+            if (wasFieldRequested(name)) {
+                this->writer->appendValue(name, values);
+            }
+        }
+
+        void MySerializer::setVal(char *name, vector<string> values){
+            if (wasFieldRequested(name)) {
+                this->writer->appendValue(name, values);
+            }
+        }
+
+        void MySerializer::setVal(char *name, vector<bool> values){
+            if (wasFieldRequested(name)) {
+                this->writer->appendValue(name, values);
+            }
+        }
+
+        void MySerializer::setVectorWritersVal(char *name, vector<MyWriter*> writers){
+            if (wasFieldRequested(name)) {
+                this->writer->appendVectorWritersValue(name, writers);
+            }
+        }
+
         void MySerializer::setVal(char *name, IGraphQlDTO *val) {
             if (wasFieldRequested(name)) {
                 //TODO die zeile muss angepasst werden

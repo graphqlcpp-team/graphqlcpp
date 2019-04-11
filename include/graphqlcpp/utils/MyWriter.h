@@ -6,6 +6,10 @@
 #define GRAPHQLCPP_MYWRITER_H
 
 #include <string>
+#include <vector>
+#include "../../../include/graphqlcpp/utils/MyWriter.h"
+
+using namespace std;
 
 namespace graphqlcpp {
     namespace utils {
@@ -14,6 +18,9 @@ namespace graphqlcpp {
         class MyWriter {
         private:
             string data;
+
+            void replaceLastSeparator();
+
         public:
             MyWriter();
 
@@ -25,7 +32,16 @@ namespace graphqlcpp {
 
             void appendValue(char *name, MyWriter *writer);
 
+            void appendValue(char *name, vector<int> values);
+
+            void appendValue(char *name, vector<string> values);
+
+            void appendValue(char *name, vector<bool> values);
+
+            void appendVectorWritersValue(char *name, vector<MyWriter*> writers);
+
             string getJson();
+
         };
     }
 }
