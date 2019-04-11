@@ -88,6 +88,7 @@ namespace demo {
 
 using namespace demo;
 
+/*
 TEST(DtoAndSerializerTest, simpleSerializaiton) {
     Customer *c = createCustomer();
     MySerializer *ser = new MySerializer(nullptr);
@@ -95,7 +96,7 @@ TEST(DtoAndSerializerTest, simpleSerializaiton) {
     MyWriter *writer = ser->createJson();
     cout << writer->getJson();
 
-}
+}*/
 
 TEST(DtoAndSerializerTest, wasFieldRequested) {
     Customer *c = createCustomer();

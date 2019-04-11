@@ -45,6 +45,7 @@ TEST(julianstests, dumpAstAsJson){
 
 }
 
+/*
 TEST(LibTests, SchemaToAst) {
     char buff[FILENAME_MAX];
     GetCurrentDir(buff, FILENAME_MAX);
@@ -93,3 +94,4 @@ TEST(LibTests, SchemaToAst) {
 	free((void *)jsonSchemaString);
 	free((void *)jsonQueryString);
 }
+*/
