@@ -14,7 +14,7 @@ namespace graphqlcpp {
         class IGraphQlResolver {
         public:
             virtual char *getResolverName() = 0;
-            virtual IGraphQlDTO execute(ResolverArgument resolverArgs[])=0;
+            virtual IGraphQlDTO* execute(ResolverArgument resolverArgs[])=0;
         };
     }
 }
