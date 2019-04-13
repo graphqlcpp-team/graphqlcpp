@@ -14,23 +14,30 @@
 #include "validators/SchemaValidator.h"
 #include "validators/SchemaAstWraper.h"
 #include "../graphqlparser/Ast.h"
+#include "resolver/IGraphQlResolver.h"
+#include "resolver/ResolverManager.h"
+
 
 namespace graphqlcpp {
 namespace api {
 using namespace facebook::graphql::ast;
 using namespace validators;
 using namespace graphqlcpp::exceptions;
+using namespace resolver;
+
 
 class GraphqlCppApi {
 private:
 	SchemaAstWraper* schemaWraper = nullptr;
 	SchemaValidator* schemaValidator = nullptr;
 	QueryValidator* queryValidator = nullptr;
+	ResolverManager* resolverManager = nullptr;
 
 public:
 	GraphqlCppApi();
 	~GraphqlCppApi();
 	void setSchema(const char* schema);
+	void registerResolver(IGraphQlResolver* resolver);
 	const char* printSchemaAsJson();
 	const char* executeQuery(const char* query);
 
