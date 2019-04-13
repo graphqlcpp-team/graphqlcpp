@@ -300,7 +300,7 @@ namespace graphqlcpp {
                 try {
                     const StringValue *booleanValue = (StringValue *) value;
                     const char *argumentsValue = booleanValue->getValue();
-                    return ((int *) &argumentsValue[0]) == (int *) 0x1 || ((int *) &argumentsValue[0]) == (int *) 0x0;
+                    return ((int *) &argumentsValue[0]) == (int *) 0x1 || ((int *) &argumentsValue[0]) == (int *) nullptr;
                 }
                 catch (...) {
                     return false;
@@ -390,7 +390,7 @@ namespace graphqlcpp {
                                                       const char *argumentSchemaAstName, bool nullable) {
 
             //if there is no argument exit function with true
-            if (argumentsQueryAst == 0x0) {
+            if (argumentsQueryAst == nullptr) {
                 return nullptr;
             }
             const std::vector<std::unique_ptr<Argument>> &argumentsQueryAstValue =
