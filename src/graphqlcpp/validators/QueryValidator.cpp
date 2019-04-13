@@ -97,21 +97,26 @@ namespace graphqlcpp {
                     const GraphQLAstField *graphQlField =
                             (GraphQLAstField *) selectionSetArray[index].get();
                     const Field *field = (const Field *) graphQlField;
+                    this->schemaWrapper->validateNode(fatherFieldName, field);
                     const Name *namePointer = &field->getName();
                     const char *name = namePointer->getValue();
 
                     int countArguments = getCountOfArguments(field);
 
+                    if(!this->schemaWrapper->validateNode(fatherFieldName, field)) {
+                        return false;
+                    }
+
                     //call method which will validate if the node exists as child of the father node.
-                    if (!this->schemaWrapper->nodeExistsAsChildOf(name,
+                    /*if (!this->schemaWrapper->nodeExistsAsChildOf(name,
                                                                     fatherFieldName, countArguments)) {
                         return false;
                     }
 
-                    //iterate thorugh all arguments of the node and validate them
+                    //iterate through all arguments of the node and validate them
                     if (!iterateThroughArgumentsOfOneFiledAndValidate(field)) {
                         return false;
-                    }
+                    }*/
 
                     //get the next level of the AST, this means get the SelectionSet of this level
                     const SelectionSet *selectionSetOfField = field->getSelectionSet();
@@ -131,7 +136,7 @@ namespace graphqlcpp {
             const std::vector<std::unique_ptr<Argument>> *argumentPointer =
                     field->getArguments();
 
-            //if there is no argument exit function with true
+            //no argument
             if (argumentPointer == 0x0) {
                 return 0;
             }

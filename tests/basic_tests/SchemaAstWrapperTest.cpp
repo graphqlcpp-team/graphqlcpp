@@ -44,7 +44,7 @@ TEST(SchemaAstWrapperTest, IsOperationValid) {
 
 
 
-TEST(SchemaAstWrapperTest, IterateThroughSchemaAst) {
+/*TEST(SchemaAstWrapperTest, IterateThroughSchemaAst) {
 
 	const char *error = nullptr;
 	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} "
@@ -63,6 +63,8 @@ TEST(SchemaAstWrapperTest, IterateThroughSchemaAst) {
 	ASSERT_FALSE(saw->nodeExistsAsChildOf("user", "query", 0));
 	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "name", 1));
 }
+*/
+
 
 TEST(SchemaAstWrapperTest, CheckIfArgumentValid) {
 

@@ -44,6 +44,30 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
+        bool SchemaAstWraper::validateNode(const char* fatherFieldName, const Field * field) {
+                        const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
+            const char *fatherNodeName = nullptr;
+
+            if (strcmp(fatherFieldName, "query") == 0 || strcmp(fatherFieldName, "mutation") == 0) {
+                fatherNodeName = getFatherFieldNameIfFatherIsOperatiom(fatherFieldName);
+                if (fatherNodeName == nullptr) {
+                    //this part of code should never be reached!!!
+                    return false;
+                }
+            } else {
+                fatherNodeName = getFatherNodeNameIfFatherIsNotOperation(fatherFieldName, operationDefintion);
+                if (fatherNodeName == nullptr) {
+                    //this part of code should never be reached!!!
+                    return false;
+                }
+            }
+
+            //now the father node name as it is set in the Schema is known and can be compared to other AST nodes
+
+            return fieldExistsAsChildOfFatherNodeWithRigthArguments(field, operationDefintion, fatherNodeName);
+            //it does not exists as child of
+        }
+
         /**
          * This method checks if the operation is a operation which is set in the schema.
          * Iterates through every operation set in the schema AST. If the transfered operation does not exists
@@ -322,7 +346,7 @@ namespace graphqlcpp {
                 if (strcmp(argumentNameLoop, argumentName) == 0) {
                     //find argument with name
                     //now have to check the type and then convert the value
-                    return validateArgument(argument, value);
+                    //return validateArgument(argument, value);
                 }
                 indexArguments ++;
             }
@@ -343,24 +367,8 @@ namespace graphqlcpp {
          * @param value The pointer to the value of the query in the query AST.
          * @return True, if the data type of the argument is as expected, otherwise false.
          */
-        bool SchemaAstWraper::validateArgument(const unique_ptr <InputValueDefinition> &argument,
+        bool SchemaAstWraper::validateArgument(const char *valueType,
                                                const facebook::graphql::ast::Value *value) {
-            const Type &type = argument->getType();
-
-            const char *valueType;
-
-            char* nonNullTypeString = "NonNullType";
-            auto typeOfType = typeid(type).name();
-            if(strstr(typeOfType, nonNullTypeString) != nullptr) {
-                //Non null type
-                const NonNullType &nonNullType = (const NonNullType &) type;
-                const NamedType &nam = (NamedType &) nonNullType.getType();
-                valueType = nam.getName().getValue();
-            } else {
-                const NamedType &nam = (NamedType &) type;
-                valueType = nam.getName().getValue();
-            }
-
 
             if (strcmp(valueType, "ID") == 0 || strcmp(valueType, "String") == 0 || strcmp(valueType, "string") == 0) {
                 try {
@@ -406,9 +414,7 @@ namespace graphqlcpp {
                 try {
                     const StringValue * booleanValue = (StringValue *) value;
                     const char* argumentsValue = booleanValue->getValue();
-                    if(((int*)&argumentsValue[0]) == (int*)0x1 || ((int*)&argumentsValue[0]) == (int*)0x0)
-                        return true;
-                    return false;
+                    return ((int*)&argumentsValue[0]) == (int*)0x1 || ((int*)&argumentsValue[0]) == (int*)0x0;
                 }
                 catch(...) {
                     return false;
@@ -427,6 +433,98 @@ namespace graphqlcpp {
                 argumentLen = static_cast<int>(arguments->size());
             }
             return argumentLen == argumentCount;
+        }
+
+        bool SchemaAstWraper::fieldExistsAsChildOfFatherNodeWithRigthArguments(const Field *fieldQueryAst,
+                                                                               const std::vector<std::unique_ptr<Definition>> &operationDefinitions,
+                                                                               const char *fatherNodeName) {
+            for (auto operationDefinition = operationDefinitions.begin() + 1; operationDefinition != operationDefinitions.end(); ++operationDefinition) {
+                const GraphQLAstObjectTypeDefinition *graphQLAstObjectTypeDefinition =
+                        (const GraphQLAstObjectTypeDefinition *) operationDefinition->get();
+                const ObjectTypeDefinition *objectTypeDefinition =
+                        (const ObjectTypeDefinition *) graphQLAstObjectTypeDefinition;
+                const char *typeDefinitionName = objectTypeDefinition->getName().getValue();
+
+                if (strcmp(typeDefinitionName, fatherNodeName) == 0) {
+                    //in this AST node the child node must be located
+
+                    const vector<unique_ptr<FieldDefinition>> &fieldsSchemaAstChildNode = objectTypeDefinition->getFields();
+
+                    for (auto fieldSchemaAstChildNode = fieldsSchemaAstChildNode.begin(); fieldSchemaAstChildNode != fieldsSchemaAstChildNode.end(); ++fieldSchemaAstChildNode) {
+                        const char *fieldName = fieldSchemaAstChildNode->get()->getName().getValue();
+                        if (strcmp(fieldQueryAst->getName().getValue(), fieldName) == 0) {
+                            //the child node exists as node of father node
+                            return checkArguments(fieldQueryAst->getArguments(), fieldSchemaAstChildNode->get()->getArguments());
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        bool SchemaAstWraper::checkArguments(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
+                                             const std::vector<std::unique_ptr<InputValueDefinition>> *argumentsSchemaAst) {
+            if(argumentsQueryAst == nullptr & argumentsSchemaAst == nullptr)
+                return true;
+            for (auto argumentSchemaAst = argumentsSchemaAst->begin(); argumentSchemaAst != argumentsSchemaAst->end(); ++argumentSchemaAst) {
+
+                const Type &type = argumentSchemaAst->get()->getType();
+
+                const char *valueType;
+                bool nullable = false;
+
+                const char *nonNullTypeString = "NonNullType";
+                auto typeOfType = typeid(type).name();
+                if(strstr(typeOfType, nonNullTypeString) != nullptr) {
+                    //Non null type
+                    const NonNullType &nonNullType = (const NonNullType &) type;
+                    const NamedType &nam = (NamedType &) nonNullType.getType();
+                    valueType = nam.getName().getValue();
+                } else {
+                    nullable = true;
+                    const NamedType &nam = (NamedType &) type;
+                    valueType = nam.getName().getValue();
+                }
+
+                const char *argumentName = argumentSchemaAst->get()->getName().getValue();
+
+                const facebook::graphql::ast::Value * valueAstArgument = checkIfQueryContainsArgument(argumentsQueryAst, argumentName, nullable);
+
+                if (valueAstArgument == nullptr & nullable) {
+                    //no value but nullable, so everything allright
+                    return true;
+                    //find argument with name
+                    //now have to check the type and then convert the value
+
+                }
+                else if(valueAstArgument == nullptr) {
+                    //no value but not nullable, so an error
+                    return false;
+                }
+                if(!validateArgument(valueType, valueAstArgument))
+                    return false;
+            }
+            return true;
+        }
+
+        const Value *
+        SchemaAstWraper::checkIfQueryContainsArgument(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
+                                                      const char *argumentSchemaAstName, bool nullable) {
+
+            //if there is no argument exit function with true
+            if (argumentsQueryAst == 0x0) {
+                return nullptr;
+            }
+            const std::vector<std::unique_ptr<Argument>> &argumentsQueryAstValue =
+                    *argumentsQueryAst;
+
+            for (auto argumentQueryAst = argumentsQueryAstValue.begin(); argumentQueryAst != argumentsQueryAstValue.end(); ++argumentQueryAst) {
+                const char * nameArgumentQueryAst = argumentQueryAst->get()->getName().getValue();
+                if(strcmp(nameArgumentQueryAst, argumentSchemaAstName) == 0) {
+                    return &argumentQueryAst->get()->getValue();
+                }
+            }
+            return nullptr;
         }
     } /* namespace validators */
 } /* namespace graphqlcpp */

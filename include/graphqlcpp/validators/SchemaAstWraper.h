@@ -28,7 +28,7 @@ public:
 	bool nodeExistsAsChildOf(const char* childFieldName, const char* fatherFieldName, int argumentCount);
 	bool isOperationValid(const char* operation);
 	bool isArgumentValid(const char* name, const Value* value, const char* fieldName);
-
+	bool validateNode(const char* fatherFieldName, const Field * field);
 private:
     const Document* getDocument();
     const char* getOperationName(int index);
@@ -36,7 +36,7 @@ private:
     //const std::vector<std::unique_ptr<Definition>> getOperationDefinition();
 	bool iterateThroughArgumentsAndValidate(const std::vector <std::unique_ptr<InputValueDefinition>>* arguments,
 	        const char* argumentName, const Value* value);
-	bool validateArgument(const std::unique_ptr <InputValueDefinition> & argument, const Value* value);
+	bool validateArgument(const char *valueType, const Value* value);
 
     const char *getFatherFieldNameIfFatherIsOperatiom(const char *fatherFieldName);
 
@@ -47,6 +47,16 @@ private:
             const std::vector<std::unique_ptr < Definition>> & operationDefintion, const char* fatherNodeName, int argumentCount);
 
 	bool checkCountOfArguments(const std::vector<std::unique_ptr<InputValueDefinition>> *arguments, int argumentCount);
+
+	bool fieldExistsAsChildOfFatherNodeWithRigthArguments(const Field *fieldQueryAst,
+														  const std::vector<std::unique_ptr<Definition>> &operationDefinition,
+														  const char *fatherNodeName);
+
+	bool checkArguments(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
+						const std::vector<std::unique_ptr<InputValueDefinition>> *argumentsSchemaAst);
+
+	const Value * checkIfQueryContainsArgument(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
+											 const char *argumentSchemaAstName, bool nullable);
 };
 
 } /* namespace validators */
