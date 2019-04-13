@@ -7,6 +7,7 @@
 
 #include "../IGraphQlDTO.h"
 #include "ResolverArgument.h"
+#include <vector>
 
 namespace graphqlcpp {
     namespace resolver {
@@ -14,7 +15,8 @@ namespace graphqlcpp {
         class IGraphQlResolver {
         public:
             virtual char *getResolverName() = 0;
-            virtual IGraphQlDTO* execute(ResolverArgument resolverArgs[])=0;
+
+            virtual IGraphQlDTO *execute(const std::vector<ResolverArgument> &resolverArgs) = 0;
         };
     }
 }

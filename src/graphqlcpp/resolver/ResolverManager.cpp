@@ -17,3 +17,10 @@ void graphqlcpp::resolver::ResolverManager::registerResolver(graphqlcpp::resolve
     this->resolvers->insert(std::make_pair(resolver->getResolverName(),resolver));
 
 }
+
+graphqlcpp::api::IGraphQlDTO *
+graphqlcpp::resolver::ResolverManager::executeResolver(char *resolverName, const std::vector<ResolverArgument> &args) {
+    std::map<char *, IGraphQlResolver *> &rmap = *(this->resolvers);
+    IGraphQlResolver *resolver = rmap[resolverName];
+    return resolver->execute(args);
+}

@@ -5,6 +5,7 @@
 #include "../../include/graphqlcpp/resolver/ResolverManager.h"
 #include "../../include/graphqlcpp/resolver/IGraphQlResolver.h"
 #include "TestData.cpp"
+#include "vector"
 
 using namespace facebook::graphql;
 using namespace facebook::graphql::ast;
@@ -16,18 +17,30 @@ class MyResolver : public IGraphQlResolver
         return "allFilms";
     }
 
-    IGraphQlDTO *execute(ResolverArgument *resolverArgs) override {
+    IGraphQlDTO *execute(const std::vector<ResolverArgument> &resolverArgs) override {
         auto cu = demo::TestDataGenerator::createCustomer();
         return cu;
     }
 
 };
 
-TEST(ResManagerTest, simpleTest){
+TEST(ResolverManagerTest, registerResolver) {
     ResolverManager* rm = new ResolverManager();
     IGraphQlResolver* res = new MyResolver();
     rm->registerResolver(res);
 }
+
+TEST(ResolverManagerTest, executeResolver) {
+    ResolverManager *rm = new ResolverManager();
+    IGraphQlResolver *res = new MyResolver();
+    rm->registerResolver(res);
+    std::vector<ResolverArgument> args;
+    IGraphQlDTO *data = nullptr;
+    data = rm->executeResolver("allFilms", args);
+    ASSERT_TRUE(data != nullptr);
+}
+
+
 
 /*
 TEST(LibTests, SchemaToAst) {

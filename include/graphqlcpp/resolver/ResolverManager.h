@@ -7,10 +7,13 @@
 
 #include "IGraphQlResolver.h"
 #include "../IGraphQlDTO.h"
+#include "ResolverArgument.h"
 #include <map>
+#include <vector>
 
 namespace graphqlcpp {
     namespace resolver {
+        using namespace api;
         class ResolverManager {
         private:
             std::map<char*, IGraphQlResolver*>* resolvers;
@@ -21,7 +24,8 @@ namespace graphqlcpp {
 
         public:
             void registerResolver(IGraphQlResolver* resolver);
-//            IGraphQlDTO executeResolver(char* resolverName );
+
+            IGraphQlDTO *executeResolver(char *resolverName, const std::vector<ResolverArgument> &args);
 
         };
 
