@@ -42,12 +42,12 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
-        const char *GraphqlCppApi::executeQuery(const char *query) {
-            Node *requestAst = parseStringToAst(query);
+        const char *GraphqlCppApi::executeRequest(const char *request) {
+            Node *requestAst = parseStringToAst(request);
             if (checkIfRequestValid(requestAst)) {
                 return schemaWraper->printSchemaAsJson();
             }
-            return "query was invalid";
+            return "request was invalid";
         }
 
         Node *GraphqlCppApi::parseStringToAst(const char *str) {

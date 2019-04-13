@@ -23,7 +23,7 @@ TEST(GraphQlApiTest, dumpAstAsJson){
 
 
 	const char * result;
-	result = api->executeQuery(query);
+    result = api->executeRequest(query);
 
 	cout << result;
 
