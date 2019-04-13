@@ -28,6 +28,8 @@ public:
 	const char* getOperation(Node* rootNodeQuery);
 	QueryValidator(SchemaAstWraper* schemaWrapper);
 	bool isQueryValid(Node* rootNodeQuery);
+
+	int getCountOfArguments(const Field *field);
 };
 
 } /* namespace api */

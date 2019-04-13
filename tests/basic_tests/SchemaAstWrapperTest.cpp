@@ -56,10 +56,12 @@ TEST(SchemaAstWrapperTest, IterateThroughSchemaAst) {
 	//const char *jsonSchemaString = graphql_ast_to_json((const struct GraphQLAstNode *)ast.get());
 
 	SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
-	ASSERT_TRUE(saw->nodeExistsAsChildOf("user", "query"));
-	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "user"));
-	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "name"));
-	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "query"));
+	ASSERT_TRUE(saw->nodeExistsAsChildOf("user", "query", 1));
+	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "user", 0));
+	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "name", 0));
+	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "query", 0));
+	ASSERT_FALSE(saw->nodeExistsAsChildOf("user", "query", 0));
+	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "name", 1));
 }
 
 TEST(SchemaAstWrapperTest, CheckIfArgumentValid) {

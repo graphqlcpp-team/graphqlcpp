@@ -110,7 +110,7 @@ namespace graphqlcpp {
          * @param fatherFieldName The name of the father field.
          * @return True, if the node exists as child ot the father node.
          */
-        bool SchemaAstWraper::nodeExistsAsChildOf(const char *childFieldName, const char *fatherFieldName) {
+        bool SchemaAstWraper::nodeExistsAsChildOf(const char *childFieldName, const char *fatherFieldName, int argumentCount) {
 
             const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
             const char *fatherNodeName = nullptr;
@@ -131,7 +131,7 @@ namespace graphqlcpp {
 
             //now the father node name as it is set in the Schema is known and can be compared to other AST nodes
 
-            bool fieldExistsAsChild = fieldExistsAsChildOfFatherNode(childFieldName, operationDefintion, fatherNodeName);
+            bool fieldExistsAsChild = fieldExistsAsChildOfFatherNode(childFieldName, operationDefintion, fatherNodeName, argumentCount);
             if(fieldExistsAsChild)
                 return true;
 
@@ -152,7 +152,7 @@ namespace graphqlcpp {
          */
         bool SchemaAstWraper::fieldExistsAsChildOfFatherNode(const char *childFieldName,
                                                              const std::vector<std::unique_ptr<facebook::graphql::ast::Definition>> &operationDefintion,
-                                                             const char *fatherNodeName) {
+                                                             const char *fatherNodeName, int argumentCount) {
             int index = 1;
             for (auto j = operationDefintion.begin() + 1; j != operationDefintion.end(); ++j) {
                 auto operationDefinition = operationDefintion[index].get();
@@ -172,7 +172,7 @@ namespace graphqlcpp {
                         const char *fieldName = fields[indexFields].get()->getName().getValue();
                         if (strcmp(childFieldName, fieldName) == 0) {
                             //the child node exists as node of father node
-                            return true;
+                            return checkCountOfArguments(fields[indexFields].get()->getArguments(), argumentCount);
                         }
                         indexFields++;
                     }
@@ -312,8 +312,7 @@ namespace graphqlcpp {
                 const std::vector<std::unique_ptr<facebook::graphql::ast::InputValueDefinition>> *arguments,
                 const char *argumentName, const Value *value) {
             int indexArguments = 0;
-            vector<std::unique_ptr<facebook::graphql::ast::InputValueDefinition, std::default_delete<facebook::graphql::ast::InputValueDefinition>>, std::allocator<std::unique_ptr<facebook::graphql::ast::InputValueDefinition, std::default_delete<facebook::graphql::ast::InputValueDefinition>>>>::const_iterator j;
-            for (j = arguments->begin(); j != arguments->end(); ++j) {
+            for (auto j = arguments->begin(); j != arguments->end(); ++j) {
                 //const vector <unique_ptr<InputValueDefinition>> test = arguments[0];
                 //vector <unique_ptr<InputValueDefinition>> test;
                 //test = arguments[1];
@@ -416,6 +415,18 @@ namespace graphqlcpp {
                 }
             }
             return true;
+        }
+
+        bool SchemaAstWraper::checkCountOfArguments(const std::vector<std::unique_ptr<InputValueDefinition>> *arguments,
+                                                    int argumentCount) {
+            int argumentLen;
+            if(arguments == nullptr) {
+                argumentLen = 0;
+            }
+            else {
+                argumentLen = static_cast<int>(arguments->size());
+            }
+            return argumentLen == argumentCount;
         }
     } /* namespace validators */
 } /* namespace graphqlcpp */

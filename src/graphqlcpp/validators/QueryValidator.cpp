@@ -100,9 +100,11 @@ namespace graphqlcpp {
                     const Name *namePointer = &field->getName();
                     const char *name = namePointer->getValue();
 
+                    int countArguments = getCountOfArguments(field);
+
                     //call method which will validate if the node exists as child of the father node.
                     if (!this->schemaWrapper->nodeExistsAsChildOf(name,
-                                                                    fatherFieldName)) {
+                                                                    fatherFieldName, countArguments)) {
                         return false;
                     }
 
@@ -123,6 +125,19 @@ namespace graphqlcpp {
                 }
             }
             return true;
+        }
+
+        int QueryValidator::getCountOfArguments(const Field *field) {
+            const std::vector<std::unique_ptr<Argument>> *argumentPointer =
+                    field->getArguments();
+
+            //if there is no argument exit function with true
+            if (argumentPointer == 0x0) {
+                return 0;
+            }
+            const std::vector<std::unique_ptr<Argument>> &argumentArray =
+                    *argumentPointer;
+            return static_cast<int>(argumentArray.size());
         }
 
         /**
@@ -227,6 +242,8 @@ namespace graphqlcpp {
                     (const OperationDefinition *) operationDefinitionCasted;
             return operationDefinition;
         }
+
+
 
     }
 }

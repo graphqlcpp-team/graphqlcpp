@@ -25,7 +25,7 @@ private:
 public:
 	SchemaAstWraper(Node* schemaAstRootNode);
 	const char* printSchemaAsJson();
-	bool nodeExistsAsChildOf(const char* childFieldName, const char* fatherFieldName);
+	bool nodeExistsAsChildOf(const char* childFieldName, const char* fatherFieldName, int argumentCount);
 	bool isOperationValid(const char* operation);
 	bool isArgumentValid(const char* name, const Value* value, const char* fieldName);
 
@@ -44,8 +44,9 @@ private:
             const std::vector<std::unique_ptr<Definition>> & definition);
 
     bool fieldExistsAsChildOfFatherNode(const char *childFieldName,
-            const std::vector<std::unique_ptr < Definition>> & operationDefintion, const char* fatherNodeName);
+            const std::vector<std::unique_ptr < Definition>> & operationDefintion, const char* fatherNodeName, int argumentCount);
 
+	bool checkCountOfArguments(const std::vector<std::unique_ptr<InputValueDefinition>> *arguments, int argumentCount);
 };
 
 } /* namespace validators */
