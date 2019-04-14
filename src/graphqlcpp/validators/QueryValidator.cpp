@@ -38,7 +38,6 @@ namespace graphqlcpp {
          * Every node of the query (element of the query) will be validate against the schema.
          * It will check if a node of the query exists under the same father element as in the schema.
          * Every argument of the query will be validate against the schema.
-         * This is TODO
          * @param rootNodeQuery The root node of the query AST.
          * @return True, if the query is valid, otherwise false.
          * @throw InvalidQueryExceprion if the query is not valid.
@@ -53,9 +52,7 @@ namespace graphqlcpp {
             char nullChar = '\0';
             if (!iterateThroughSelectionSetsAndValidate(selectionSet, operation)) {
                 throw InvalidQueryException();
-                return false;
             }
-
             return true;
         }
 
@@ -69,9 +66,9 @@ namespace graphqlcpp {
          * If the node exists as a child of the father, every argument will be validate.
          * If the arguments are valid, the method will call itself recursivly to validate the whole AST.
          * The method walks through the AST in preorder.
-         * @param selectionSet The selection set which conna be validate.
+         * @param selectionSet The selection set which will be validate.
          * @param fatherFieldName The name of the father node element.
-         * @return True, if the two validation steps were successfull, otherwise false.
+         * @return True, if the two validation steps were successful, otherwise false.
          */
         bool QueryValidator::iterateThroughSelectionSetsAndValidate(
                 const SelectionSet *selectionSet, const char *fatherFieldName) {
@@ -117,16 +114,6 @@ namespace graphqlcpp {
             return true;
         }
 
-        /** bool QueryValidator::iterateThroughArgumentsOfOneFiledAndValidate(
-         * This method iterates through all arguments of a field and validates these.
-         * For every argument the name and the value are validate against the schema AST.
-         * There are different kinds of values which can be arguments. The differentiation must be done by the
-         * schemaAstWrapper. That's because in the schema the expected type of value is specified. It can be checked
-         * if it is possible to cast the value to the expected type of value.
-         * @param field The field of which the arguments should be validated.
-         * @return True, if no arguments are there or if the arguments are valid. Otherwise false.
-         */
-
         /**
          * This method gets the operation of the query.
          * @param rootNodeQuery The root node of the query AST.
@@ -170,10 +157,10 @@ namespace graphqlcpp {
             const auto *realNode = (const Document *) graphQlAstDocument;
             const std::vector<std::unique_ptr<Definition>> &definition =
                     realNode->getDefinitions();
-            std::unique_ptr<Definition, default_delete<Definition>>::pointer operationDefinitioNotCasted =
+            std::unique_ptr<Definition, default_delete<Definition>>::pointer operationDefinitionNotCasted =
                     definition[0].get();
             const auto *operationDefinitionCasted =
-                    (const GraphQLAstOperationDefinition *) operationDefinitioNotCasted;
+                    (const GraphQLAstOperationDefinition *) operationDefinitionNotCasted;
             const auto *operationDefinition =
                     (const OperationDefinition *) operationDefinitionCasted;
             return operationDefinition;

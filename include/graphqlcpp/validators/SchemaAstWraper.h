@@ -26,7 +26,7 @@ public:
     explicit SchemaAstWraper(Node* schemaAstRootNode);
 	const char* printSchemaAsJson();
 	bool isOperationValid(const char* operation);
-	bool validateNode(const char* fatherFieldName, const Field * field);
+	bool validateNode(const char* fatherFieldName, const Field * fieldQueryAst);
 private:
     const Document* getDocument();
     const SchemaDefinition* getSchemaDefinition();
@@ -45,7 +45,7 @@ private:
 						const std::vector<std::unique_ptr<InputValueDefinition>> *argumentsSchemaAst);
 
 	const Value * checkIfQueryContainsArgument(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
-											 const char *argumentSchemaAstName, bool nullable);
+											 const char *argumentSchemaAstName);
 };
 
 } /* namespace validators */

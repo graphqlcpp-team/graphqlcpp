@@ -43,29 +43,6 @@ TEST(SchemaAstWrapperTest, IsOperationValid) {
 }
 
 
-
-/*TEST(SchemaAstWrapperTest, IterateThroughSchemaAst) {
-
-	const char *error = nullptr;
-	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} "
-					  "type User { id: ID! name: Name age: Int} type Name {vorname: String name: String}";
-	std::unique_ptr<Node> schemaAst;
-	schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
-	ASSERT_TRUE(schemaAst);
-	ASSERT_FALSE(error);
-	//const char *jsonSchemaString = graphql_ast_to_json((const struct GraphQLAstNode *)ast.get());
-
-	SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
-	ASSERT_TRUE(saw->nodeExistsAsChildOf("user", "query", 1));
-	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "user", 0));
-	ASSERT_TRUE(saw->nodeExistsAsChildOf("name", "name", 0));
-	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "query", 0));
-	ASSERT_FALSE(saw->nodeExistsAsChildOf("user", "query", 0));
-	ASSERT_FALSE(saw->nodeExistsAsChildOf("name", "name", 1));
-}
-*/
-
-
 TEST(SchemaAstWrapperTest, CheckIfArgumentValid) {
 
     const char *error = nullptr;

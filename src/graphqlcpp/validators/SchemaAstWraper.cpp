@@ -44,7 +44,21 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
-        bool SchemaAstWraper::validateNode(const char *fatherFieldName, const Field *field) {
+        /**
+         * This method validate if a node exists as the child of the root node.
+         * If it exists as a child node, the arguments will be validated. It will be validated if all mandatory arguments
+         * have been set.
+         * It makes a difference whether the father node is the operation or not. That's because the types of the
+         * nodes differ. Therefore the if condition.
+         * First the field name is searched in the fields. If the name was found, the node name is extracted out of
+         * the AST. This name can be searched in the other nodes, if a field with this name exists. If this is the
+         * case the child field name exists as a child of the father node.
+         * Afterwards the arguments will be validated.
+         * @param fatherFieldName The name of the father field.
+         * @param fieldQueryAst The field in the query AST.
+         * @return True, if the node is valid.
+         */
+        bool SchemaAstWraper::validateNode(const char *fatherFieldName, const Field *fieldQueryAst) {
             const std::vector<std::unique_ptr<Definition>> &operationDefintion = getDocument()->getDefinitions();
             const char *fatherNodeName = nullptr;
 
@@ -63,9 +77,7 @@ namespace graphqlcpp {
             }
 
             //now the father node name as it is set in the Schema is known and can be compared to other AST nodes
-
-            return fieldExistsAsChildOfFatherNodeWithRigthArguments(field, operationDefintion, fatherNodeName);
-            //it does not exists as child of
+            return fieldExistsAsChildOfFatherNodeWithRigthArguments(fieldQueryAst, operationDefintion, fatherNodeName);
         }
 
         /**
@@ -123,33 +135,6 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
-        /** bool SchemaAstWraper::nodeExistsAsChildOf(const char *childFieldName, const char *fatherFieldName, int argumentCount)
-         * This method validate if a node exists as the child of the root node.
-         * Must make a difference whether the father node is the operation or not. That's because the types of the
-         * nodes differ.
-         * First the field name is searched in the fields. If the name was found, the node name is extracted out of
-         * the AST. This name can be searched in the other nodes, if a field with this name exists. If this is the
-         * case the child field name exists as a child of the father node.
-         * @param childFieldName The name of the child field.
-         * @param fatherFieldName The name of the father field.
-         * @return True, if the node exists as child ot the father node.
-         */
-
-
-        /** bool SchemaAstWraper::fieldExistsAsChildOfFatherNode(const char *childFieldName,
-                                                             const std::vector<std::unique_ptr<facebook::graphql::ast::Definition>> &operationDefintion,
-                                                             const char *fatherNodeName, int argumentCount)
-         * It's conna be check if the field name of the child from the query exists as a child of the node.
-         * Therefor there is an iteration through the child fields of the father node set in the query.
-         * To get to the father node there is a iteration through the AST necessary, this is the first for-loop.
-         * If we have the father node we can iterate thorugh its fields (the second for-loop).
-         * If a child node with the name of the child name set in the query is there, the function returns true.
-         * @param childFieldName The child field name set in the query. This is exactly the name as in the query.
-         * @param operationDefinitions The start point of the schema AST.
-         * @param fatherNodeName The father node name. This has to be extracted out of the AST.
-         * @return True if the field exists as child of the father node, otherwise false.
-         */
-
         /**
          * This function will get the fathers node name from the field name.
          * This function should be called if the father node name is not an operation as query or mutation.
@@ -162,7 +147,7 @@ namespace graphqlcpp {
         const char *SchemaAstWraper::getFatherNodeNameIfFatherIsNotOperation(const char *fatherFieldName,
                                                                              const std::vector<std::unique_ptr<facebook::graphql::ast::Definition>> &operationDefinitions) {
             const char *fatherNodeName = nullptr;
-            //begin with 1 because the first element is the operation and is treated seperatly.
+            //begin with 1 because the first element is the operation and is treated separate.
             for (auto operationDefinition = operationDefinitions.begin() + 1;
                  operationDefinition != operationDefinitions.end(); ++operationDefinition) {
                 const auto *graphQLAstObjectTypeDefinition =
@@ -178,7 +163,6 @@ namespace graphqlcpp {
                         const NamedType *namedType = (NamedType *) type;
                         fatherNodeName = namedType->getName().getValue();
                         break;
-
                     }
                 }
                 if (fatherNodeName != nullptr) {
@@ -213,31 +197,6 @@ namespace graphqlcpp {
             }
             return fatherNodeName;
         }
-
-        /**         bool SchemaAstWraper::isArgumentValid(const char *name, const Value *value, const char *fieldName) {
-         * This function validates if the argument is valid.
-         * To get the arguments of the field it is necessary to get the field node. Therefor the for-loop iterates
-         * through the schema AST (for loop). The start index is not the first node because this is the operation
-         * node and at this there can't be a argument set.
-         * After having the field node the list of all arguments will be transfered to the function which validates
-         * the argument against a list of arguments.
-         * @param name The name of the argument. In the query it's the part in brackets in front of the equal sign.
-         * @param value The value of the argument. In the query it's the part in brackets behind the equal sign.
-         * @param fieldName The name of the field to which the argument will be executed.
-         * @return True if the argument is valid, otherwise false.
-         */
-
-
-        /**         bool SchemaAstWraper::iterateThroughArgumentsAndValidate(
-
-         * Iterate through each argument of a field an check if the name of the argument is the same as in the query.
-         * If the name equals the function to validate the value of the argument will be called.
-         * @param arguments The list of the arguments of the field.
-         * @param argumentName The name of the argument set in the query. This is exactly the name as in the query.
-         * @param value The value of the argument set in the query.
-         * @return True if the argument exists and has the rigth type of value otherwise false.
-         */
-
 
         /**
          * This function validates if the value of the argument has the right data type.
@@ -309,7 +268,17 @@ namespace graphqlcpp {
             return true;
         }
 
-
+        /**
+         * It's conna be check if the field name of the child from the query exists as a child of the node.
+         * Therefor there is an iteration through the child fields of the father node set in the query.
+         * To get to the father node there is a iteration through the AST necessary, this is the first for-loop.
+         * If we have the father node we can iterate through its fields (the second for-loop).
+         * If a child node with the name of the child name set in the query is there, the arguments will be validated.
+         * @param fieldQueryAst The field of the query AST.
+         * @param operationDefinitions The start point of the schema AST.
+         * @param fatherNodeName The father node name. This has to be extracted out of the AST.
+         * @return True if the field exists as child of the father node and the argument(s) is valid, otherwise false.
+         */
         bool SchemaAstWraper::fieldExistsAsChildOfFatherNodeWithRigthArguments(const Field *fieldQueryAst,
                                                                                const std::vector<std::unique_ptr<Definition>> &operationDefinitions,
                                                                                const char *fatherNodeName) {
@@ -339,6 +308,16 @@ namespace graphqlcpp {
             return false;
         }
 
+        /**
+         * Iterate through each argument of the schema AST.
+         * Check if the argument is a 'NonNullType', because the call hierarchy differs.
+         * Foreach argument it will be checked if the query contains the argument. In case of a nullable type
+         * the argument does not have to be set.
+         * If the argument is in the query the arguments type will be validated.
+         * @param argumentsQueryAst The arguments of the query AST.
+         * @param argumentsSchemaAst The arguments of the schema AST.
+         * @return true, if all mandatory arguments are set and the type is correct.
+         */
         bool SchemaAstWraper::checkArguments(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
                                              const std::vector<std::unique_ptr<InputValueDefinition>> *argumentsSchemaAst) {
             if (argumentsQueryAst == nullptr & argumentsSchemaAst == nullptr)
@@ -366,15 +345,11 @@ namespace graphqlcpp {
                 const char *argumentName = argumentSchemaAst->getName().getValue();
 
                 const facebook::graphql::ast::Value *valueAstArgument = checkIfQueryContainsArgument(argumentsQueryAst,
-                                                                                                     argumentName,
-                                                                                                     nullable);
+                                                                                                     argumentName);
 
                 if (valueAstArgument == nullptr & nullable) {
                     //no value but nullable, so everything allright
-                    return true;
-                    //find argument with name
-                    //now have to check the type and then convert the value
-
+                    continue;
                 } else if (valueAstArgument == nullptr) {
                     //no value but not nullable, so an error
                     return false;
@@ -385,9 +360,17 @@ namespace graphqlcpp {
             return true;
         }
 
+        /**
+         * This function checks if the query AST contains the argument name of the schema AST.
+         * If there is no argument in the query AST a null pointer is returned.
+         * If the query AST does containing it, the value of the argument will be returned.
+         * @param argumentsQueryAst The arguments in the query AST.
+         * @param argumentSchemaAstName The name of the argument of the schema AST which should be validate againt the query.
+         * @return The value of the argument or nullptr if there is no argument in the query.
+         */
         const Value *
         SchemaAstWraper::checkIfQueryContainsArgument(const std::vector<std::unique_ptr<Argument>> *argumentsQueryAst,
-                                                      const char *argumentSchemaAstName, bool nullable) {
+                                                      const char *argumentSchemaAstName) {
 
             //if there is no argument exit function with true
             if (argumentsQueryAst == nullptr) {

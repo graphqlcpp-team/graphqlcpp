@@ -374,3 +374,24 @@ TEST(QueryValidatorTests, IsArgumentValidExpectNoErrorThreeAndTwoRequiredDiffren
 
     ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
 }
+
+
+TEST(QueryValidatorTests, IsArgumentValidExpectErrorThreeAndTwoRequiredOneWrongType) {
+    const char * error = nullptr;
+    const char * query = "query{user(id: 10 age: wuhu) {name}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    error = nullptr;
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: Int! name: String age: Int!): User} type User { id: Int! name: string age: Int}";
+    std::unique_ptr<Node> schemaAst;
+    schemaAst = parseStringWithExperimentalSchemaSupport(schema, &error);
+    ASSERT_TRUE(schemaAst);
+    ASSERT_FALSE(error);
+    SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
+    QueryValidator* qv = new QueryValidator(saw);
+
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+}
