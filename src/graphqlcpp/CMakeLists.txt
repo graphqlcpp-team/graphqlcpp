@@ -1,11 +1,14 @@
 include_directories(validators)
+include_directories(dispatcher)
+include_directories(resolver)
+include_directories(utils)
 
 set(SOURCE_FILES
         GraphqlCppApi.cpp
         validators/QueryValidator.cpp
         validators/SchemaAstWraper.cpp
         validators/SchemaValidator.cpp
-        ApiFactory.cpp utils/MySerializer.cpp utils/MyWriter.cpp resolver/ResolverArgument.cpp ../../include/graphqlcpp/resolver/ResolverArgument.h resolver/IGraphQlResolver.cpp ../../include/graphqlcpp/resolver/IGraphQlResolver.h resolver/ResolverManager.cpp ../../include/graphqlcpp/resolver/ResolverManager.h)
+        dispatcher/RequestDispatcher.cpp ApiFactory.cpp utils/MySerializer.cpp utils/MyWriter.cpp resolver/ResolverArgument.cpp ../../include/graphqlcpp/resolver/ResolverArgument.h resolver/IGraphQlResolver.cpp ../../include/graphqlcpp/resolver/IGraphQlResolver.h resolver/ResolverManager.cpp ../../include/graphqlcpp/resolver/ResolverManager.h ../RequestAstWrapper.cpp ../RequestAstWrapper.h ../ResolverInfo.cpp ../ResolverInfo.h)
 
 
 add_library(graphqlcpp STATIC ${SOURCE_FILES})
