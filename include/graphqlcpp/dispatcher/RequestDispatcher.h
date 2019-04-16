@@ -23,7 +23,7 @@ namespace graphqlcpp {
 
             //std::string getRes
         public:
-            RequestDispatcher(ResolverManager* resolverManager, SchemaAstWraper* schemaAstWraper);
+            RequestDispatcher(ResolverManager* resolverManager);
             std::string executeRequest(RequestAstWrapper* requestAst);
         };
 

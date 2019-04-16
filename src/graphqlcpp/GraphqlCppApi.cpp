@@ -23,6 +23,7 @@ namespace graphqlcpp {
         GraphqlCppApi::GraphqlCppApi() {
             this->schemaValidator = new SchemaValidator();
             this->resolverManager = new ResolverManager();
+            this->requestDispatcher = new RequestDispatcher(resolverManager);
         }
 
         void GraphqlCppApi::setSchema(const char *schema) {
@@ -45,7 +46,8 @@ namespace graphqlcpp {
         const char *GraphqlCppApi::executeRequest(const char *request) {
             Node *requestAst = parseStringToAst(request);
             if (checkIfRequestValid(requestAst)) {
-                return schemaWraper->printSchemaAsJson();
+                auto requestWrapper = new RequestAstWrapper(requestAst);
+                return this->requestDispatcher->executeRequest(requestWrapper)
             }
             return "request was invalid";
         }
@@ -83,6 +85,7 @@ namespace graphqlcpp {
             delete schemaValidator;
             delete queryValidator;
             delete resolverManager;
+            delete requestDispatcher;
         }
 
         void GraphqlCppApi::registerResolver(IGraphQlResolver *resolver) {

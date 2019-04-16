@@ -16,7 +16,7 @@
 #include "../graphqlparser/Ast.h"
 #include "resolver/IGraphQlResolver.h"
 #include "resolver/ResolverManager.h"
-
+#include "dispatcher/RequestDispatcher.h"
 
 namespace graphqlcpp {
 namespace api {
@@ -24,6 +24,7 @@ using namespace facebook::graphql::ast;
 using namespace validators;
 using namespace graphqlcpp::exceptions;
 using namespace resolver;
+using namespace dispatcher;
 
 
 class GraphqlCppApi {
@@ -32,6 +33,7 @@ private:
 	SchemaValidator* schemaValidator = nullptr;
 	QueryValidator* queryValidator = nullptr;
 	ResolverManager* resolverManager = nullptr;
+	RequestDispatcher* requestDispatcher = nullptr;
 
 public:
 	GraphqlCppApi();
