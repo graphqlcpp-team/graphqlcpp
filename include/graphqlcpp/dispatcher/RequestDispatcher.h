@@ -8,6 +8,7 @@
 #include "../IGraphQlDTO.h"
 #include "../resolver/ResolverManager.h"
 #include "../validators/SchemaAstWraper.h"
+#include "../RequestAstWrapper.h"
 
 namespace graphqlcpp {
     namespace dispatcher {
@@ -19,11 +20,11 @@ namespace graphqlcpp {
         private:
             ResolverManager* resolverManager;
             SchemaAstWraper* schemaAstWraper;
-            std::string getRequestType(Node* requestAst);
+
             //std::string getRes
         public:
             RequestDispatcher(ResolverManager* resolverManager, SchemaAstWraper* schemaAstWraper);
-            IGraphQlDTO* executeRequest(Node* requestAst);
+            std::string executeRequest(RequestAstWrapper* requestAst);
         };
 
     }

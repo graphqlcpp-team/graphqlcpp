@@ -16,7 +16,7 @@ namespace graphqlcpp {
         using namespace api;
         class ResolverManager {
         private:
-            std::map<char*, IGraphQlResolver*>* resolvers;
+            std::map<std::string, IGraphQlResolver*>* resolvers;
         public:
             ResolverManager();
 
@@ -25,7 +25,7 @@ namespace graphqlcpp {
         public:
             void registerResolver(IGraphQlResolver* resolver);
 
-            IGraphQlDTO *executeResolver(char *resolverName, const std::vector<ResolverArgument> &args);
+            IGraphQlDTO *executeResolver(std::string resolverName, const std::vector<ResolverArgument> &args);
 
         };
 

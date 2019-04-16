@@ -5,12 +5,18 @@
 #include "../../../include/graphqlcpp/dispatcher/RequestDispatcher.h"
 
 
-graphqlcpp::api::IGraphQlDTO *
-graphqlcpp::dispatcher::RequestDispatcher::executeRequest(facebook::graphql::ast::Node *requestAst) {
-    auto requestType = getRequestType(requestAst);
-    if(requestType == "query"){
-
+std::string
+graphqlcpp::dispatcher::RequestDispatcher::executeRequest(RequestAstWrapper *requestAstWrapper) {
+    auto operation = requestAstWrapper->extractOperation();
+    if (operation == "query") {
+        auto resolver = requestAstWrapper->extractResolver();
+        auto data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
+        auto serializer = new MySerializer(requestAstWrapper->extractSelectionSetForSerialisation());
+        std::string json = data->serialize(serializer)->createJson()->getJson();
+        delete serializer;
+        return json;
     }
+    return nullptr; //TODO use exception
 }
 
 graphqlcpp::dispatcher::RequestDispatcher::RequestDispatcher(graphqlcpp::resolver::ResolverManager *resolverManager,
@@ -20,6 +26,3 @@ graphqlcpp::dispatcher::RequestDispatcher::RequestDispatcher(graphqlcpp::resolve
 
 }
 
-std::string graphqlcpp::dispatcher::RequestDispatcher::getRequestType(facebook::graphql::ast::Node *requestAst) {
-    return "query";
-}
