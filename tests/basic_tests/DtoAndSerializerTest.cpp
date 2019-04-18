@@ -38,7 +38,7 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
     demo::Customer *c = demo::TestDataGenerator::createCustomer();
 
     const char * error = nullptr;
-    const char * query = "query{name, address {city {plz, name}}}";
+    const char * query = "query{name, addressFirst {city {plz, name}} age}";
     std::unique_ptr<Node> queryAst;
     queryAst = facebook::graphql::parseString(query, &error);
     Node * rootNodeQuery = queryAst.get();
@@ -52,6 +52,24 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
     cout << writer->getJson();
 }
 
+
+TEST(DtoAndSerializerTest, wasFieldRequestedTwoObjects) {
+    demo::Customer *c = demo::TestDataGenerator::createCustomer();
+
+    const char * error = nullptr;
+    const char * query = "query{addressSecond {city {plz, name}} name addressFirst {city {plz, name}} age}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = facebook::graphql::parseString(query, &error);
+    Node * rootNodeQuery = queryAst.get();
+    graphqlcpp::validators::SchemaAstWraper* saw = new graphqlcpp::validators::SchemaAstWraper(queryAst.get());
+    graphqlcpp::validators::QueryValidator* qv = new graphqlcpp::validators::QueryValidator(saw);
+    const SelectionSet *selectionSet = qv->getSelectionSet(rootNodeQuery);
+
+    MySerializer *ser = new MySerializer(selectionSet);
+    ser = c->serialize(ser);
+    MyWriter *writer = ser->createJson();
+    cout << writer->getJson();
+}
 
 TEST(DtoAndSerializerTest, intVectorTest) {
     vector<int> array = {1, 2, 3,4, 5};

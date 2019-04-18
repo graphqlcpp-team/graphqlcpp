@@ -60,20 +60,23 @@ namespace demo {
     private:
         char *name;
         int age;
-        Address *address;
+        Address *addressFirst;
+        Address *addressSecond;
     public:
-        Customer(char *name, int age, Address *address) {
+        Customer(char *name, int age, Address *addressFirst, Address *second) {
             this->name = name;
             this->age = age;
-            this->address = address;
+            this->addressFirst = addressFirst;
+            this->addressSecond = second;
         }
 
 
         MySerializer *serialize(MySerializer *serializer) override {
             //TODO prüfen ob key z.B name wieder freigegeben wird am ende -> lint / tools zur laufzeitanalyse von speicher
             serializer->setVal("name", name);
+            serializer->setVal("addressFirst", addressFirst);
             serializer->setVal("age", age);
-            serializer->setVal("address", address);
+            serializer->setVal("addressSecond", addressSecond);
             return serializer;
         }
     };
@@ -82,8 +85,10 @@ namespace demo {
     public:
         static Customer *createCustomer() {
             City *c = new City("Nuernberg", {90429} );
-            Address *a = new Address(c, "Fuertherstr.");
-            Customer *cu = new Customer("Sven Steuermann", 34, a);
+            City *c2 = new City("Munic", {90429} );
+            Address *a1 = new Address(c, "Fuertherstr.");
+            Address *a2 = new Address(c2, "Maximilanstr.");
+            Customer *cu = new Customer("Sven Steuermann", 34, a1, a2);
             return cu;
         }
     };

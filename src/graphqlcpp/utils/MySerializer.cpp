@@ -24,6 +24,7 @@ namespace graphqlcpp {
                 const GraphQLAstField *graphQlField =
                         (GraphQLAstField *) selectionSetArray[index].get();
                 const Field *field = (const Field *) graphQlField;
+
                 const Name *namePointer = &field->getName();
                 const char *name = namePointer->getValue();
                 if(strcmp(name, fieldName) == 0) {

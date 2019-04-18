@@ -23,7 +23,7 @@ namespace graphqlcpp {
     }
 
     graphqlcpp::ResolverInfo *graphqlcpp::RequestAstWrapper::extractResolver() {
-        auto selectionSet = extractSelectionSetForSerialisation();
+        auto selectionSet = getSelectionSet(this->queryRootNode);
         std::string name;
         if (selectionSet == nullptr) {
             //TODO throw exception
@@ -44,8 +44,7 @@ namespace graphqlcpp {
         const auto &selection = getSelectionSet(this->queryRootNode)->getSelections().at(0);
         //get the pointer to the field on place index in the list/array of Selections.
         // The field is a node of the AST.
-        const GraphQLAstField *graphQlField =
-                (GraphQLAstField *) selection.get();
+        const GraphQLAstField *graphQlField = (GraphQLAstField *) selection.get();
         auto field = (const Field *) graphQlField;
         return field->getSelectionSet();
     }

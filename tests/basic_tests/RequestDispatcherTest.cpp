@@ -18,7 +18,7 @@ TEST(RequestDispatcherTest, simpleTest) {
 
     auto dispatcher = new RequestDispatcher(resManager);
 
-    const char *query = "query{ user { name }}";
+    const char *query = "query{ user { name age }}";
     const char *error = nullptr;
     std::unique_ptr<Node> queryAst;
     queryAst = facebook::graphql::parseString(query, &error);
