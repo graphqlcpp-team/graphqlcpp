@@ -17,6 +17,7 @@
 #include "resolver/IGraphQlResolver.h"
 #include "resolver/ResolverManager.h"
 #include "dispatcher/RequestDispatcher.h"
+#include "RequestAstWrapper.h"
 
 namespace graphqlcpp {
 namespace api {

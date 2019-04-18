@@ -8,7 +8,30 @@ set(SOURCE_FILES
         validators/QueryValidator.cpp
         validators/SchemaAstWraper.cpp
         validators/SchemaValidator.cpp
-        dispatcher/RequestDispatcher.cpp ApiFactory.cpp utils/MySerializer.cpp utils/MyWriter.cpp resolver/ResolverArgument.cpp ../../include/graphqlcpp/resolver/ResolverArgument.h resolver/IGraphQlResolver.cpp ../../include/graphqlcpp/resolver/IGraphQlResolver.h resolver/ResolverManager.cpp ../../include/graphqlcpp/resolver/ResolverManager.h ../RequestAstWrapper.cpp ../RequestAstWrapper.h ../ResolverInfo.cpp ../ResolverInfo.h)
+        dispatcher/RequestDispatcher.cpp
+        ApiFactory.cpp
+        RequestAstWrapper.cpp
+        utils/MySerializer.cpp
+        utils/MyWriter.cpp
+        resolver/ResolverArgument.cpp
+        resolver/IGraphQlResolver.cpp
+        resolver/ResolverManager.cpp
+        resolver/ResolverInfo.cpp
+        ../../include/graphqlcpp/GraphqlCppApi.h
+        ../../include/graphqlcpp/validators/QueryValidator.h
+        ../../include/graphqlcpp/validators/SchemaAstWraper.h
+        ../../include/graphqlcpp/validators/SchemaValidator.h
+        ../../include/graphqlcpp/dispatcher/RequestDispatcher.h
+        ../../include/graphqlcpp/ApiFactory.h
+        ../../include/graphqlcpp/RequestAstWrapper.h
+        ../../include/graphqlcpp/utils/MySerializer.h
+        ../../include/graphqlcpp/utils/MyWriter.h
+        ../../include/graphqlcpp/resolver/ResolverArgument.h
+        ../../include/graphqlcpp/resolver/IGraphQlResolver.h
+        ../../include/graphqlcpp/resolver/ResolverManager.h
+        ../../include/graphqlcpp/resolver/ResolverInfo.h
+
+        )
 
 
 add_library(graphqlcpp STATIC ${SOURCE_FILES})

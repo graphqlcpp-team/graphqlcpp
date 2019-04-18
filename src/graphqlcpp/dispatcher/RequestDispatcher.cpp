@@ -7,11 +7,14 @@
 
 std::string
 graphqlcpp::dispatcher::RequestDispatcher::executeRequest(RequestAstWrapper *requestAstWrapper) {
-    auto operation = requestAstWrapper->extractOperation();
+    std::string operation = requestAstWrapper->extractOperation();
     if (operation == "query") {
-        auto resolver = requestAstWrapper->extractResolver();
-        auto data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
-        auto serializer = new MySerializer(requestAstWrapper->extractSelectionSetForSerialisation());
+        ResolverInfo * resolver;
+        resolver = requestAstWrapper->extractResolver();
+        IGraphQlDTO * data;
+        data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
+        MySerializer * serializer;
+        serializer = new MySerializer(requestAstWrapper->extractSelectionSetForSerialisation());
         std::string json = data->serialize(serializer)->createJson()->getJson();
         delete serializer;
         return json;
@@ -19,9 +22,7 @@ graphqlcpp::dispatcher::RequestDispatcher::executeRequest(RequestAstWrapper *req
     return nullptr; //TODO use exception
 }
 
-graphqlcpp::dispatcher::RequestDispatcher::RequestDispatcher(graphqlcpp::resolver::ResolverManager *resolverManager,
-                                                             graphqlcpp::validators::SchemaAstWraper *schemaAstWraper) {
-    this->schemaAstWraper = schemaAstWraper;
+graphqlcpp::dispatcher::RequestDispatcher::RequestDispatcher(graphqlcpp::resolver::ResolverManager *resolverManager) {
     this->resolverManager = resolverManager;
 
 }

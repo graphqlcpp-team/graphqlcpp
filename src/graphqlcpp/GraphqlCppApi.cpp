@@ -13,6 +13,7 @@
 #include "../../include/graphqlcpp/exceptions/InvalidSchemaException.h"
 #include "../../include/graphqlcpp/resolver/IGraphQlResolver.h"
 #include "../../include/graphqlcpp/resolver/ResolverManager.h"
+#include "../../include/graphqlcpp/RequestAstWrapper.h"
 
 namespace graphqlcpp {
     namespace api {
@@ -43,11 +44,13 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
+        //TODO auf string umstellen
         const char *GraphqlCppApi::executeRequest(const char *request) {
             Node *requestAst = parseStringToAst(request);
             if (checkIfRequestValid(requestAst)) {
-                auto requestWrapper = new RequestAstWrapper(requestAst);
-                return this->requestDispatcher->executeRequest(requestWrapper)
+//                graphqlcpp::RequestAstWrapper* requestWrapper = new graphqlcpp::RequestAstWrapper(requestAst);
+//                std::string response = this->requestDispatcher->executeRequest(requestWrapper);
+//                return response.c_str();
             }
             return "request was invalid";
         }

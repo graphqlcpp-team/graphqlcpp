@@ -3,6 +3,3 @@
 //
 
 #include "../../include/graphqlcpp/RequestAstWrapper.h"
-
-graphqlcpp::RequestAstWrapper::RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode) : queryRootNode(
-        queryRootNode) {}
