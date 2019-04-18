@@ -16,6 +16,8 @@ namespace graphqlcpp {
     class RequestAstWrapper {
     private:
         facebook::graphql::ast::Node* queryRootNode;
+
+        const char *getOperation(facebook::graphql::ast::Node *rootNodeQuery);
     public:
         RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode);
 
