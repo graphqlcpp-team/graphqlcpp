@@ -23,6 +23,8 @@ namespace graphqlcpp {
         const OperationDefinition *getOperationDefinition(Node *rootNodeQuery);
         const SelectionSet *getSelectionSet(Node *rootNodeQuery);
         const char* getNameOfSelectionSet(const SelectionSet *selectionSet);
+        std::vector<ResolverArgument*> *getArgumentsOfSelectionSet(const SelectionSet* selectionSet);
+        ResolverArgument* generateResolverArgument(const std::unique_ptr <Argument> &);
     public:
         RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode);
 

@@ -14,5 +14,5 @@ std::string graphqlcpp::ResolverInfo::getResolverName() {
 }
 
 std::vector<ResolverArgument *> *graphqlcpp::ResolverInfo::getArgs() {
-    return this->getArgs();
+    return this->args;
 }

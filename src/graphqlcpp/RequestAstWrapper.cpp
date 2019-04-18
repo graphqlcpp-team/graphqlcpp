@@ -16,6 +16,8 @@ namespace graphqlcpp {
     using namespace facebook::graphql;
     using namespace facebook::graphql::ast;
 
+    //TODO aufräumen new
+
     graphqlcpp::RequestAstWrapper::RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode) {
         this->queryRootNode = queryRootNode;
     }
@@ -23,12 +25,14 @@ namespace graphqlcpp {
     graphqlcpp::ResolverInfo *graphqlcpp::RequestAstWrapper::extractResolver() {
         auto selectionSet = extractSelectionSetForSerialisation();
         std::string name;
-        if (selectionSet != nullptr) {
-            name = std::string(getNameOfSelectionSet(selectionSet));
+        if (selectionSet == nullptr) {
+            //TODO throw exception
+            return nullptr;
         }
-
-        return new ResolverInfo(name, new vector<ResolverArgument*>());
+        name = std::string(getNameOfSelectionSet(selectionSet));
+        return new ResolverInfo(name, getArgumentsOfSelectionSet(selectionSet));
     }
+
 
 
     std::string graphqlcpp::RequestAstWrapper::extractOperation() {
@@ -39,6 +43,44 @@ namespace graphqlcpp {
         return getSelectionSet(this->queryRootNode);
     }
 
+    //URL: https://stackoverflow.com/questions/29049584/heap-corruption-trying-to-add-elements-to-existing-stdvector
+
+    std::vector<ResolverArgument*> *RequestAstWrapper::getArgumentsOfSelectionSet(const SelectionSet* selectionSet) {
+        std::vector<ResolverArgument*> *vectorResolverArguments = new std::vector<ResolverArgument*>();
+
+        const auto &selection = selectionSet->getSelections().at(0);
+        //get the pointer to the field on place index in the list/array of Selections.
+        // The field is a node of the AST.
+        const GraphQLAstField *graphQlField =
+                (GraphQLAstField *) selection.get();
+        auto field = (const Field *) graphQlField;
+        auto arguments = field->getArguments();
+        for(const auto &argument : *arguments) {
+            vectorResolverArguments->push_back(generateResolverArgument(argument));
+        }
+        return vectorResolverArguments;
+    }
+
+    ResolverArgument* RequestAstWrapper::generateResolverArgument(const unique_ptr <Argument> & argument) {
+        const char* name = argument->getName().getValue();
+        const Value* value = &argument->getValue();
+
+        const StringValue *booleanValue = (StringValue *) value;
+        const char *argumentsValue = booleanValue->getValue();
+        std::string args;
+        if( ((int *) &argumentsValue[0]) == (int *) 0x1) {
+            args = "true";
+        }
+        else if(((int *) &argumentsValue[0]) == (int *)nullptr) {
+            args = "false";
+        }
+        else {
+            args = argumentsValue;
+        }
+
+        ResolverArgument* resolverArgument = new ResolverArgument(name, args);
+        return  resolverArgument;
+    }
 
     const char *graphqlcpp::RequestAstWrapper::getNameOfSelectionSet(const SelectionSet *selectionSet) {
         //getSelections return a vector pointers to Selections. The vector can

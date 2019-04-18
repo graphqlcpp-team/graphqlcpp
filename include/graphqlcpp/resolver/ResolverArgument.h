@@ -5,18 +5,19 @@
 #ifndef GRAPHQLCPP_RESOLVERARGUMENT_H
 #define GRAPHQLCPP_RESOLVERARGUMENT_H
 
+#include <string>
 
 class ResolverArgument {
 private:
-    char* argName;
+    std::string argName;
     //TODO: typiesieren
-    void* argValue;
+    std::string argValue;
 public:
-    ResolverArgument(char *argName, void *argValue);
+    ResolverArgument(std::string argName, std::string argValue);
 
-    char *getArgName() const;
+    std::string getArgName() const;
 
-    void *getArgValue() const;
+    std::string getArgValue() const;
 
 };
 
