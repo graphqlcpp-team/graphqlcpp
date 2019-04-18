@@ -7,6 +7,7 @@
 #include "gtest/gtest.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
 
+
 using namespace graphqlcpp::dispatcher;
 
 TEST(RequestDispatcherTest, simpleTest) {
