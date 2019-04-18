@@ -16,6 +16,7 @@
 #include "../graphqlparser/Ast.h"
 #include "resolver/IGraphQlResolver.h"
 #include "resolver/ResolverManager.h"
+#include <string>
 
 
 namespace graphqlcpp {
@@ -32,11 +33,16 @@ private:
 	SchemaValidator* schemaValidator = nullptr;
 	QueryValidator* queryValidator = nullptr;
 	ResolverManager* resolverManager = nullptr;
+    std::string introspectionSchema = "";
 
 public:
 	GraphqlCppApi();
 	~GraphqlCppApi();
 	void setSchema(const char* schema);
+
+    void setGraphiQlIntrospectionSchema(std::string introspectionSchema);
+
+    std::string getGraphiQlIntrospectionSchema();
 	void registerResolver(IGraphQlResolver* resolver);
 	const char* printSchemaAsJson();
 	const char* executeQuery(const char* query);
