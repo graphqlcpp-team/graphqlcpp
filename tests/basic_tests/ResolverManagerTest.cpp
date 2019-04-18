@@ -22,6 +22,10 @@ using namespace graphqlcpp::resolver;
 
 TEST(ResolverManager, IsOperationValid) {
     ResolverManager* rm = new ResolverManager();
-    rm->registerResolver(GraphQlResolverTestData::ResolverOne);
+    GraphQlResolverTestData::ResolverOne * resolver = new GraphQlResolverTestData::ResolverOne();
+    rm->registerResolver(resolver);
+    IGraphQlDTO *dto = rm->executeResolver("user", nullptr);
+    IGraphQlDTO *validateDto = resolver->getDtoObject();
+    ASSERT_EQ(dto, validateDto);
 }
 

@@ -24,14 +24,22 @@ using namespace graphqlcpp::resolver;
 namespace GraphQlResolverTestData {
 
     class ResolverOne : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
     public:
+
+        IGraphQlDTO * getDtoObject() {
+            return dtoObject;
+        }
+
         char *getResolverName() override {
             return "user";
         }
 
         //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-            return demo::TestDataGenerator::createCustomer();
+            dtoObject = demo::TestDataGenerator::createCustomer();
+            return dtoObject;
         }
 
     };

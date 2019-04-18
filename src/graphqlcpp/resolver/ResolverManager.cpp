@@ -10,7 +10,7 @@ graphqlcpp::resolver::ResolverManager::ResolverManager() {
 
 graphqlcpp::resolver::ResolverManager::~ResolverManager() {
     delete this->resolvers;
-
+    //TODO inhalt der map deleten. Oder funtioniert das automatisch?
 }
 
 void graphqlcpp::resolver::ResolverManager::registerResolver(graphqlcpp::resolver::IGraphQlResolver *resolver) {
