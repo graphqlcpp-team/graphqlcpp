@@ -38,7 +38,6 @@ namespace graphqlcpp {
          * Every node of the query (element of the query) will be validate against the schema.
          * It will check if a node of the query exists under the same father element as in the schema.
          * Every argument of the query will be validate against the schema.
-         * This is TODO
          * @param rootNodeQuery The root node of the query AST.
          * @return True, if the query is valid, otherwise false.
          * @throw InvalidQueryExceprion if the query is not valid.
@@ -46,17 +45,14 @@ namespace graphqlcpp {
          */
         bool QueryValidator::isQueryValid(Node *rootNodeQuery) {
             const char *operation = getOperation(rootNodeQuery);
-            if(!this->schemaWrapper->isOperationValid(operation)) {
+            if (!this->schemaWrapper->isOperationValid(operation)) {
                 throw WrongOperationException();
             }
             const SelectionSet *selectionSet = getSelectionSet(rootNodeQuery);
             char nullChar = '\0';
-            //const char *firstElement = &nullChar;
             if (!iterateThroughSelectionSetsAndValidate(selectionSet, operation)) {
                 throw InvalidQueryException();
-                return false;
             }
-
             return true;
         }
 
@@ -70,44 +66,38 @@ namespace graphqlcpp {
          * If the node exists as a child of the father, every argument will be validate.
          * If the arguments are valid, the method will call itself recursivly to validate the whole AST.
          * The method walks through the AST in preorder.
-         * @param selectionSet The selection set which conna be validate.
+         * @param selectionSet The selection set which will be validate.
          * @param fatherFieldName The name of the father node element.
-         * @return True, if the two validation steps were successfull, otherwise false.
+         * @return True, if the two validation steps were successful, otherwise false.
          */
         bool QueryValidator::iterateThroughSelectionSetsAndValidate(
                 const SelectionSet *selectionSet, const char *fatherFieldName) {
 
             //exit condition: if there is no SelectionSet exit the recursion
             // The selectionSet is the access to the next level of the AST
-            if (selectionSet != 0x0) {
+            if (selectionSet != nullptr) {
 
                 //getSelections return a vector pointers to Selections. The vector can
                 // be seen as an array, over which we will iterate. Over the index we
                 // can access all Selections.
-                const std::vector<std::unique_ptr<Selection>> &selectionSetArray =
+                const std::vector<std::unique_ptr<Selection>> &selections =
                         selectionSet->getSelections();
 
                 //a separate counter variable because the counter variable i of the for-loop is of type pointer.
-                int index = 0;
-                for (auto i = selectionSetArray.begin(); i != selectionSetArray.end();
-                     ++i) {
+                for (const auto &selection : selections) {
 
                     //get the pointer to the field on place index in the list/array of Selections.
                     // The field is a node of the AST.
                     const GraphQLAstField *graphQlField =
-                            (GraphQLAstField *) selectionSetArray[index].get();
-                    const Field *field = (const Field *) graphQlField;
+                            (GraphQLAstField *) selection.get();
+                    auto field = (const Field *) graphQlField;
+                    this->schemaWrapper->validateNode(fatherFieldName, field);
                     const Name *namePointer = &field->getName();
                     const char *name = namePointer->getValue();
 
                     //call method which will validate if the node exists as child of the father node.
-                    if (!this->schemaWrapper->nodeExistsAsChildOf(name,
-                                                                    fatherFieldName)) {
-                        return false;
-                    }
-
-                    //iterate thorugh all arguments of the node and validate them
-                    if (!iterateThroughArgumentsOfOneFiledAndValidate(field)) {
+                    //iterate through all arguments of the node and validate them
+                    if (!this->schemaWrapper->validateNode(fatherFieldName, field)) {
                         return false;
                     }
 
@@ -119,59 +109,7 @@ namespace graphqlcpp {
                                                                 name)) {
                         return false;
                     }
-                    index++;
                 }
-            }
-            return true;
-        }
-
-        /**
-         * This method iterates through all arguments of a field and validates these.
-         * For every argument the name and the value are validate against the schema AST.
-         * There are different kinds of values which can be arguments. The differentiation must be done by the
-         * schemaAstWrapper. That's because in the schema the expected type of value is specified. It can be checked
-         * if it is possible to cast the value to the expected type of value.
-         * @param field The field of which the arguments should be validated.
-         * @return True, if no arguments are there or if the arguments are valid. Otherwise false.
-         */
-        bool QueryValidator::iterateThroughArgumentsOfOneFiledAndValidate(
-                const Field *field) {
-
-            //getArguments return a Pointer. Will need the value of this address to get one argument
-            // from the list of arguments.
-            const std::vector<std::unique_ptr<Argument>> *argumentPointer =
-                    field->getArguments();
-
-            //if there is no argument exit function with true
-            if (argumentPointer == 0x0) {
-                return true;
-            }
-            const std::vector<std::unique_ptr<Argument>> &argumentArray =
-                    *argumentPointer;
-
-            //a separate counter variable because the counter variable j of the for-loop is of type pointer.
-            int index = 0;
-            for (auto j = argumentArray.begin(); j != argumentArray.end(); ++j) {
-
-                //pointer to the argument on place index in the list/array of arguments
-                std::unique_ptr<Argument, default_delete<Argument>>::pointer argumentPointerOneField =
-                        argumentArray[index].get();
-                const GraphQLAstArgument *graphQLAstArgument =
-                        (GraphQLAstArgument *) argumentPointerOneField;
-                const Argument *argument = (const Argument *) graphQLAstArgument;
-
-                const Name *nameA = &argument->getName();
-                const char *nameAr = nameA->getValue();
-                const Value &valueA = argument->getValue();
-                const Value *pointerA = &valueA;
-                if(!this->schemaWrapper->isArgumentValid(nameAr, pointerA, field->getName().getValue())) {
-                    return false;
-                }
-                //call method to validate the argument
-
-                cout << "Name Argument: " << nameAr << endl;
-
-                index++;
             }
             return true;
         }
@@ -197,9 +135,9 @@ namespace graphqlcpp {
         const SelectionSet *QueryValidator::getSelectionSet(Node *rootNodeQuery) {
             const OperationDefinition *operationDefinition = getOperationDefinition(
                     rootNodeQuery);
-            const GraphQLAstSelectionSet *graphQlSelectionSet =
+            auto graphQlSelectionSet =
                     (const struct GraphQLAstSelectionSet *) &operationDefinition->getSelectionSet();
-            const SelectionSet *selectionSet =
+            const auto *selectionSet =
                     (const SelectionSet *) graphQlSelectionSet;
             return selectionSet;
         }
@@ -214,19 +152,18 @@ namespace graphqlcpp {
          */
         const OperationDefinition *QueryValidator::getOperationDefinition(
                 Node *rootNodeQuery) {
-            const GraphQLAstDocument *graphQlAstDocument =
+            const auto *graphQlAstDocument =
                     (const struct GraphQLAstDocument *) rootNodeQuery;
-            const Document *realNode = (const Document *) graphQlAstDocument;
+            const auto *realNode = (const Document *) graphQlAstDocument;
             const std::vector<std::unique_ptr<Definition>> &definition =
                     realNode->getDefinitions();
-            std::unique_ptr<Definition, default_delete<Definition>>::pointer operationDefinitioNotCasted =
+            std::unique_ptr<Definition, default_delete<Definition>>::pointer operationDefinitionNotCasted =
                     definition[0].get();
-            const GraphQLAstOperationDefinition *operationDefinitionCasted =
-                    (const GraphQLAstOperationDefinition *) operationDefinitioNotCasted;
-            const OperationDefinition *operationDefinition =
+            const auto *operationDefinitionCasted =
+                    (const GraphQLAstOperationDefinition *) operationDefinitionNotCasted;
+            const auto *operationDefinition =
                     (const OperationDefinition *) operationDefinitionCasted;
             return operationDefinition;
         }
-
     }
 }

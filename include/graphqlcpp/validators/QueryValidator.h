@@ -19,14 +19,12 @@ using namespace facebook::graphql::ast;
 class QueryValidator {
 private:
 	SchemaAstWraper* schemaWrapper;
-	void iterateThroughAST(Node* rootNodeQuery);
 	bool iterateThroughSelectionSetsAndValidate(const SelectionSet* selectionSet, const char* fatherFieldName);
 	const OperationDefinition* getOperationDefinition(Node *rootNodeQuery);
-	bool iterateThroughArgumentsOfOneFiledAndValidate(const Field* field);
 public:
 	const SelectionSet* getSelectionSet(Node* rootNodeQuery);
 	const char* getOperation(Node* rootNodeQuery);
-	QueryValidator(SchemaAstWraper* schemaWrapper);
+	explicit QueryValidator(SchemaAstWraper* schemaWrapper);
 	bool isQueryValid(Node* rootNodeQuery);
 };
 
