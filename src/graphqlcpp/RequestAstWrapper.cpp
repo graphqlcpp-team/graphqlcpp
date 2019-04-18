@@ -40,7 +40,13 @@ namespace graphqlcpp {
     }
 
     const SelectionSet *graphqlcpp::RequestAstWrapper::extractSelectionSetForSerialisation() {
-        return getSelectionSet(this->queryRootNode);
+        const auto &selection = getSelectionSet(this->queryRootNode)->getSelections().at(0);
+        //get the pointer to the field on place index in the list/array of Selections.
+        // The field is a node of the AST.
+        const GraphQLAstField *graphQlField =
+                (GraphQLAstField *) selection.get();
+        auto field = (const Field *) graphQlField;
+        return field->getSelectionSet();
     }
 
     //URL: https://stackoverflow.com/questions/29049584/heap-corruption-trying-to-add-elements-to-existing-stdvector
