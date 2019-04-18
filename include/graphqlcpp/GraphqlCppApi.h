@@ -16,6 +16,8 @@
 #include "../graphqlparser/Ast.h"
 #include "resolver/IGraphQlResolver.h"
 #include "resolver/ResolverManager.h"
+#include <string>
+
 #include "dispatcher/RequestDispatcher.h"
 #include "RequestAstWrapper.h"
 
@@ -35,11 +37,16 @@ private:
 	QueryValidator* queryValidator = nullptr;
 	ResolverManager* resolverManager = nullptr;
 	RequestDispatcher* requestDispatcher = nullptr;
+    std::string introspectionSchema = "";
 
 public:
 	GraphqlCppApi();
 	~GraphqlCppApi();
 	void setSchema(const char* schema);
+
+    void setGraphiQlIntrospectionSchema(std::string introspectionSchema);
+
+    std::string getGraphiQlIntrospectionSchema();
 	void registerResolver(IGraphQlResolver* resolver);
 	const char* printSchemaAsJson();
 

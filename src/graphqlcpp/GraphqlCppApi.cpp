@@ -94,6 +94,14 @@ namespace graphqlcpp {
         void GraphqlCppApi::registerResolver(IGraphQlResolver *resolver) {
             this->resolverManager->registerResolver(resolver);
         }
+
+        void GraphqlCppApi::setGraphiQlIntrospectionSchema(std::string introspectionSchema) {
+            this->introspectionSchema = introspectionSchema;
+        }
+
+        std::string GraphqlCppApi::getGraphiQlIntrospectionSchema() {
+            return this->introspectionSchema;
+        }
     }
 } /* namespace graphqlcppapi */
 

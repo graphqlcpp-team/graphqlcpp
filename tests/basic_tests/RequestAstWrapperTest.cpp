@@ -41,4 +41,102 @@ TEST(RequestAstWrapperTest, IsOperationValid) {
     ASSERT_TRUE(operation == "query");
 }
 
+TEST(RequestAstWrapperTest, IsSelectionSetNotNull) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:1){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
 
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    const SelectionSet *operation = raw->extractSelectionSetForSerialisation();
+    ASSERT_FALSE(operation == nullptr);
+}
+
+TEST(RequestAstWrapperTest, IsResolverNameValid) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:1){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo * resolverInfo;
+    resolverInfo = raw->extractResolver();
+    std::string name = resolverInfo->getResolverName();
+    ASSERT_TRUE(name == "user");
+}
+
+TEST(RequestAstWrapperTest, AreResolverArgumentsValid) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:1){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo * resolverInfo;
+    resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
+    ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "1");
+}
+
+TEST(RequestAstWrapperTest, AreResolverArgumentsValidTrueValue) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:true){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo * resolverInfo;
+    resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
+    ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "true");
+}
+
+TEST(RequestAstWrapperTest, AreResolverArgumentsValidFalseValue) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:false){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo * resolverInfo;
+    resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
+    ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "false");
+}
+
+TEST(RequestAstWrapperTest, AreResolverArgumentsValidTwoValues) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:false age:22){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo * resolverInfo;
+    resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
+    ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "false");
+    ASSERT_TRUE(resolverArguments->at(1)->getArgName() == "age");
+    ASSERT_TRUE(resolverArguments->at(1)->getArgValue() == "22");
+}
