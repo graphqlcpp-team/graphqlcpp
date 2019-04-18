@@ -20,8 +20,5 @@ using namespace graphqlcpp::resolver;
 #include <stdio.h>  /* defines FILENAME_MAX */
 
 
-TEST(ResolverManager, IsOperationValid) {
-    ResolverManager* rm = new ResolverManager();
-    rm->registerResolver(GraphQlResolverTestData::ResolverOne);
-}
+
 

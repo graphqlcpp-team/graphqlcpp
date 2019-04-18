@@ -30,7 +30,8 @@ namespace graphqlcpp {
             return nullptr;
         }
         name = std::string(getNameOfSelectionSet(selectionSet));
-        return new ResolverInfo(name, getArgumentsOfSelectionSet(selectionSet));
+        auto arguments = getArgumentsOfSelectionSet(selectionSet);
+        return new ResolverInfo(name, arguments);
     }
 
 
@@ -55,6 +56,9 @@ namespace graphqlcpp {
                 (GraphQLAstField *) selection.get();
         auto field = (const Field *) graphQlField;
         auto arguments = field->getArguments();
+        if (arguments == nullptr) {
+            return nullptr;
+        }
         for(const auto &argument : *arguments) {
             vectorResolverArguments->push_back(generateResolverArgument(argument));
         }

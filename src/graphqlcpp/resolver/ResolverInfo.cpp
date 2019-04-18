@@ -5,8 +5,8 @@
 #include "../../../include/graphqlcpp/resolver/ResolverInfo.h"
 
 graphqlcpp::ResolverInfo::ResolverInfo(std::string resolverName, std::vector<ResolverArgument *> *args) {
-this->resolverName = resolverName;
-this->args = args;
+    this->resolverName = resolverName;
+    this->args = args;
 }
 
 std::string graphqlcpp::ResolverInfo::getResolverName() {

@@ -88,6 +88,23 @@ TEST(RequestAstWrapperTest, AreResolverArgumentsValid) {
     ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "1");
 }
 
+
+TEST(RequestAstWrapperTest, AreResolverArgumentsValidWithNoValue) {
+    const char *error = nullptr;
+    const char *query = "query{user {name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo *resolverInfo;
+    resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> *resolverArguments = resolverInfo->getArgs();
+    ASSERT_EQ(resolverArguments, nullptr);
+}
+
 TEST(RequestAstWrapperTest, AreResolverArgumentsValidTrueValue) {
     const char *error = nullptr;
     const char *query = "query{user(id:true){name age}}";

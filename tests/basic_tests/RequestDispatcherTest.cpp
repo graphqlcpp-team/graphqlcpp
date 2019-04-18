@@ -6,15 +6,19 @@
 
 #include "gtest/gtest.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
-
+#include "GraphQlResolverTestData.cpp"
+#include <iostream>
 
 using namespace graphqlcpp::dispatcher;
 
 TEST(RequestDispatcherTest, simpleTest) {
     auto resManager = new ResolverManager();
+
+    resManager->registerResolver(new GraphQlResolverTestData::ResolverOne());
+
     auto dispatcher = new RequestDispatcher(resManager);
 
-    const char *query = "query{user(id:1) {name: hallo}}";
+    const char *query = "query{ user { name }}";
     const char *error = nullptr;
     std::unique_ptr<Node> queryAst;
     queryAst = facebook::graphql::parseString(query, &error);
@@ -26,7 +30,7 @@ TEST(RequestDispatcherTest, simpleTest) {
 
     string res;
     res = dispatcher->executeRequest(wrapper);
-
+    std::cout << "Result is: " << res;
 
     delete resManager;
     delete dispatcher;
