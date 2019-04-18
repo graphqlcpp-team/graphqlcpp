@@ -41,4 +41,32 @@ TEST(RequestAstWrapperTest, IsOperationValid) {
     ASSERT_TRUE(operation == "query");
 }
 
+TEST(RequestAstWrapperTest, IsSelectionSetNotNull) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:1){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
 
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    const SelectionSet *operation = raw->extractSelectionSetForSerialisation();
+    ASSERT_FALSE(operation == nullptr);
+}
+
+TEST(RequestAstWrapperTest, IsResolverNameValid) {
+    const char *error = nullptr;
+    const char *query = "query{user(id:1){name age}}";
+    std::unique_ptr<Node> queryAst;
+    queryAst = parseString(query, &error);
+    ASSERT_TRUE(query);
+    ASSERT_FALSE(error);
+
+    Node *node = queryAst.get();
+    RequestAstWrapper *raw = new RequestAstWrapper(node);
+    ResolverInfo * resolverInfo;
+    resolverInfo = raw->extractResolver();
+    std::string name = resolverInfo->getResolverName();
+    ASSERT_TRUE(name == "user");
+}

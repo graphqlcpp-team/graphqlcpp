@@ -4,13 +4,15 @@
 
 #include "../../../include/graphqlcpp/resolver/ResolverInfo.h"
 
-const std::string &graphqlcpp::ResolverInfo::getResolverName() const {
-    return resolverName;
+graphqlcpp::ResolverInfo::ResolverInfo(std::string resolverName, std::vector<ResolverArgument *> *args) {
+this->resolverName = resolverName;
+this->args = args;
 }
 
-const std::vector<ResolverArgument> &graphqlcpp::ResolverInfo::getArgs() const {
-    return args;
+std::string graphqlcpp::ResolverInfo::getResolverName() {
+    return this->resolverName;
 }
 
-graphqlcpp::ResolverInfo::ResolverInfo(const std::string &resolverName, const std::vector<ResolverArgument> &args)
-        : resolverName(resolverName), args(args) {}
+std::vector<ResolverArgument *> *graphqlcpp::ResolverInfo::getArgs() {
+    return this->getArgs();
+}

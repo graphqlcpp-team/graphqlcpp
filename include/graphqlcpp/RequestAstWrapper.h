@@ -13,17 +13,22 @@
 
 namespace graphqlcpp {
 
+    using namespace facebook::graphql::ast;
+
     class RequestAstWrapper {
     private:
         facebook::graphql::ast::Node* queryRootNode;
 
-        const char *getOperation(facebook::graphql::ast::Node *rootNodeQuery);
+        const char *getOperation(Node *rootNodeQuery);
+        const OperationDefinition *getOperationDefinition(Node *rootNodeQuery);
+        const SelectionSet *getSelectionSet(Node *rootNodeQuery);
+        const char* getNameOfSelectionSet(const SelectionSet *selectionSet);
     public:
         RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode);
 
         ResolverInfo* extractResolver();
         std::string extractOperation();
-        facebook::graphql::ast::SelectionSet* extractSelectionSetForSerialisation();
+        const SelectionSet* extractSelectionSetForSerialisation();
     };
 
 }
