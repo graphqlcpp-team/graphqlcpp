@@ -12,10 +12,3 @@ type User {
 	name: string!
 	age: Int
 }
-
-
-query{
-    user(id:10) {
-        name
-    }
-}
