@@ -45,12 +45,12 @@ namespace graphqlcpp {
         }
 
         //TODO auf string umstellen
-        const char *GraphqlCppApi::executeRequest(const char *request) {
+        string GraphqlCppApi::executeRequest(const char *request) {
             Node *requestAst = parseStringToAst(request);
             if (checkIfRequestValid(requestAst)) {
-//                graphqlcpp::RequestAstWrapper* requestWrapper = new graphqlcpp::RequestAstWrapper(requestAst);
-//                std::string response = this->requestDispatcher->executeRequest(requestWrapper);
-//                return response.c_str();
+                graphqlcpp::RequestAstWrapper* requestWrapper = new graphqlcpp::RequestAstWrapper(requestAst);
+                std::string response = this->requestDispatcher->executeRequest(requestWrapper);
+                return response.c_str();
             }
             return "request was invalid";
         }

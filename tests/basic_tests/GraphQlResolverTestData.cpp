@@ -43,4 +43,25 @@ namespace GraphQlResolverTestData {
         }
 
     };
+
+    class UserResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+
+        IGraphQlDTO * getDtoObject() {
+            return dtoObject;
+        }
+
+        char *getResolverName() override {
+            return "user";
+        }
+
+        //TODO beachte es werden die serialisierten objekte nicht gelöscht
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            dtoObject = demo::TestDataGenerator::createUser();
+            return dtoObject;
+        }
+
+    };
 }

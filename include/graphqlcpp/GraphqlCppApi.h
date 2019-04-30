@@ -50,7 +50,7 @@ public:
 	void registerResolver(IGraphQlResolver* resolver);
 	const char* printSchemaAsJson();
 
-    const char *executeRequest(const char *request);
+    string executeRequest(const char *request);
 
 private:
 	bool checkIfRequestValid(Node* rootNodeRequest);

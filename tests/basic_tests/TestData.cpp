@@ -81,6 +81,23 @@ namespace demo {
         }
     };
 
+    class User : public IGraphQlDTO {
+    private:
+        int id;
+        char* name;
+    public:
+        User(char* name,int id) {
+            this->name = name;
+            this->id = id;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("id", this->id);
+            serializer->setVal("name", this->name);
+            return serializer;
+        }
+    };
+
     class TestDataGenerator {
     public:
         static Customer *createCustomer() {
@@ -90,6 +107,9 @@ namespace demo {
             Address *a2 = new Address(c2, "Maximilanstr.");
             Customer *cu = new Customer("Sven Steuermann", 34, a1, a2);
             return cu;
+        }
+        static User *createUser(){
+            return new User("Herbert", 1);
         }
     };
 
