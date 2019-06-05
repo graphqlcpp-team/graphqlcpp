@@ -50,9 +50,8 @@ TEST(GraphqlApiTest, all){
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
-    const char *response = (api->executeRequest(query)).c_str();;
-    const char *expected = "{\"name\":\"Herbert\"}";
+    const char *response = (api->executeRequest(query)).c_str();
+    const char *expected = "{\"data\":{\"name\":\"Herbert\"}}";
     ASSERT_STREQ(expected, response);
-
 }
 
