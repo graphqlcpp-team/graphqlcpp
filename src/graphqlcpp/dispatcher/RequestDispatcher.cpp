@@ -23,9 +23,9 @@ graphqlcpp::dispatcher::RequestDispatcher::executeRequest(graphqlcpp::RequestAst
         MySerializer * serializer;
         serializer = new MySerializer(requestAstWrapper->extractSelectionSetForSerialisation());
         std::string json = data->serialize(serializer)->createJson()->getJson();
-        //std::string jsonWithData = "{\"data\":" + json + "}";
+        std::string jsonWithData = "{\"data\":" + json + "}";
         delete serializer;
-        return json;
+        return jsonWithData;
     }
     return nullptr; //TODO use exception
 }
