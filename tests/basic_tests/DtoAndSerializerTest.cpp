@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../include/graphqlcpp/utils/MySerializerRoot.h"
 #include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
@@ -35,7 +35,7 @@ TEST(DtoAndSerializerTest, simpleSerializaiton) {
 
 
 TEST(DtoAndSerializerTest, wasFieldRequested) {
-    demo::Customer *c = demo::TestDataGenerator::createCustomer();
+    IGraphQlDTO *c = demo::TestDataGenerator::createCustomer();
 
     const char * error = nullptr;
     const char * query = "query{name, addressFirst {city {plz, name}} age}";
@@ -46,7 +46,7 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
     graphqlcpp::validators::QueryValidator* qv = new graphqlcpp::validators::QueryValidator(saw);
     const SelectionSet *selectionSet = qv->getSelectionSet(rootNodeQuery);
 
-    MySerializer *ser = new MySerializer(selectionSet);
+    MySerializer *ser = new MySerializerRoot(selectionSet);
     ser = c->serialize(ser);
     MyWriter *writer = ser->createJson();
     cout << writer->getJson();
@@ -54,7 +54,7 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
 
 
 TEST(DtoAndSerializerTest, wasFieldRequestedTwoObjects) {
-    demo::Customer *c = demo::TestDataGenerator::createCustomer();
+    IGraphQlDTO *c = demo::TestDataGenerator::createCustomer();
 
     const char * error = nullptr;
     const char * query = "query{addressSecond {city {plz, name}} name addressFirst {city {plz, name}} age}";
@@ -65,7 +65,7 @@ TEST(DtoAndSerializerTest, wasFieldRequestedTwoObjects) {
     graphqlcpp::validators::QueryValidator* qv = new graphqlcpp::validators::QueryValidator(saw);
     const SelectionSet *selectionSet = qv->getSelectionSet(rootNodeQuery);
 
-    MySerializer *ser = new MySerializer(selectionSet);
+    MySerializer *ser = new MySerializerRoot(selectionSet);
     ser = c->serialize(ser);
     MyWriter *writer = ser->createJson();
     cout << writer->getJson();

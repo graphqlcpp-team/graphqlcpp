@@ -18,14 +18,12 @@ graphqlcpp::dispatcher::RequestDispatcher::executeRequest(graphqlcpp::RequestAst
     if (operation == "query") {
         ResolverInfo * resolver;
         resolver = requestAstWrapper->extractResolver();
-        IGraphQlDTO * data;
-        data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
+        IGraphQlDTO* data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
         MySerializer * serializer;
         serializer = new MySerializerRoot(requestAstWrapper->extractSelectionSetForSerialisation());
         std::string json = data->serialize(serializer)->createJson()->getJson();
-        std::string jsonWithData = "{\"data\":" + json + "}";
         delete serializer;
-        return jsonWithData;
+        return json;
     }
     return nullptr; //TODO use exception
 }

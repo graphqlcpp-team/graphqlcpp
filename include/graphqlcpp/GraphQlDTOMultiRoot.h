@@ -14,9 +14,9 @@ namespace graphqlcpp {
         using namespace std;
         class GraphQlDTOMultiRoot : public IGraphQlDTO {
         private:
-            vector<IGraphQlDTO> content;
+            vector<IGraphQlDTO*> content;
         public:
-            GraphQlDTOMultiRoot(vector<IGraphQlDTO> content){
+            GraphQlDTOMultiRoot(vector<IGraphQlDTO*> content){
                 this->content = content;
             }
             MySerializer *serialize(MySerializer *serializer) override {

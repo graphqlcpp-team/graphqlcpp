@@ -6,7 +6,7 @@
 #include <cstring>
 
 bool graphqlcpp::utils::MySerializerRoot::wasFieldRequested(char *fieldName) {
-    return strcmp(fieldName, "data") != 0;
+    return strcmp("data",fieldName)==0;
 }
 
 graphqlcpp::utils::MySerializerRoot::MySerializerRoot(

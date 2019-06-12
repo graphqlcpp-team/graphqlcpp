@@ -7,6 +7,7 @@
 //#include "jsoncpp/json/reader.h"
 #include "../../include/graphqlcpp/utils/MySerializer.h";
 #include "../../include/graphqlcpp/IGraphQlDTO.h";
+#include "../../include/graphqlcpp/GraphQlDTOSingleRoot.h";
 #include "../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
 #include "../../include/graphqlcpp/validators/QueryValidator.h"
@@ -100,7 +101,7 @@ namespace demo {
 
     class TestDataGenerator {
     public:
-        static Customer *createCustomer() {
+        static IGraphQlDTO *createCustomer() {
             City *c = new City("Nuernberg", {90429} );
             City *c2 = new City("Munic", {90429} );
             Address *a1 = new Address(c, "Fuertherstr.");
@@ -108,7 +109,7 @@ namespace demo {
             Customer *cu = new Customer("Sven Steuermann", 34, a1, a2);
             return cu;
         }
-        static User *createUser(){
+        static IGraphQlDTO *createUser(){
             return new User("Herbert", 1);
         }
     };

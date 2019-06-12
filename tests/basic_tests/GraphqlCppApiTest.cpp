@@ -56,14 +56,12 @@ TEST(GraphqlApiTest, all){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
-    demo::User *user = demo::TestDataGenerator::createUser();
-
     const char * query = "query{user(id:1) {name}}";
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
     string response = (api->executeRequest(query));
-    string expected = "{\"data\":{\"name\":\"Herbert\"}}";
+    string expected = R"({"data":{"name":"Herbert"}})";
     checkIfStrEqu(expected, response);
 }
 
