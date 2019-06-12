@@ -3,39 +3,13 @@
 //
 
 #include "../../../include/graphqlcpp/utils/MySerializer.h"
-#include "../../graphqlparser/c/GraphQLAst.h"
+#include "../../../include/graphqlcpp/utils/MySerializerChild.h"
+
 #include <cstring>
 
 
 namespace graphqlcpp {
     namespace utils {
-        bool MySerializer::wasFieldRequested(char *fieldName) {
-
-            const std::vector<std::unique_ptr<Selection>> &selectionSetArray =
-                    this->selectionSetOfCurrentLevel->getSelections();
-
-            //a separate counter variable because the counter variable i of the for-loop is of type pointer.
-            int index = 0;
-            for (auto i = selectionSetArray.begin(); i != selectionSetArray.end();
-                 ++i) {
-
-                //get the pointer to the field on place index in the list/array of Selections.
-                // The field is a node of the AST.
-                const GraphQLAstField *graphQlField =
-                        (GraphQLAstField *) selectionSetArray[index].get();
-                const Field *field = (const Field *) graphQlField;
-
-                const Name *namePointer = &field->getName();
-                const char *name = namePointer->getValue();
-                if(strcmp(name, fieldName) == 0) {
-                    this->selectionSetNextLevelOfCurrentField = field->getSelectionSet();
-                    return true;
-                }
-                index ++;
-            }
-            return false;
-        }
-
         void MySerializer::setVal(char *name, int val) {
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, val);
@@ -78,7 +52,7 @@ namespace graphqlcpp {
                 const SelectionSet *childLevelSelectionSet = this->selectionSetNextLevelOfCurrentField;
                 for(auto v : val){
 
-                    MySerializer *childNodeSerializer = new MySerializer(childLevelSelectionSet);
+                    MySerializer *childNodeSerializer = new MySerializerChild(childLevelSelectionSet);
                     childNodeSerializer = v->serialize(childNodeSerializer);
                     writerVec.push_back(childNodeSerializer->createJson());
                 }
@@ -92,7 +66,7 @@ namespace graphqlcpp {
                 //TODO die zeile muss angepasst werden
                 const SelectionSet *childLevelSelectionSet = this->selectionSetNextLevelOfCurrentField;
 
-                MySerializer *childNodeSerializer = new MySerializer(childLevelSelectionSet);
+                MySerializer *childNodeSerializer = new MySerializerChild(childLevelSelectionSet);
                 childNodeSerializer = val->serialize(childNodeSerializer);
                 this->writer->appendValue(name, childNodeSerializer->createJson());
                 delete childNodeSerializer;

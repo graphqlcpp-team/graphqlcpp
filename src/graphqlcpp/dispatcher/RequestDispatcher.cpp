@@ -5,7 +5,7 @@
 #include "../../../include/graphqlcpp/dispatcher/RequestDispatcher.h"
 #include "../../../include/graphqlcpp/resolver/ResolverInfo.h"
 #include "../../../include/graphqlcpp/IGraphQlDTO.h"
-#include "../../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../../include/graphqlcpp/utils/MySerializerRoot.h"
 #include "../../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../../include/graphqlcpp/RequestAstWrapper.h"
 #include <string>
@@ -21,7 +21,7 @@ graphqlcpp::dispatcher::RequestDispatcher::executeRequest(graphqlcpp::RequestAst
         IGraphQlDTO * data;
         data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
         MySerializer * serializer;
-        serializer = new MySerializer(requestAstWrapper->extractSelectionSetForSerialisation());
+        serializer = new MySerializerRoot(requestAstWrapper->extractSelectionSetForSerialisation());
         std::string json = data->serialize(serializer)->createJson()->getJson();
         std::string jsonWithData = "{\"data\":" + json + "}";
         delete serializer;
