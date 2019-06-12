@@ -44,9 +44,7 @@ namespace graphqlcpp {
 
             void setVal(char *name, vector<bool> val);
 
-            void setVal(char *name, vector<IGraphQlDTO> val)
-
-            void setVectorWritersVal(char *name, vector<MyWriter*> writers);
+            void setVal(char *name, vector<IGraphQlDTO*> val);
 
             MyWriter *createJson();
         };

@@ -19,7 +19,7 @@ namespace graphqlcpp {
             return data.append("}");
         }
 
-        void MyWriter::replaceLastSeparator() {
+        void MyWriter::removeLastChar() {
             data = data.substr(0, data.length() - 1);
         }
 
@@ -83,7 +83,7 @@ namespace graphqlcpp {
                 index++;
             }
             data.append(tmpStringRepresentation);
-            replaceLastSeparator();
+            removeLastChar();
             data.append("]");
             data.append(separator);
         }
@@ -104,7 +104,7 @@ namespace graphqlcpp {
                 index++;
             }
             data.append(tmpStringRepresentation);
-            replaceLastSeparator();
+            removeLastChar();
             data.append("]");
             data.append(separator);
         }
@@ -135,13 +135,13 @@ namespace graphqlcpp {
                 index++;
             }
             data.append(tmpStringRepresentation);
-            replaceLastSeparator();
+            removeLastChar();
             data.append("]");
             data.append(separator);
 
         }
 
-        void MyWriter::appendVectorWritersValue(char *name, vector<MyWriter*> writers) {
+        void MyWriter::appendValue(char *name, vector<MyWriter*> writers) {
             string sTrue = "true";
             string sFalse = "false";
             data.append("\"");
@@ -149,20 +149,13 @@ namespace graphqlcpp {
             data.append("\"");
             data.append(":");
             data.append("[");
-            std::string tmpStringRepresentation;
-            int index = 0;
-            for (auto value = writers.begin(); value != writers.end(); ++value) {
-                MyWriter * asdf;
-                asdf = writers[index];
-                tmpStringRepresentation += writers[index]->getJson();
 
-                if (value != writers.end()) {
-                    tmpStringRepresentation += separator;
-                }
-                index++;
+            for(MyWriter* writer : writers){
+                data.append(writer->getJson());
+                data.append(",");
+                delete writer;
             }
-            data.append(tmpStringRepresentation);
-            replaceLastSeparator();
+            removeLastChar();
             data.append("]");
             data.append(separator);
         }

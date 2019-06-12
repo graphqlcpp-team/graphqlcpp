@@ -7,7 +7,6 @@
 
 #include <string>
 #include <vector>
-#include "../../../include/graphqlcpp/utils/MyWriter.h"
 
 using namespace std;
 
@@ -19,7 +18,7 @@ namespace graphqlcpp {
         private:
             string data;
 
-            void replaceLastSeparator();
+            void removeLastChar();
 
         public:
             MyWriter();
@@ -38,7 +37,7 @@ namespace graphqlcpp {
 
             void appendValue(char *name, vector<bool> values);
 
-            void appendVectorWritersValue(char *name, vector<MyWriter*> writers);
+            void appendValue(char *name, vector<MyWriter*> writers);
 
             string getJson();
 

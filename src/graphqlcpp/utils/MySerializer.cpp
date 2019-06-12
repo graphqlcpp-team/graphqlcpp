@@ -72,9 +72,18 @@ namespace graphqlcpp {
             }
         }
 
-        void MySerializer::setVectorWritersVal(char *name, vector<MyWriter*> writers){
+        void MySerializer::setVal(char *name, vector<IGraphQlDTO*> val){
             if (wasFieldRequested(name)) {
-                this->writer->appendVectorWritersValue(name, writers);
+                vector<MyWriter*> writerVec = vector<MyWriter*>(val.size());
+                const SelectionSet *childLevelSelectionSet = this->selectionSetNextLevelOfCurrentField;
+                for(auto v : val){
+
+                    MySerializer *childNodeSerializer = new MySerializer(childLevelSelectionSet);
+                    childNodeSerializer = v->serialize(childNodeSerializer);
+                    writerVec.push_back(childNodeSerializer->createJson());
+                }
+
+                this->writer->appendValue(name, writerVec);
             }
         }
 

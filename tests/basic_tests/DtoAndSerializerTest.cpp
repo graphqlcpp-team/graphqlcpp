@@ -124,7 +124,7 @@ TEST(DtoAndSerializerTest, writerVectorTest) {
     writerArray.push_back(intWriter);
 
     MyWriter *writer = new  MyWriter();
-    writer->appendVectorWritersValue("name", writerArray);
+    writer->appendValue("name", writerArray);
     cout << writer->getJson();
     EXPECT_TRUE(writer->getJson() ==  "{\"name\":[{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]},{\"name\":[true,false,true,false,true]},{\"name\":[1,2,3,4,5]}]}");
 }
