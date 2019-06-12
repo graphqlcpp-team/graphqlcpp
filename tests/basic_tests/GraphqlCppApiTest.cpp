@@ -40,6 +40,18 @@ TEST(GraphqlApiTest, setSchema) {
     delete api;
 }
 
+void checkIfStrEqu(const string &expected, const string &actual){
+    char expCstr[expected.size() + 1];
+    strcpy(expCstr, expected.c_str());
+
+    char actCstr[actual.size() + 1];
+    strcpy(actCstr, actual.c_str());
+
+    ASSERT_STREQ(expCstr, actCstr);
+}
+
+
+
 TEST(GraphqlApiTest, all){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
@@ -50,9 +62,8 @@ TEST(GraphqlApiTest, all){
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
-    const char *response = (api->executeRequest(query)).c_str();;
-    const char *expected = "{\"name\":\"Herbert\"}";
-    ASSERT_STREQ(expected, response);
-
+    string response = (api->executeRequest(query));
+    string expected = "{\"name\":\"Herbert\"}";
+    checkIfStrEqu(expected, response);
 }
 
