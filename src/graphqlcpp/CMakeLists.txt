@@ -30,7 +30,8 @@ set(SOURCE_FILES
         ../../include/graphqlcpp/resolver/IGraphQlResolver.h
         ../../include/graphqlcpp/resolver/ResolverManager.h
         ../../include/graphqlcpp/resolver/ResolverInfo.h
-
+        ../../include/graphqlcpp/GraphQlDTOMultiRoot.h
+        ../../include/graphqlcpp/GraphQlDTOSingleRoot.h
         )
 
 
