@@ -42,20 +42,20 @@ private:
 public:
 	GraphqlCppApi();
 	~GraphqlCppApi();
-	void setSchema(const char* schema);
+	void setSchema(const std::string &schema);
 
     void setGraphiQlIntrospectionSchema(std::string introspectionSchema);
 
     std::string getGraphiQlIntrospectionSchema();
 	void registerResolver(IGraphQlResolver* resolver);
-	const char* printSchemaAsJson();
+	//const char* printSchemaAsJson();
 
-    string executeRequest(const char *request);
+    string executeRequest(const std::string &request);
 
 private:
 	bool checkIfRequestValid(Node* rootNodeRequest);
-	Node* parseStringToAst(const char* str);
-	Node* parseSchemaStringToSchemaAst(const char* str);
+	Node* parseStringToAst(const std::string &str);
+	Node* parseSchemaStringToSchemaAst(const std::string &str);
 };
 
 } /* namespace graphqlcppapi */

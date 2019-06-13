@@ -14,6 +14,8 @@
 #include "../../include/graphqlcpp/resolver/IGraphQlResolver.h"
 #include "../../include/graphqlcpp/resolver/ResolverManager.h"
 #include "../../include/graphqlcpp/RequestAstWrapper.h"
+#include <string>
+#include <cstring>
 
 namespace graphqlcpp {
     namespace api {
@@ -21,13 +23,23 @@ namespace graphqlcpp {
         using namespace graphqlcpp::exceptions;
         using namespace graphqlcpp::resolver;
 
+        //TODO place this function in string utils class
+        char* toCharArr(const std::string & str){
+            char char_array[str.length() + 1];
+
+            // copying the contents of the
+            // string to char array
+            std::strcpy(char_array, str.c_str());
+            return char_array;
+        }
+
         GraphqlCppApi::GraphqlCppApi() {
             this->schemaValidator = new SchemaValidator();
             this->resolverManager = new ResolverManager();
             this->requestDispatcher = new RequestDispatcher(resolverManager);
         }
 
-        void GraphqlCppApi::setSchema(const char *schema) {
+        void GraphqlCppApi::setSchema(const std::string &schema) {
             auto rootNode = parseSchemaStringToSchemaAst(schema);
             if (schemaValidator->checkIfSchemaIsValid(rootNode)) {
                 schemaWraper = new SchemaAstWraper(rootNode);
@@ -44,8 +56,8 @@ namespace graphqlcpp {
             throw NoSchemaSetException();
         }
 
-        //TODO auf string umstellen
-        string GraphqlCppApi::executeRequest(const char *request) {
+
+        string GraphqlCppApi::executeRequest(const std::string &request) {
             Node *requestAst = parseStringToAst(request);
             if (checkIfRequestValid(requestAst)) {
                 graphqlcpp::RequestAstWrapper* requestWrapper = new graphqlcpp::RequestAstWrapper(requestAst);
@@ -55,33 +67,33 @@ namespace graphqlcpp {
             return "request was invalid";
         }
 
-        Node *GraphqlCppApi::parseStringToAst(const char *str) {
+        Node *GraphqlCppApi::parseStringToAst(const std::string &str) {
             //TODO check error string
             const char *error = nullptr;
             std::unique_ptr<Node> queryAst;
-            queryAst = parseString(str, &error);
+            queryAst = parseString(toCharArr(str), &error);
             //const char* err = "";
             //auto sAst = parseString(str, &err);
             Node *rootNode = queryAst.release();
             return rootNode;
         }
 
-        Node *GraphqlCppApi::parseSchemaStringToSchemaAst(const char *schema) {
+        Node *GraphqlCppApi::parseSchemaStringToSchemaAst(const std::string &schema) {
             //TODO check error string
             const char *err = "";
             std::unique_ptr<Node> schemaAst;
-            schemaAst = parseStringWithExperimentalSchemaSupport(schema, &err);
+            schemaAst = parseStringWithExperimentalSchemaSupport(toCharArr(schema), &err);
             Node *rootNode = schemaAst.release();
             return rootNode;
         }
 
 
-        const char *GraphqlCppApi::printSchemaAsJson() {
-            if (schemaWraper != nullptr) {
-                return schemaWraper->printSchemaAsJson();
-            }
-            throw NoSchemaSetException();
-        }
+//        const char *GraphqlCppApi::printSchemaAsJson() {
+//            if (schemaWraper != nullptr) {
+//                return schemaWraper->printSchemaAsJson();
+//            }
+//            throw NoSchemaSetException();
+//        }
 
         GraphqlCppApi::~GraphqlCppApi() {
             delete schemaWraper;
