@@ -16,6 +16,7 @@
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
 #include "../../include/graphqlcpp/resolver/IGraphQlResolver.h"
 #include "../../include/graphqlcpp/GraphQlDTOSingleRoot.h"
+#include "../../include/graphqlcpp/GraphQlDTOMultiRoot.h"
 #include "TestData.cpp"
 
 //using namespace Json;
@@ -54,6 +55,33 @@ namespace GraphQlResolverTestData {
     public:
         UserResolver() {
             dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createUser());
+        }
+
+        IGraphQlDTO * getDtoObject() {
+            return dtoObject;
+        }
+
+        char *getResolverName() override {
+            return "user";
+        }
+
+        //TODO beachte es werden die serialisierten objekte nicht gelöscht
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            return dtoObject;
+        }
+
+    };
+
+    class AllUserResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        AllUserResolver() {
+            vector<IGraphQlDTO*> users = vector<IGraphQlDTO*>();
+            users.push_back(demo::TestDataGenerator::createUser());
+            users.push_back(demo::TestDataGenerator::createUser());
+            users.push_back(demo::TestDataGenerator::createUser());
+            dtoObject = new GraphQlDTOMultiRoot(users);
         }
 
         IGraphQlDTO * getDtoObject() {

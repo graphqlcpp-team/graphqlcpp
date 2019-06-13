@@ -18,22 +18,6 @@ using namespace std;
 using namespace graphqlcpp::api;
 
 
-
-
-/*
-TEST(DtoAndSerializerTest, simpleSerializaiton) {
-    Customer *c = createCustomer();
-    MySerializer *ser = new MySerializer(nullptr);
-    ser = c->serialize(ser);
-    MyWriter *writer = ser->createJson();
-    cout << writer->getJson();
-
-}*/
-
-
-
-
-
 TEST(DtoAndSerializerTest, wasFieldRequested) {
     IGraphQlDTO *c = demo::TestDataGenerator::createCustomer();
 
