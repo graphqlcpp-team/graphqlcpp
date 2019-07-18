@@ -75,6 +75,7 @@ local.properties
 .sts4-cache/
 /Debug/
 
+\.idea/
 \.idea/\.name
 
 \.idea/codeStyles/Project\.xml
