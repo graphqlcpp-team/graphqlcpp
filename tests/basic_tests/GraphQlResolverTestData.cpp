@@ -5,8 +5,8 @@
 #include <gtest/gtest.h>
 //#include "jsoncpp/json/value.h"
 //#include "jsoncpp/json/reader.h"
-#include "../../include/graphqlcpp/utils/MySerializer.h";
-#include "../../include/graphqlcpp/IGraphQlDTO.h";
+#include "../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
 #include "../../include/graphqlcpp/validators/QueryValidator.h"
@@ -32,7 +32,7 @@ namespace GraphQlResolverTestData {
             return dtoObject;
         }
 
-        char *getResolverName() override {
+        std::string getResolverName() override {
             return "user";
         }
 
@@ -53,7 +53,7 @@ namespace GraphQlResolverTestData {
             return dtoObject;
         }
 
-        char *getResolverName() override {
+        std::string getResolverName() override {
             return "user";
         }
 

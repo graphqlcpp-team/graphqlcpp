@@ -24,21 +24,21 @@ namespace graphqlcpp {
         public:
             MyWriter();
 
-            void appendValue(char *name, int val);
+            void appendValue(std::string name, int val);
 
-            void appendValue(char *name, char *val);
+            void appendValue(std::string name, std::string val);
 
-            void appendValue(char *name, bool val);
+            void appendValue(std::string name, bool val);
 
-            void appendValue(char *name, MyWriter *writer);
+            void appendValue(std::string name, MyWriter *writer);
 
-            void appendValue(char *name, vector<int> values);
+            void appendValue(std::string name, vector<int> values);
 
-            void appendValue(char *name, vector<string> values);
+            void appendValue(std::string name, vector<string> values);
 
-            void appendValue(char *name, vector<bool> values);
+            void appendValue(std::string name, vector<bool> values);
 
-            void appendVectorWritersValue(char *name, vector<MyWriter*> writers);
+            void appendVectorWritersValue(std::string name, vector<MyWriter*> writers);
 
             string getJson();
 

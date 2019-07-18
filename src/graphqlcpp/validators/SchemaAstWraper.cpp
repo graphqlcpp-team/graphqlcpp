@@ -347,7 +347,7 @@ namespace graphqlcpp {
                 const facebook::graphql::ast::Value *valueAstArgument = checkIfQueryContainsArgument(argumentsQueryAst,
                                                                                                      argumentName);
 
-                if (valueAstArgument == nullptr & nullable) {
+                if (valueAstArgument == nullptr && nullable) {
                     //no value but nullable, so everything allright
                     continue;
                 } else if (valueAstArgument == nullptr) {

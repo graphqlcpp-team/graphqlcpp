@@ -24,7 +24,7 @@ namespace graphqlcpp {
         }
 
 
-        void MyWriter::appendValue(char *name, int val) {
+        void MyWriter::appendValue(std::string name, int val) {
             data.append("\"");
             data.append(name);
             data.append("\"");
@@ -33,7 +33,7 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
-        void MyWriter::appendValue(char *name, bool val) {
+        void MyWriter::appendValue(std::string name, bool val) {
             data.append("\"");
             data.append(name);
             data.append("\"");
@@ -46,7 +46,7 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
-        void MyWriter::appendValue(char *name, char *val) {
+        void MyWriter::appendValue(std::string name, std::string val) {
             data.append("\"");
             data.append(name);
             data.append("\"");
@@ -57,7 +57,7 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
-        void MyWriter::appendValue(char *name, MyWriter *writer) {
+        void MyWriter::appendValue(std::string name, MyWriter *writer) {
             data.append("\"");
             data.append(name);
             data.append("\"");
@@ -67,7 +67,7 @@ namespace graphqlcpp {
         }
 
 
-        void MyWriter::appendValue(char *name, vector<int> values) {
+        void MyWriter::appendValue(std::string name, vector<int> values) {
             data.append("\"");
             data.append(name);
             data.append("\"");
@@ -88,7 +88,7 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
-        void MyWriter::appendValue(char *name, vector<string> values) {
+        void MyWriter::appendValue(std::string name, vector<string> values) {
             data.append("\"");
             data.append(name);
             data.append("\"");
@@ -109,7 +109,7 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
-        void MyWriter::appendValue(char *name, vector<bool> values) {
+        void MyWriter::appendValue(std::string name, vector<bool> values) {
             string sTrue = "true";
             string sFalse = "false";
 
@@ -141,7 +141,7 @@ namespace graphqlcpp {
 
         }
 
-        void MyWriter::appendVectorWritersValue(char *name, vector<MyWriter*> writers) {
+        void MyWriter::appendVectorWritersValue(std::string name, vector<MyWriter*> writers) {
             string sTrue = "true";
             string sFalse = "false";
             data.append("\"");

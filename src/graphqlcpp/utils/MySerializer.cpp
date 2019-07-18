@@ -9,7 +9,7 @@
 
 namespace graphqlcpp {
     namespace utils {
-        bool MySerializer::wasFieldRequested(char *fieldName) {
+        bool MySerializer::wasFieldRequested(std::string fieldName) {
 
             const std::vector<std::unique_ptr<Selection>> &selectionSetArray =
                     this->selectionSetOfCurrentLevel->getSelections();
@@ -27,7 +27,7 @@ namespace graphqlcpp {
 
                 const Name *namePointer = &field->getName();
                 const char *name = namePointer->getValue();
-                if(strcmp(name, fieldName) == 0) {
+                if(fieldName.compare(std::string(name)) == 0) {
                     this->selectionSetNextLevelOfCurrentField = field->getSelectionSet();
                     return true;
                 }
@@ -36,49 +36,49 @@ namespace graphqlcpp {
             return false;
         }
 
-        void MySerializer::setVal(char *name, int val) {
+        void MySerializer::setVal(std::string name, int val) {
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, val);
             }
         }
 
-        void MySerializer::setVal(char *name, char *val) {
+        void MySerializer::setVal(std::string name, std::string val) {
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, val);
             }
         }
 
-        void MySerializer::setVal(char *name, bool val) {
+        void MySerializer::setVal(std::string name, bool val) {
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, val);
             }
         }
 
-        void MySerializer::setVal(char *name, vector<int> values){
+        void MySerializer::setVal(std::string name, vector<int> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);
             }
         }
 
-        void MySerializer::setVal(char *name, vector<string> values){
+        void MySerializer::setVal(std::string name, vector<string> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);
             }
         }
 
-        void MySerializer::setVal(char *name, vector<bool> values){
+        void MySerializer::setVal(std::string name, vector<bool> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);
             }
         }
 
-        void MySerializer::setVectorWritersVal(char *name, vector<MyWriter*> writers){
+        void MySerializer::setVectorWritersVal(std::string name, vector<MyWriter*> writers){
             if (wasFieldRequested(name)) {
                 this->writer->appendVectorWritersValue(name, writers);
             }
         }
 
-        void MySerializer::setVal(char *name, IGraphQlDTO *val) {
+        void MySerializer::setVal(std::string name, IGraphQlDTO *val) {
             if (wasFieldRequested(name)) {
                 //TODO die zeile muss angepasst werden
                 const SelectionSet *childLevelSelectionSet = this->selectionSetNextLevelOfCurrentField;

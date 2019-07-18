@@ -5,8 +5,8 @@
 #include <gtest/gtest.h>
 //#include "jsoncpp/json/value.h"
 //#include "jsoncpp/json/reader.h"
-#include "../../include/graphqlcpp/utils/MySerializer.h";
-#include "../../include/graphqlcpp/IGraphQlDTO.h";
+#include "../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
 #include "../../include/graphqlcpp/validators/QueryValidator.h"
@@ -22,10 +22,10 @@ using namespace graphqlcpp::api;
 namespace demo {
     class City : public IGraphQlDTO {
     private:
-        char *name;
+        std::string name;
         vector<int> plz;
     public:
-        City(char *name, vector<int> plz) {
+        City(std::string name, vector<int> plz) {
             this->name = name;
             this->plz = plz;
         }
@@ -40,9 +40,9 @@ namespace demo {
     class Address : public IGraphQlDTO {
     private:
         City *city;
-        char *street;
+        std::string street;
     public:
-        Address(City *city, char *street) {
+        Address(City *city, std::string street) {
             this->city = city;
             this->street = street;
         }
@@ -58,12 +58,12 @@ namespace demo {
 
     class Customer : public IGraphQlDTO {
     private:
-        char *name;
+        std::string name;
         int age;
         Address *addressFirst;
         Address *addressSecond;
     public:
-        Customer(char *name, int age, Address *addressFirst, Address *second) {
+        Customer(std::string name, int age, Address *addressFirst, Address *second) {
             this->name = name;
             this->age = age;
             this->addressFirst = addressFirst;
@@ -84,9 +84,9 @@ namespace demo {
     class User : public IGraphQlDTO {
     private:
         int id;
-        char* name;
+        std::string name;
     public:
-        User(char* name,int id) {
+        User(std::string name,int id) {
             this->name = name;
             this->id = id;
         }

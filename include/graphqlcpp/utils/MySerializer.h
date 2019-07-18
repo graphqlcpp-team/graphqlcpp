@@ -20,7 +20,7 @@ namespace graphqlcpp {
 
         class MySerializer {
         private:
-            bool wasFieldRequested(char *fieldName);
+            bool wasFieldRequested(std::string fieldName);
 
             MyWriter *writer;
             const SelectionSet *selectionSetOfCurrentLevel;
@@ -30,21 +30,21 @@ namespace graphqlcpp {
 
             virtual ~MySerializer();
 
-            void setVal(char *name, int val);
+            void setVal(std::string name, int val);
 
-            void setVal(char *name, char *val);
+            void setVal(std::string name, std::string val);
 
-            void setVal(char *name, bool val);
+            void setVal(std::string name, bool val);
 
-            void setVal(char *name, IGraphQlDTO *val);
+            void setVal(std::string name, IGraphQlDTO *val);
 
-            void setVal(char *name, vector<int> values);
+            void setVal(std::string name, vector<int> values);
 
-            void setVal(char *name, vector<string> values);
+            void setVal(std::string name, vector<string> values);
 
-            void setVal(char *name, vector<bool> values);
+            void setVal(std::string name, vector<bool> values);
 
-            void setVectorWritersVal(char *name, vector<MyWriter*> writers);
+            void setVectorWritersVal(std::string name, vector<MyWriter*> writers);
 
             MyWriter *createJson();
         };
