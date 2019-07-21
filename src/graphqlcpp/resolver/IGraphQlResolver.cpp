@@ -4,3 +4,6 @@
 
 #include "../../../include/graphqlcpp/resolver/IGraphQlResolver.h"
 
+graphqlcpp::resolver::IGraphQlResolver::~IGraphQlResolver() {
+
+}
