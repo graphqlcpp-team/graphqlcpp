@@ -14,7 +14,6 @@ graphqlcpp::resolver::ResolverManager::~ResolverManager() {
             delete resolver.second;
         delete resolvers;
     }
-    delete this->resolvers;
 }
 
 void graphqlcpp::resolver::ResolverManager::registerResolver(graphqlcpp::resolver::IGraphQlResolver *resolver) {
