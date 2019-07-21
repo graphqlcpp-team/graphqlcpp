@@ -78,7 +78,7 @@ TEST(GraphqlApiTest, finalDemoTest) {
     const char *schema = "schema {  query: Query }  type Query {  book(id: int!): Book  author(id: int!): Author }  type Book {  id: int!  title: String  published: String  price: String  authorOfBook: Author }  type Quote {  id: int!  quote: String }  type Author {  id: int!  firstName: String  lastName: String  quotes: [Quote] }";
 
     const char *query = "query{book(id:1){title, authorOfBook{firstName quotes{quote}}}}";
-    GraphqlCppApi *api = ApiFactory::createApi();
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
     api->setSchema(schema);
     auto resolver = new GraphQlResolverTestData::BookResolver;
     api->registerResolver(resolver);
