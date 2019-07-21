@@ -69,7 +69,8 @@ namespace graphqlcpp {
         Node *GraphqlCppApi::parseSchemaStringToSchemaAst(const std::string &schema) {
             const char *err = nullptr;
             std::unique_ptr<Node> schemaAst;
-            schemaAst = parseStringWithExperimentalSchemaSupport(schema.c_str(), &err);
+            std::string mystr = schema;
+            schemaAst = parseStringWithExperimentalSchemaSupport(mystr.c_str(), &err);
             Node *rootNode = schemaAst.release();
             if(err!= nullptr){
                 throw exceptions::InvalidSchemaException();
