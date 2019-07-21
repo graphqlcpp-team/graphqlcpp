@@ -4,8 +4,8 @@ build/
 cmake-build-debug/
 
 **/CMakeFiles/
-
-
+*/.idea/*
+.idea/
 ### Eclipse ###
 
 .metadata
