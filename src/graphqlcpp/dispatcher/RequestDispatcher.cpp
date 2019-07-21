@@ -17,9 +17,8 @@ std::string
 graphqlcpp::dispatcher::RequestDispatcher::executeRequest(graphqlcpp::RequestAstWrapper *requestAstWrapper) {
     std::string operation = requestAstWrapper->extractOperation();
     if (operation == "query") {
-        ResolverInfo * resolver;
-        resolver = requestAstWrapper->extractResolver();
-        IGraphQlDTO* data = this->resolverManager->executeResolver(resolver->getResolverName(), resolver->getArgs());
+        ResolverInfo resolver = requestAstWrapper->extractResolver();
+        IGraphQlDTO* data = this->resolverManager->executeResolver(resolver.getResolverName(), resolver.getArgs());
         MySerializer * serializer;
         serializer = new MySerializerRoot(requestAstWrapper->extractSelectionSetForSerialisation());
         std::string json = data->serialize(serializer)->createJson()->getJson();

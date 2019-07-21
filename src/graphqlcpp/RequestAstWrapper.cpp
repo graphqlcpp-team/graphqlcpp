@@ -23,7 +23,7 @@ namespace graphqlcpp {
         this->queryRootNode = queryRootNode;
     }
 
-    graphqlcpp::ResolverInfo *graphqlcpp::RequestAstWrapper::extractResolver() {
+    graphqlcpp::ResolverInfo graphqlcpp::RequestAstWrapper::extractResolver() {
         auto selectionSet = getSelectionSet(this->queryRootNode);
         std::string name;
         if (selectionSet == nullptr) {
@@ -31,7 +31,7 @@ namespace graphqlcpp {
         }
         name = std::string(getNameOfSelectionSet(selectionSet));
         auto arguments = getArgumentsOfSelectionSet(selectionSet);
-        return new ResolverInfo(name, arguments);
+        return ResolverInfo(name, arguments);
     }
 
 
