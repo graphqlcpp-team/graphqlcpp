@@ -41,7 +41,6 @@ namespace GraphQlResolverTestData {
             return "user";
         }
 
-        //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
             return dtoObject;
         }
@@ -64,7 +63,6 @@ namespace GraphQlResolverTestData {
             return "user";
         }
 
-        //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
             return dtoObject;
         }
@@ -91,7 +89,6 @@ namespace GraphQlResolverTestData {
             return "allUsers";
         }
 
-        //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
             return dtoObject;
         }
@@ -138,7 +135,6 @@ namespace GraphQlResolverTestData {
             return "book";
         }
 
-        //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
             for (auto i : *resolverArgs) {
                 if (i->getArgName() == "id") {

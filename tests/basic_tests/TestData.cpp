@@ -75,7 +75,6 @@ namespace demo {
 
 
         MySerializer *serialize(MySerializer *serializer) override {
-            //TODO prüfen ob key z.B name wieder freigegeben wird am ende -> lint / tools zur laufzeitanalyse von speicher
             serializer->setVal("name", name);
             serializer->setVal("addressFirst", addressFirst);
             serializer->setVal("age", age);
