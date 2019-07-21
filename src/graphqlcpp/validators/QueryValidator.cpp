@@ -49,7 +49,6 @@ namespace graphqlcpp {
                 throw WrongOperationException();
             }
             const SelectionSet *selectionSet = getSelectionSet(rootNodeQuery);
-            char nullChar = '\0';
             if (!iterateThroughSelectionSetsAndValidate(selectionSet, operation)) {
                 throw InvalidQueryException();
             }
@@ -91,7 +90,7 @@ namespace graphqlcpp {
                     const GraphQLAstField *graphQlField =
                             (GraphQLAstField *) selection.get();
                     auto field = (const Field *) graphQlField;
-                    this->schemaWrapper->validateNode(fatherFieldName, field);
+                    //this->schemaWrapper->validateNode(fatherFieldName, field); //TODO: Zeile noterndig?
                     const Name *namePointer = &field->getName();
                     const char *name = namePointer->getValue();
 

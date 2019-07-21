@@ -7,7 +7,6 @@
 
 #include <string>
 #include <vector>
-#include "../../../include/graphqlcpp/utils/MyWriter.h"
 
 using namespace std;
 
@@ -38,7 +37,7 @@ namespace graphqlcpp {
 
             void appendValue(std::string name, vector<bool> values);
 
-            void appendVectorWritersValue(std::string name, vector<MyWriter*> writers);
+            void appendValue(std::string *name, vector<MyWriter*> writers);
 
             string getJson();
 

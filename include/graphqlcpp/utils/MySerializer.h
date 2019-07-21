@@ -6,7 +6,6 @@
 #define MYSERIALIZER_H_
 
 #include "../IGraphQlDTO.h"
-#include "../../graphqlparser/AstNode.h"
 #include "../../graphqlparser/Ast.h"
 #include "MyWriter.h"
 
@@ -19,17 +18,16 @@ namespace graphqlcpp {
         using namespace graphqlcpp::api;
 
         class MySerializer {
-        private:
-            bool wasFieldRequested(std::string fieldName);
-
+        protected:
+        public:
+            virtual ~MySerializer();
+        protected:
             MyWriter *writer;
+            virtual bool wasFieldRequested(std::string *fieldName)=0;
             const SelectionSet *selectionSetOfCurrentLevel;
             const SelectionSet *selectionSetNextLevelOfCurrentField;
-        public:
             MySerializer(const SelectionSet *selectionSetOfCurrentLevel);
-
-            virtual ~MySerializer();
-
+        public:
             void setVal(std::string name, int val);
 
             void setVal(std::string name, std::string val);
@@ -44,7 +42,7 @@ namespace graphqlcpp {
 
             void setVal(std::string name, vector<bool> values);
 
-            void setVectorWritersVal(std::string name, vector<MyWriter*> writers);
+            void setVal(std::string name, vector<IGraphQlDTO*> val);
 
             MyWriter *createJson();
         };

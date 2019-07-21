@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../include/graphqlcpp/utils/MySerializerRoot.h"
 #include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../src/graphqlparser/GraphQLParser.h"
@@ -18,24 +18,8 @@ using namespace std;
 using namespace graphqlcpp::api;
 
 
-
-
-/*
-TEST(DtoAndSerializerTest, simpleSerializaiton) {
-    Customer *c = createCustomer();
-    MySerializer *ser = new MySerializer(nullptr);
-    ser = c->serialize(ser);
-    MyWriter *writer = ser->createJson();
-    cout << writer->getJson();
-
-}*/
-
-
-
-
-
 TEST(DtoAndSerializerTest, wasFieldRequested) {
-    demo::Customer *c = demo::TestDataGenerator::createCustomer();
+    IGraphQlDTO *c = demo::TestDataGenerator::createCustomer();
 
     const char * error = nullptr;
     const char * query = "query{name, addressFirst {city {plz, name}} age}";
@@ -46,7 +30,7 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
     graphqlcpp::validators::QueryValidator* qv = new graphqlcpp::validators::QueryValidator(saw);
     const SelectionSet *selectionSet = qv->getSelectionSet(rootNodeQuery);
 
-    MySerializer *ser = new MySerializer(selectionSet);
+    MySerializer *ser = new MySerializerRoot(selectionSet);
     ser = c->serialize(ser);
     MyWriter *writer = ser->createJson();
     cout << writer->getJson();
@@ -54,7 +38,7 @@ TEST(DtoAndSerializerTest, wasFieldRequested) {
 
 
 TEST(DtoAndSerializerTest, wasFieldRequestedTwoObjects) {
-    demo::Customer *c = demo::TestDataGenerator::createCustomer();
+    IGraphQlDTO *c = demo::TestDataGenerator::createCustomer();
 
     const char * error = nullptr;
     const char * query = "query{addressSecond {city {plz, name}} name addressFirst {city {plz, name}} age}";
@@ -65,7 +49,7 @@ TEST(DtoAndSerializerTest, wasFieldRequestedTwoObjects) {
     graphqlcpp::validators::QueryValidator* qv = new graphqlcpp::validators::QueryValidator(saw);
     const SelectionSet *selectionSet = qv->getSelectionSet(rootNodeQuery);
 
-    MySerializer *ser = new MySerializer(selectionSet);
+    MySerializer *ser = new MySerializerRoot(selectionSet);
     ser = c->serialize(ser);
     MyWriter *writer = ser->createJson();
     cout << writer->getJson();
@@ -124,7 +108,7 @@ TEST(DtoAndSerializerTest, writerVectorTest) {
     writerArray.push_back(intWriter);
 
     MyWriter *writer = new  MyWriter();
-    writer->appendVectorWritersValue("name", writerArray);
+    writer->appendValue("name", writerArray);
     cout << writer->getJson();
     EXPECT_TRUE(writer->getJson() ==  "{\"name\":[{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]},{\"name\":[true,false,true,false,true]},{\"name\":[1,2,3,4,5]}]}");
 }

@@ -149,19 +149,12 @@ namespace graphqlcpp {
             data.append("\"");
             data.append(":");
             data.append("[");
-            std::string tmpStringRepresentation;
-            int index = 0;
-            for (auto value = writers.begin(); value != writers.end(); ++value) {
-                MyWriter * asdf;
-                asdf = writers[index];
-                tmpStringRepresentation += writers[index]->getJson();
 
-                if (value != writers.end()) {
-                    tmpStringRepresentation += separator;
-                }
-                index++;
+            for(MyWriter* writer : writers){
+                data.append(writer->getJson());
+                data.append(",");
+                delete writer;
             }
-            data.append(tmpStringRepresentation);
             replaceLastSeparator();
             data.append("]");
             data.append(separator);

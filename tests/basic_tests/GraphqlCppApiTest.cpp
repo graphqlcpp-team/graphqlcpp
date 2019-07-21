@@ -14,22 +14,6 @@ using namespace facebook::graphql;
 using namespace facebook::graphql::ast;
 using namespace graphqlcpp::api;
 
-//TEST(GraphqlApiTest, dumpAstAsJson) {
-//	const char * query = "query{user(id:1) {name}}";
-//	const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
-//
-//	GraphqlCppApi* api = ApiFactory::createApi();
-//	api->setSchema(schema);
-//
-//
-//
-//	string result = "";
-//    result = api->executeRequest(query);
-//
-//	cout << result;
-//
-//	//ASSERT_NE(nullptr, result);
-//}
 
 TEST(GraphqlApiTest, setSchema) {
     GraphqlCppApi *api = ApiFactory::createApi();
@@ -50,20 +34,32 @@ void checkIfStrEqu(const string &expected, const string &actual){
     ASSERT_STREQ(expCstr, actCstr);
 }
 
-
-
-TEST(GraphqlApiTest, all){
+TEST(GraphqlApiTest, libIntegrationTest){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
-
-    demo::User *user = demo::TestDataGenerator::createUser();
 
     const char * query = "query{user(id:1) {name}}";
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
     string response = (api->executeRequest(query));
-    string expected = "{\"name\":\"Herbert\"}";
+    string expected = R"({"data":{"name":"Herbert"}})";
     checkIfStrEqu(expected, response);
 }
 
+//TODO Validierung funktioniert nicht bei Listentypen
+TEST(GraphqlApiTest, multipleChildesAtRootLevel){
+
+    const char* schema = "schema {query: Query, mutation: Mutation} type Query { allUsers: [User]} type User { id: ID! name: string!	age: Int}";
+
+    const char * query = "query{ allUsers {name}}";
+    GraphqlCppApi *api = ApiFactory::createApi();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::AllUserResolver();
+    api->registerResolver(resolver);
+    string response = (api->executeRequest(query));
+    string expected = R"({"data":[{"name":"Herbert"},{"name":"Herbert"},{"name":"Herbert"}]})";
+    checkIfStrEqu(expected, response);
+}
+
+//TODO test schreiben, ob nested listen typen also nicht auf root ebene auch funktionieren

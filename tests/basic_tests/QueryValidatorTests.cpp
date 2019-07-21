@@ -173,7 +173,7 @@ TEST(QueryValidatorTests, IsArgumentTypeMultibleArgumentsValidExpectNoError) {
     ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
 }
 
-TEST(QueryValidatorTests, IsArgumentTypeFloatValidExpectNoError) {
+TEST(QueryValidatorTests, IsArgumentTypeFloatValidExpectNoError) { //TODO
     const char * error = nullptr;
     const char * query = "query{user(id:100.07) {name}}";
     std::unique_ptr<Node> queryAst;
@@ -295,7 +295,7 @@ TEST(QueryValidatorTests, IsArgumentValidExpectNoErrorTwoArguments) {
     ASSERT_NO_THROW(qv->isQueryValid(queryAst.get()));
 }
 
-TEST(QueryValidatorTests, IsArgumentValidExpectNoErrorThreeArgumentsButOnlyTwoRequired) {
+TEST(QueryValidatorTests, IsArgumentValidExpectNoErrorThreeArgumentsButOnlyTwoRequired) { //TODO
     const char * error = nullptr;
     const char * query = "query{user(id: 10 name: Amelie) {name}}";
     std::unique_ptr<Node> queryAst;
