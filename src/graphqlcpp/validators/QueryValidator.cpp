@@ -5,6 +5,8 @@
  *      Author: amelie
  */
 
+/** @file validate the query*/
+
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../graphqlparser/c/GraphQLAst.h"
 #include "../../../include/graphqlparser/Ast.h"

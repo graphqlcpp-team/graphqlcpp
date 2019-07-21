@@ -5,6 +5,8 @@
  *      Author: amelie
  */
 
+/** @file*/
+
 #ifndef QUERYVALIDATOR_H_
 #define QUERYVALIDATOR_H_
 
@@ -12,10 +14,16 @@
 #include "../../graphqlparser/Ast.h"
 
 namespace graphqlcpp {
+    /**
+     * namespace for validation
+     */
 namespace validators {
 
 using namespace facebook::graphql::ast;
 
+/**
+ * validates the query
+ */
 class QueryValidator {
 private:
 	SchemaAstWraper* schemaWrapper;

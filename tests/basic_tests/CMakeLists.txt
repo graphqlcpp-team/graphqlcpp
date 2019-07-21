@@ -6,7 +6,6 @@ add_executable(runTests
         RequestAstWrapperTest.cpp
         GraphqlCppApiTest.cpp
         DtoAndSerializerTest.cpp
-        JsonVisitorTests.cpp
         QueryValidatorTests.cpp
         SchemaAstWrapperTest.cpp
         RequestDispatcherTest.cpp

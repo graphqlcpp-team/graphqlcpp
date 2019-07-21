@@ -34,7 +34,7 @@ void checkIfStrEqu(const string &expected, const string &actual){
     ASSERT_STREQ(expCstr, actCstr);
 }
 
-TEST(GraphqlApiTest, libIntegrationTest){
+TEST(GraphqlApiTest, integrationTestForLibraryGraphqlcpp){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
