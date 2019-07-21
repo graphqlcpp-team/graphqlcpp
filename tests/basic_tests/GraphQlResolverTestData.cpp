@@ -45,6 +45,7 @@ namespace GraphQlResolverTestData {
 
         //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+
             return dtoObject;
         }
 
@@ -99,4 +100,48 @@ namespace GraphQlResolverTestData {
         }
 
     };
+    class BookResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        BookResolver() {
+            vector<IGraphQlDTO*> v = demo::TestDataGenerator::createBooks();
+            dtoObject = new GraphQlDTOMultiRoot(v);
+        }
+
+        IGraphQlDTO * getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "book";
+        }
+
+        //TODO beachte es werden die serialisierten objekte nicht gelöscht
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            for (auto i : *resolverArgs) {
+                if (i->getArgName() == "id") {
+                    int value = atoi(i->getArgValue().c_str());
+                    switch (value) {
+                        case 1:
+                            this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createBooks()[0]);
+                            break;
+                        case 2:
+                            this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createBooks()[1]);
+                            break;
+                        case 3:
+                            this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createBooks()[2]);
+                            break;
+                        case 4:
+                            this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createBooks()[3]);
+                            break;
+                    }
+
+                }
+            }
+            return dtoObject;
+        }
+
+    };
+
 }

@@ -24,7 +24,7 @@ TEST(GraphqlApiTest, setSchema) {
     delete api;
 }
 
-void checkIfStrEqu(const string &expected, const string &actual){
+void checkIfStrEqu(const string &expected, const string &actual) {
     char expCstr[expected.size() + 1];
     strcpy(expCstr, expected.c_str());
 
@@ -34,11 +34,11 @@ void checkIfStrEqu(const string &expected, const string &actual){
     ASSERT_STREQ(expCstr, actCstr);
 }
 
-TEST(GraphqlApiTest, libIntegrationTest){
+TEST(GraphqlApiTest, libIntegrationTest) {
 
-    const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
+    const char *schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
-    const char * query = "query{user(id:1) {name}}";
+    const char *query = "query{user(id:1) {name}}";
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
@@ -48,11 +48,11 @@ TEST(GraphqlApiTest, libIntegrationTest){
 }
 
 //TODO Validierung funktioniert nicht bei Listentypen
-TEST(GraphqlApiTest, multipleChildesAtRootLevel){
+TEST(GraphqlApiTest, multipleChildesAtRootLevel) {
 
-    const char* schema = "schema {query: Query, mutation: Mutation} type Query { allUsers: [User]} type User { id: ID! name: string!	age: Int}";
+    const char *schema = "schema {query: Query, mutation: Mutation} type Query { allUsers: [User]} type User { id: ID! name: string!	age: Int}";
 
-    const char * query = "query{ allUsers {name}}";
+    const char *query = "query{ allUsers {name}}";
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
     auto resolver = new GraphQlResolverTestData::AllUserResolver();
@@ -63,3 +63,17 @@ TEST(GraphqlApiTest, multipleChildesAtRootLevel){
 }
 
 //TODO test schreiben, ob nested listen typen also nicht auf root ebene auch funktionieren
+
+TEST(GraphqlApiTest, finalDemoTest) {
+    const char *schema = "schema {  query: Query }  type Query {  book(id: int!): Book  author(id: int!): Author }  type Book {  id: int!  title: String  published: String  price: String  authorOfBook: Author }  type Quote {  id: int!  quote: String }  type Author {  id: int!  firstName: String  lastName: String  quotes: [Quote] }";
+
+    const char *query = "query{book(id:1){title, authorOfBook{firstName quotes{quote}}}}";
+    GraphqlCppApi *api = ApiFactory::createApi();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::BookResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
+    std::string expected = R"({"data":{"title":"Faust. Eine Tragödie.","authorOfBook":{"firstName":"Johann Wolfgang","quotes":[{"quote":"Mit dem Wissen wächst der Zweifel."},{"quote":"Wo viel Licht ist, ist starker Schatten."}]}}})";
+
+    checkIfStrEqu(response, expected);
+}

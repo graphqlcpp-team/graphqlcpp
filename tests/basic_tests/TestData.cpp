@@ -5,9 +5,9 @@
 #include <gtest/gtest.h>
 //#include "jsoncpp/json/value.h"
 //#include "jsoncpp/json/reader.h"
-#include "../../include/graphqlcpp/utils/MySerializer.h";
-#include "../../include/graphqlcpp/IGraphQlDTO.h";
-#include "../../include/graphqlcpp/GraphQlDTOSingleRoot.h";
+#include "../../include/graphqlcpp/utils/MySerializer.h"
+#include "../../include/graphqlcpp/IGraphQlDTO.h"
+#include "../../include/graphqlcpp/GraphQlDTOSingleRoot.h"
 #include "../../include/graphqlcpp/utils/MySerializer.h"
 #include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
@@ -89,7 +89,7 @@ namespace demo {
         int id;
         std::string name;
     public:
-        User(std::string name,int id) {
+        User(std::string name, int id) {
             this->name = name;
             this->id = id;
         }
@@ -101,19 +101,113 @@ namespace demo {
         }
     };
 
+    class Quote : public IGraphQlDTO {
+    private:
+        int id;
+        std::string quote;
+
+    public:
+        Quote(int id, std::string quote) {
+            this->id = id;
+            this->quote = quote;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("id", this->id);
+            serializer->setVal("quote", this->quote);
+            return serializer;
+        }
+    };
+
+    class Author : public IGraphQlDTO {
+    private:
+        int id;
+        std::string firstName;
+        std::string lastName;
+        std::vector<IGraphQlDTO*> quotes;
+    public:
+        Author(int id, std::string firstName, std::string lastName, vector<IGraphQlDTO*> quotes) {
+            this->id = id;
+            this->firstName = firstName;
+            this->lastName = lastName;
+            this->quotes = vector<IGraphQlDTO*>(quotes.begin(), quotes.end());
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("id", this->id);
+            serializer->setVal("firstName", this->firstName);
+            serializer->setVal("lastName", this->lastName);
+            serializer->setVal("quotes", this->quotes);
+            return serializer;
+        }
+    };
+
+    class Book : public IGraphQlDTO {
+    private:
+        int id;
+        std::string title;
+        std::string published;
+        std::string price;
+        Author *authorOfBook;
+    public:
+        Book(int id, std::string title, std::string published, std::string price, Author *author) {
+            this->id = id;
+            this->title = title;
+            this->published = published;
+            this->price = price;
+            this->authorOfBook = author;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("id", this->id);
+            serializer->setVal("title", this->title);
+            serializer->setVal("published", this->published);
+            serializer->setVal("price", this->price);
+            serializer->setVal("authorOfBook", this->authorOfBook);
+            return serializer;
+        }
+    };
+
     class TestDataGenerator {
     public:
         static IGraphQlDTO *createCustomer() {
-            City *c = new City("Nuernberg", {90429} );
-            City *c2 = new City("Munic", {90429} );
+            City *c = new City("Nuernberg", {90429});
+            City *c2 = new City("Munic", {90429});
             Address *a1 = new Address(c, "Fuertherstr.");
             Address *a2 = new Address(c2, "Maximilanstr.");
             Customer *cu = new Customer("Sven Steuermann", 34, a1, a2);
             return cu;
         }
-        static IGraphQlDTO *createUser(){
+
+        static IGraphQlDTO *createUser() {
             return new User("Herbert", 1);
         }
+        static vector<IGraphQlDTO *> createBooks(){
+            Quote *q1 = new Quote(1, "Mit dem Wissen wächst der Zweifel.");
+            Quote *q2 = new Quote(2, "Wo viel Licht ist, ist starker Schatten.");
+            vector<IGraphQlDTO *> qs;
+            qs.push_back(q1);
+            qs.push_back(q2);
+            Author * a1 = new Author(1, "Johann Wolfgang", "von Goethe", qs);
+            Book *b1 = new Book(1, "Faust. Eine Tragödie.", "1808", "unbezahlbar", a1);
+            Book *b2 = new Book(2, "Faust. Der Tragödie zweiter Teil", "1832", "unbezahlbar", a1);
+            vector<IGraphQlDTO *> bs;
+            bs.push_back(b1);
+            bs.push_back(b2);
+
+            Quote *q3 = new Quote(3, "Man sollt' den Tag nicht vor dem Abend loben.");
+            Quote *q4 = new Quote(4, "Erst handeln und dann reden.");
+            vector<IGraphQlDTO *> qf;
+            qf.push_back(q3);
+            qf.push_back(q4);
+            Author * a2 = new Author(2, "Friedrich", "Schiller", qf);
+            Book *b3 = new Book(3, "Die Räuber", "1782", "unbezahlbar", a2);
+            Book *b4 = new Book(4, "Wallenstein", "1800", "unbezahlbar", a2);
+            bs.push_back(b3);
+            bs.push_back(b4);
+            return bs;
+        }
+
     };
 
 
