@@ -37,7 +37,7 @@ namespace graphqlcpp {
 
             void appendValue(std::string name, vector<bool> values);
 
-            void appendValue(std::string *name, vector<MyWriter*> writers);
+            void appendVectorWritersValue(std::string name, vector<MyWriter*> writers);
 
             string getJson();
 

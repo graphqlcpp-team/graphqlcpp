@@ -7,7 +7,7 @@
 #include "../../graphqlparser/c/GraphQLAst.h"
 #include <cstring>
 
-bool graphqlcpp::utils::MySerializerChild::wasFieldRequested(char *fieldName) {
+bool graphqlcpp::utils::MySerializerChild::wasFieldRequested(std::string fieldName) {
     const std::vector<std::unique_ptr<Selection>> &selectionSetArray =
             this->selectionSetOfCurrentLevel->getSelections();
 
@@ -24,7 +24,7 @@ bool graphqlcpp::utils::MySerializerChild::wasFieldRequested(char *fieldName) {
 
         const Name *namePointer = &field->getName();
         const char *name = namePointer->getValue();
-        if(strcmp(name, fieldName) == 0) {
+        if(fieldName.compare(name) == 0) {
             this->selectionSetNextLevelOfCurrentField = field->getSelectionSet();
             return true;
         }

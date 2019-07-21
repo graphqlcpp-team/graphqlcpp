@@ -56,7 +56,7 @@ namespace graphqlcpp {
                     writerVec[i] = childNodeSerializer->createJson();
                 }
 
-                this->writer->appendValue(name, writerVec);
+                this->writer->appendVectorWritersValue(name, writerVec);
             }
         }
 

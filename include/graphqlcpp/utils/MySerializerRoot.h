@@ -11,7 +11,7 @@ namespace graphqlcpp{
     namespace utils{
         class MySerializerRoot : public MySerializer {
         protected:
-            bool wasFieldRequested(char *fieldName) override;
+            bool wasFieldRequested(std::string fieldName) override;
         public:
             MySerializerRoot(const SelectionSet *selectionSetOfCurrentLevel);
 

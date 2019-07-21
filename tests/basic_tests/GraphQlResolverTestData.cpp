@@ -3,6 +3,7 @@
 //
 
 #include <gtest/gtest.h>
+#include "string"
 //#include "jsoncpp/json/value.h"
 //#include "jsoncpp/json/reader.h"
 #include "../../include/graphqlcpp/utils/MySerializer.h"
@@ -88,7 +89,7 @@ namespace GraphQlResolverTestData {
             return dtoObject;
         }
 
-        char *getResolverName() override {
+        std::string getResolverName() override {
             return "allUsers";
         }
 

@@ -15,7 +15,7 @@ namespace graphqlcpp {
             MySerializerChild(const SelectionSet *selectionSetOfCurrentLevel);
         protected:
 
-            bool wasFieldRequested(char *fieldName) override;
+            bool wasFieldRequested(std::string fieldName) override;
         };
     }
 }

@@ -23,7 +23,7 @@ namespace graphqlcpp {
             virtual ~MySerializer();
         protected:
             MyWriter *writer;
-            virtual bool wasFieldRequested(std::string *fieldName)=0;
+            virtual bool wasFieldRequested(std::string fieldName)=0;
             const SelectionSet *selectionSetOfCurrentLevel;
             const SelectionSet *selectionSetNextLevelOfCurrentField;
             MySerializer(const SelectionSet *selectionSetOfCurrentLevel);
