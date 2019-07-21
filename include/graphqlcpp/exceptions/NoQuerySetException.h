@@ -14,6 +14,9 @@ namespace graphqlcpp {
 namespace exceptions {
 using namespace std;
 
+/**
+ * Will be thrown if the there is no query given
+ */
 class NoQuerySetException : public runtime_error {
 public:
     NoQuerySetException() : runtime_error("no query set"){};

@@ -11,6 +11,9 @@
 namespace graphqlcpp {
 namespace exceptions {
 using namespace std;
+/**
+ * Will be thrown if the schema is not valid
+ */
 class InvalidSchemaException : public runtime_error {
 public:
 	InvalidSchemaException() : runtime_error("invalid schema"){};
