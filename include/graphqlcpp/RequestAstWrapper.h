@@ -28,7 +28,7 @@ namespace graphqlcpp {
     public:
         RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode);
 
-        ResolverInfo* extractResolver();
+        ResolverInfo extractResolver();
         std::string extractOperation();
         const SelectionSet* extractSelectionSetForSerialisation();
     };

@@ -7,7 +7,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../graphqlparser/c/GraphQLAst.h"
 #include "../../../include/graphqlparser/Ast.h"
-#include "../../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 #include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
 #include "../../../include/graphqlcpp/exceptions/NoQuerySetException.h"
 
@@ -17,13 +17,11 @@ namespace graphqlcpp {
     using namespace facebook::graphql;
     using namespace facebook::graphql::ast;
 
-    //TODO aufräumen new
-
     graphqlcpp::RequestAstWrapper::RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode) {
         this->queryRootNode = queryRootNode;
     }
 
-    graphqlcpp::ResolverInfo *graphqlcpp::RequestAstWrapper::extractResolver() {
+    graphqlcpp::ResolverInfo graphqlcpp::RequestAstWrapper::extractResolver() {
         auto selectionSet = getSelectionSet(this->queryRootNode);
         std::string name;
         if (selectionSet == nullptr) {
@@ -31,7 +29,7 @@ namespace graphqlcpp {
         }
         name = std::string(getNameOfSelectionSet(selectionSet));
         auto arguments = getArgumentsOfSelectionSet(selectionSet);
-        return new ResolverInfo(name, arguments);
+        return ResolverInfo(name, arguments);
     }
 
 

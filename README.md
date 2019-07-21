@@ -63,7 +63,7 @@ To add the schema call the methode `void setSchema(const char* schema)`. As you 
 ```cpp
 const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
-GraphqlCppApi *api = ApiFactory::createApi();
+GraphqlCppApi *api = GraphqlCppApi::createInstance();
 api->setSchema(schema);
 ```
 ## Add resolver methods.

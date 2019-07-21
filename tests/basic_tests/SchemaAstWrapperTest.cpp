@@ -17,7 +17,7 @@
 #include "../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
 #include "../../include/graphqlcpp/exceptions/WrongOperationException.h"
-#include "../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 
 
 using namespace std;

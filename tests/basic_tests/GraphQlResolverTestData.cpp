@@ -97,4 +97,26 @@ namespace GraphQlResolverTestData {
         }
 
     };
+
+    class CarResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        CarResolver() {
+            this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createCar());
+        }
+
+        IGraphQlDTO * getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "car";
+        }
+
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            return dtoObject;
+        }
+
+    };
 }

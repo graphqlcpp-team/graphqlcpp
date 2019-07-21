@@ -10,7 +10,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../graphqlparser/c/GraphQLAst.h"
 #include "../../../include/graphqlparser/Ast.h"
-#include "../../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 #include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
 #include <vector>
 #include <memory>
@@ -52,7 +52,7 @@ namespace graphqlcpp {
             }
             const SelectionSet *selectionSet = getSelectionSet(rootNodeQuery);
             if (!iterateThroughSelectionSetsAndValidate(selectionSet, operation)) {
-                throw InvalidQueryException();
+                throw InvalidRequestException();
             }
             return true;
         }

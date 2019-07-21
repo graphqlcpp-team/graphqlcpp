@@ -17,7 +17,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../src/graphqlparser/c/GraphQLAst.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
-
+#include <vector>
 //using namespace Json;
 using namespace std;
 using namespace graphqlcpp::api;
@@ -101,6 +101,38 @@ namespace demo {
         }
     };
 
+    class Wheel : public IGraphQlDTO {
+    private:
+        int pressure;
+    public:
+        Wheel(int pressure) {
+            this->pressure = pressure;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("pressure", this->pressure);
+            return serializer;
+        }
+    };
+
+
+    class Car : public IGraphQlDTO {
+    private:
+        vector<Wheel*> wheels;
+    public:
+        Car(vector<Wheel*> wheels) {
+            this->wheels = wheels;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            vector<IGraphQlDTO*> vec(wheels.begin(), wheels.end());
+            serializer->setVal("wheels", vec);
+            return serializer;
+        }
+    };
+
+
+
     class TestDataGenerator {
     public:
         static IGraphQlDTO *createCustomer() {
@@ -113,6 +145,21 @@ namespace demo {
         }
         static IGraphQlDTO *createUser(){
             return new User("Herbert", 1);
+        }
+
+        static IGraphQlDTO *createCar(){
+            std::vector<Wheel*> vw ;
+
+            Wheel* w1 = new Wheel(1);
+            vw.push_back(w1);
+            Wheel* w2 = new Wheel(2);
+            vw.push_back(w2);
+            Wheel* w3 = new Wheel(3);
+            vw.push_back(w3);
+            Wheel* w4 = new Wheel(4);
+            vw.push_back(w4);
+
+            return new Car(vw);
         }
     };
 
