@@ -9,13 +9,16 @@ graphqlcpp::resolver::ResolverManager::ResolverManager() {
 }
 
 graphqlcpp::resolver::ResolverManager::~ResolverManager() {
+    if(resolvers!= nullptr){
+        for (auto & resolver : *resolvers)
+            delete resolver.second;
+        delete resolvers;
+    }
     delete this->resolvers;
-    //TODO inhalt der map deleten. Oder funtioniert das automatisch?
 }
 
 void graphqlcpp::resolver::ResolverManager::registerResolver(graphqlcpp::resolver::IGraphQlResolver *resolver) {
     this->resolvers->insert(std::make_pair(resolver->getResolverName(),resolver));
-
 }
 
 graphqlcpp::api::IGraphQlDTO *
