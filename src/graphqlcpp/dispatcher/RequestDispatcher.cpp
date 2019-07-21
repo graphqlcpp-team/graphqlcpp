@@ -8,6 +8,7 @@
 #include "../../../include/graphqlcpp/utils/MySerializerRoot.h"
 #include "../../../include/graphqlcpp/utils/MyWriter.h"
 #include "../../../include/graphqlcpp/RequestAstWrapper.h"
+#include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
 #include <string>
 
 
@@ -25,7 +26,7 @@ graphqlcpp::dispatcher::RequestDispatcher::executeRequest(graphqlcpp::RequestAst
         delete serializer;
         return json;
     }
-    return nullptr; //TODO use exception
+    throw exceptions::WrongOperationException();
 }
 
 graphqlcpp::dispatcher::RequestDispatcher::RequestDispatcher(graphqlcpp::resolver::ResolverManager *resolverManager) {

@@ -47,7 +47,6 @@ TEST(GraphqlApiTest, libIntegrationTest){
     checkIfStrEqu(expected, response);
 }
 
-//TODO Validierung funktioniert nicht bei Listentypen
 TEST(GraphqlApiTest, multipleChildesAtRootLevel){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { allUsers: [User]} type User { id: ID! name: string!	age: Int}";

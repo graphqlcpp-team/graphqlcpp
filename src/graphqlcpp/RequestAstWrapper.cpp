@@ -9,6 +9,7 @@
 #include "../../../include/graphqlparser/Ast.h"
 #include "../../../include/graphqlcpp/exceptions/InvalidQueryException.h"
 #include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
+#include "../../../include/graphqlcpp/exceptions/NoQuerySetException.h"
 
 namespace graphqlcpp {
     using namespace graphqlcpp::exceptions;
@@ -26,8 +27,7 @@ namespace graphqlcpp {
         auto selectionSet = getSelectionSet(this->queryRootNode);
         std::string name;
         if (selectionSet == nullptr) {
-            //TODO throw exception
-            return nullptr;
+            throw NoQuerySetException();
         }
         name = std::string(getNameOfSelectionSet(selectionSet));
         auto arguments = getArgumentsOfSelectionSet(selectionSet);

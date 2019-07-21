@@ -62,7 +62,6 @@ namespace graphqlcpp {
 
         void MySerializer::setVal(std::string name, IGraphQlDTO *val) {
             if (wasFieldRequested(name)) {
-                //TODO die zeile muss angepasst werden
                 const SelectionSet *childLevelSelectionSet = this->selectionSetNextLevelOfCurrentField;
 
                 MySerializer *childNodeSerializer = new MySerializerChild(childLevelSelectionSet);
