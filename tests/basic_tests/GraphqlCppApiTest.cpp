@@ -59,4 +59,16 @@ TEST(GraphqlApiTest, multipleChildesAtRootLevel){
     checkIfStrEqu(expected, response);
 }
 
-//TODO test schreiben, ob nested listen typen also nicht auf root ebene auch funktionieren
+TEST(GraphqlApiTest, multipleChildes){
+
+    const char* schema = "schema {query: Query } type Query { car: Car} type Car { wheels: [Wheel]} type Wheel {pressure:Int}";
+
+    const char * query = "query{ car { wheels { pressure } } }";
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::CarResolver();
+    api->registerResolver(resolver);
+    string response = (api->executeRequest(query));
+    string expected = R"({"data":{"wheels":[{"pressure":1},{"pressure":2},{"pressure":3},{"pressure":4}]}})";
+    checkIfStrEqu(expected, response);
+}

@@ -17,8 +17,6 @@ namespace graphqlcpp {
     using namespace facebook::graphql;
     using namespace facebook::graphql::ast;
 
-    //TODO aufräumen new
-
     graphqlcpp::RequestAstWrapper::RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode) {
         this->queryRootNode = queryRootNode;
     }
