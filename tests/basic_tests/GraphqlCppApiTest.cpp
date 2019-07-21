@@ -1,13 +1,11 @@
-#include"gtest/gtest.h"
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
-#include "../../include/graphqlcpp/GraphqlCppApi.h"
-#include "../../include/graphqlcpp/ApiFactory.h"
 #include <string>
+#include "../../include/graphqlcpp/GraphqlCppApi.h"
 #include "GraphQlResolverTestData.cpp"
+#include"gtest/gtest.h"
 
 using namespace std;
 using namespace facebook::graphql;
@@ -16,7 +14,7 @@ using namespace graphqlcpp::api;
 
 
 TEST(GraphqlApiTest, setSchema) {
-    GraphqlCppApi *api = ApiFactory::createApi();
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
     string schema = "query{user(id:1) {name}}";
     api->setGraphiQlIntrospectionSchema(schema);
     string res = api->getGraphiQlIntrospectionSchema();
@@ -39,7 +37,7 @@ TEST(GraphqlApiTest, libIntegrationTest){
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
     const char * query = "query{user(id:1) {name}}";
-    GraphqlCppApi *api = ApiFactory::createApi();
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
     string response = (api->executeRequest(query));
@@ -52,7 +50,7 @@ TEST(GraphqlApiTest, multipleChildesAtRootLevel){
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { allUsers: [User]} type User { id: ID! name: string!	age: Int}";
 
     const char * query = "query{ allUsers {name}}";
-    GraphqlCppApi *api = ApiFactory::createApi();
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
     api->setSchema(schema);
     auto resolver = new GraphQlResolverTestData::AllUserResolver();
     api->registerResolver(resolver);

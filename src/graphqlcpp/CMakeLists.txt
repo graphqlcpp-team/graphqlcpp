@@ -9,7 +9,6 @@ set(SOURCE_FILES
         validators/SchemaAstWraper.cpp
         validators/SchemaValidator.cpp
         dispatcher/RequestDispatcher.cpp
-        ApiFactory.cpp
         RequestAstWrapper.cpp
         utils/MySerializer.cpp
         utils/MyWriter.cpp
@@ -24,7 +23,6 @@ set(SOURCE_FILES
         ../../include/graphqlcpp/validators/SchemaAstWraper.h
         ../../include/graphqlcpp/validators/SchemaValidator.h
         ../../include/graphqlcpp/dispatcher/RequestDispatcher.h
-        ../../include/graphqlcpp/ApiFactory.h
         ../../include/graphqlcpp/RequestAstWrapper.h
         ../../include/graphqlcpp/utils/MySerializer.h
         ../../include/graphqlcpp/utils/MyWriter.h

@@ -38,12 +38,15 @@ private:
 	ResolverManager* resolverManager = nullptr;
 	RequestDispatcher* requestDispatcher = nullptr;
     std::string introspectionSchema = "";
-
-public:
     /**
      * The constructor of the GraphqlCpp Class
      */
 	GraphqlCppApi();
+	bool checkIfRequestValid(Node* rootNodeRequest);
+	Node* parseStringToAst(const std::string &str);
+	Node* parseSchemaStringToSchemaAst(const std::string &str);
+
+public:
 	~GraphqlCppApi();
 
 	/**
@@ -57,12 +60,12 @@ public:
     string executeRequest(const std::string &request);
 
     const char * printSchemaAsJson();
-    static GraphqlCppApi* createInstance();
 
-private:
-	bool checkIfRequestValid(Node* rootNodeRequest);
-	Node* parseStringToAst(const std::string &str);
-	Node* parseSchemaStringToSchemaAst(const std::string &str);
+    /***
+     * Factory method for GraphQlCppApi
+     * @return
+     */
+    static GraphqlCppApi* createInstance();
 };
 
 } /* namespace graphqlcppapi */

@@ -67,11 +67,13 @@ namespace graphqlcpp {
         }
 
         Node *GraphqlCppApi::parseSchemaStringToSchemaAst(const std::string &schema) {
-            //TODO check error string
-            const char *err = "";
+            const char *err = nullptr;
             std::unique_ptr<Node> schemaAst;
             schemaAst = parseStringWithExperimentalSchemaSupport(schema.c_str(), &err);
             Node *rootNode = schemaAst.release();
+            if(err!= nullptr){
+                throw exceptions::InvalidSchemaException();
+            }
             return rootNode;
         }
 
@@ -104,7 +106,7 @@ namespace graphqlcpp {
         }
 
         GraphqlCppApi *GraphqlCppApi::createInstance() {
-            return nullptr;
+            return new GraphqlCppApi();
         }
     }
 } /* namespace graphqlcppapi */
