@@ -13,7 +13,7 @@ using namespace facebook::graphql::ast;
 using namespace graphqlcpp::api;
 
 
-TEST(GraphqlApiTest, setSchema) {
+TEST(IntegrationTest, setSchema) {
     GraphqlCppApi *api = GraphqlCppApi::createInstance();
     string schema = "query{user(id:1) {name}}";
     api->setGraphiQlIntrospectionSchema(schema);
@@ -32,7 +32,7 @@ void checkIfStrEqu(const string &expected, const string &actual){
     ASSERT_STREQ(expCstr, actCstr);
 }
 
-TEST(GraphqlApiTest, libIntegrationTest){
+TEST(IntegrationTest, libIntegrationTest){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
@@ -45,7 +45,7 @@ TEST(GraphqlApiTest, libIntegrationTest){
     checkIfStrEqu(expected, response);
 }
 
-TEST(GraphqlApiTest, multipleChildesAtRootLevel){
+TEST(IntegrationTest, multipleChildesAtRootLevel){
 
     const char* schema = "schema {query: Query, mutation: Mutation} type Query { allUsers: [User]} type User { id: ID! name: string!	age: Int}";
 
@@ -59,7 +59,7 @@ TEST(GraphqlApiTest, multipleChildesAtRootLevel){
     checkIfStrEqu(expected, response);
 }
 
-TEST(GraphqlApiTest, multipleChildes){
+TEST(IntegrationTest, multipleChildes){
 
     const char* schema = "schema {query: Query } type Query { car: Car} type Car { wheels: [Wheel]} type Wheel {pressure:Int}";
 
