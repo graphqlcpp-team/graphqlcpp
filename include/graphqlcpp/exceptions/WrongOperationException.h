@@ -11,6 +11,9 @@
 namespace graphqlcpp {
 namespace exceptions {
 using namespace std;
+/**
+ * Will be thrown if the operation is not valid.
+ */
 class WrongOperationException : public runtime_error {
 public:
 	WrongOperationException() : runtime_error("only query operations are allowed"){};

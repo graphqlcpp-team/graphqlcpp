@@ -14,9 +14,12 @@ namespace graphqlcpp {
 namespace exceptions {
 using namespace std;
 
+/**
+ * Will be thrown if the argument is not valid
+ */
 class ArgumentNotValidException : public runtime_error {
 public:
-	ArgumentNotValidException() : runtime_error("no schema set"){};
+	ArgumentNotValidException() : runtime_error("argument is not valid"){};
 };
 
 } /* namespace api */
