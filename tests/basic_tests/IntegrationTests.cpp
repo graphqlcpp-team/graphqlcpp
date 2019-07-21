@@ -72,3 +72,18 @@ TEST(IntegrationTest, multipleChildes){
     string expected = R"({"data":{"wheels":[{"pressure":1},{"pressure":2},{"pressure":3},{"pressure":4}]}})";
     checkIfStrEqu(expected, response);
 }
+//TODO test schreiben, ob nested listen typen also nicht auf root ebene auch funktionieren
+
+TEST(GraphqlApiTest, finalDemoTest) {
+    const char *schema = "schema {  query: Query }  type Query {  book(id: int!): Book  author(id: int!): Author }  type Book {  id: int!  title: String  published: String  price: String  authorOfBook: Author }  type Quote {  id: int!  quote: String }  type Author {  id: int!  firstName: String  lastName: String  quotes: [Quote] }";
+
+    const char *query = "query{book(id:1){title, authorOfBook{firstName quotes{quote}}}}";
+    GraphqlCppApi *api = ApiFactory::createApi();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::BookResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
+    std::string expected = R"({"data":{"title":"Faust. Eine Tragödie.","authorOfBook":{"firstName":"Johann Wolfgang","quotes":[{"quote":"Mit dem Wissen wächst der Zweifel."},{"quote":"Wo viel Licht ist, ist starker Schatten."}]}}})";
+
+    checkIfStrEqu(response, expected);
+}
