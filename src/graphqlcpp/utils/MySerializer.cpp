@@ -50,11 +50,10 @@ namespace graphqlcpp {
             if (wasFieldRequested(name)) {
                 vector<MyWriter*> writerVec = vector<MyWriter*>(val.size());
                 const SelectionSet *childLevelSelectionSet = this->selectionSetNextLevelOfCurrentField;
-                for(auto v : val){
-
+                for(int i =0; i<val.size(); i++){
                     MySerializer *childNodeSerializer = new MySerializerChild(childLevelSelectionSet);
-                    childNodeSerializer = v->serialize(childNodeSerializer);
-                    writerVec.push_back(childNodeSerializer->createJson());
+                    childNodeSerializer = val.at(i)->serialize(childNodeSerializer);
+                    writerVec[i] = childNodeSerializer->createJson();
                 }
 
                 this->writer->appendValue(name, writerVec);

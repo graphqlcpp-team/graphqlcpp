@@ -89,7 +89,7 @@ namespace GraphQlResolverTestData {
         }
 
         char *getResolverName() override {
-            return "user";
+            return "allUsers";
         }
 
         //TODO beachte es werden die serialisierten objekte nicht gelöscht

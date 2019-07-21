@@ -55,8 +55,11 @@ TEST(GraphqlApiTest, multipleChildesAtRootLevel){
     const char * query = "query{ allUsers {name}}";
     GraphqlCppApi *api = ApiFactory::createApi();
     api->setSchema(schema);
-    api->registerResolver(new GraphQlResolverTestData::AllUserResolver());
+    auto resolver = new GraphQlResolverTestData::AllUserResolver();
+    api->registerResolver(resolver);
     string response = (api->executeRequest(query));
-    string expected = R"({"data":{"name":"Herbert"}})";
+    string expected = R"({"data":[{"name":"Herbert"},{"name":"Herbert"},{"name":"Herbert"}]})";
     checkIfStrEqu(expected, response);
 }
+
+//TODO test schreiben, ob nested listen typen also nicht auf root ebene auch funktionieren

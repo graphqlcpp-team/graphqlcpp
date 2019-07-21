@@ -160,8 +160,13 @@ namespace graphqlcpp {
                     const char *fieldName = field->getName().getValue();
                     if (strcmp(fatherFieldName, fieldName) == 0) {
                         const Type *type = &field->getType();
-                        const NamedType *namedType = (NamedType *) type;
-                        fatherNodeName = namedType->getName().getValue();
+                        const Type * listType = &((ListType*) type)->getType();
+                        fatherNodeName= ((NamedType*)listType)->getName().getValue();
+                        if(fatherNodeName == nullptr )
+                        {
+                            const NamedType *namedType = (NamedType *) type;
+                            fatherNodeName = namedType->getName().getValue();
+                        }
                         break;
                     }
                 }
