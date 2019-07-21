@@ -14,6 +14,9 @@ namespace graphqlcpp {
     namespace exceptions {
         using namespace std;
 
+        /**
+         * Will be thrown if the request was invalid.
+         */
         class InvalidRequestException : public runtime_error {
         public:
             InvalidRequestException() : runtime_error("invalid query") {};

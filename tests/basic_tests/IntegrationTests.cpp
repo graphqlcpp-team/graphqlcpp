@@ -78,3 +78,17 @@ TEST(IntegrationTest, setSchemaTest) {
     ASSERT_EQ(schema, res);
     delete api;
 }
+
+TEST(GraphqlApiTest, finalDemoTest) {
+    const char *schema = "schema {  query: Query }  type Query {  book(id: int!): Book  author(id: int!): Author }  type Book {  id: int!  title: String  published: String  price: String  authorOfBook: Author }  type Quote {  id: int!  quote: String }  type Author {  id: int!  firstName: String  lastName: String  quotes: [Quote] }";
+
+    const char *query = "query{book(id:1){title, authorOfBook{firstName quotes{quote}}}}";
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::BookResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
+    std::string expected = R"({"data":{"title":"Faust. Eine Tragödie.","authorOfBook":{"firstName":"Johann Wolfgang","quotes":[{"quote":"Mit dem Wissen wächst der Zweifel."},{"quote":"Wo viel Licht ist, ist starker Schatten."}]}}})";
+
+    ASSERT_EQ(response, expected);
+}

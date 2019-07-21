@@ -14,6 +14,9 @@ namespace graphqlcpp {
 namespace exceptions {
 using namespace std;
 
+/**
+ * Will be thrown if no schema is set
+ */
 class NoSchemaSetException : public runtime_error {
 public:
 	NoSchemaSetException() : runtime_error("no schema set"){};
