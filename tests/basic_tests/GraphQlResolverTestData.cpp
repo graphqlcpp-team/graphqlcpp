@@ -4,8 +4,6 @@
 
 #include <gtest/gtest.h>
 #include "string"
-//#include "jsoncpp/json/value.h"
-//#include "jsoncpp/json/reader.h"
 #include "../../include/graphqlcpp/utils/MySerializer.h"
 #include "../../include/graphqlcpp/IGraphQlDTO.h"
 #include "../../include/graphqlcpp/utils/MyWriter.h"
@@ -45,7 +43,6 @@ namespace GraphQlResolverTestData {
 
         //TODO beachte es werden die serialisierten objekte nicht gelöscht
         IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-
             return dtoObject;
         }
 
@@ -99,7 +96,31 @@ namespace GraphQlResolverTestData {
             return dtoObject;
         }
 
+
     };
+
+    class CarResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        CarResolver() {
+            this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createCar());
+        }
+
+        IGraphQlDTO * getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "car";
+        }
+
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            return dtoObject;
+        }
+
+    };
+
     class BookResolver : public graphqlcpp::resolver::IGraphQlResolver {
     private:
         IGraphQlDTO *dtoObject;

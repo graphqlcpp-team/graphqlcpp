@@ -5,10 +5,12 @@
  *      Author: amelie
  */
 
+/** @file validate the query*/
+
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../graphqlparser/c/GraphQLAst.h"
 #include "../../../include/graphqlparser/Ast.h"
-#include "../../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 #include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
 #include <vector>
 #include <memory>
@@ -50,7 +52,7 @@ namespace graphqlcpp {
             }
             const SelectionSet *selectionSet = getSelectionSet(rootNodeQuery);
             if (!iterateThroughSelectionSetsAndValidate(selectionSet, operation)) {
-                throw InvalidQueryException();
+                throw InvalidRequestException();
             }
             return true;
         }
@@ -90,7 +92,6 @@ namespace graphqlcpp {
                     const GraphQLAstField *graphQlField =
                             (GraphQLAstField *) selection.get();
                     auto field = (const Field *) graphQlField;
-                    //this->schemaWrapper->validateNode(fatherFieldName, field); //TODO: Zeile noterndig?
                     const Name *namePointer = &field->getName();
                     const char *name = namePointer->getValue();
 

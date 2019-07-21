@@ -10,7 +10,6 @@
 class ResolverArgument {
 private:
     std::string argName;
-    //TODO: typiesieren
     std::string argValue;
 public:
     ResolverArgument(std::string argName, std::string argValue);

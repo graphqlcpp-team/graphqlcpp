@@ -17,7 +17,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../src/graphqlparser/c/GraphQLAst.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
-
+#include <vector>
 //using namespace Json;
 using namespace std;
 using namespace graphqlcpp::api;
@@ -89,7 +89,7 @@ namespace demo {
         int id;
         std::string name;
     public:
-        User(std::string name, int id) {
+        User(std::string name,int id) {
             this->name = name;
             this->id = id;
         }
@@ -100,6 +100,38 @@ namespace demo {
             return serializer;
         }
     };
+
+    class Wheel : public IGraphQlDTO {
+    private:
+        int pressure;
+    public:
+        Wheel(int pressure) {
+            this->pressure = pressure;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("pressure", this->pressure);
+            return serializer;
+        }
+    };
+
+
+    class Car : public IGraphQlDTO {
+    private:
+        vector<Wheel*> wheels;
+    public:
+        Car(vector<Wheel*> wheels) {
+            this->wheels = wheels;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            vector<IGraphQlDTO*> vec(wheels.begin(), wheels.end());
+            serializer->setVal("wheels", vec);
+            return serializer;
+        }
+    };
+
+
 
     class Quote : public IGraphQlDTO {
     private:
@@ -171,16 +203,30 @@ namespace demo {
     class TestDataGenerator {
     public:
         static IGraphQlDTO *createCustomer() {
-            City *c = new City("Nuernberg", {90429});
-            City *c2 = new City("Munic", {90429});
+            City *c = new City("Nuernberg", {90429} );
+            City *c2 = new City("Munic", {90429} );
             Address *a1 = new Address(c, "Fuertherstr.");
             Address *a2 = new Address(c2, "Maximilanstr.");
             Customer *cu = new Customer("Sven Steuermann", 34, a1, a2);
             return cu;
         }
-
-        static IGraphQlDTO *createUser() {
+        static IGraphQlDTO *createUser(){
             return new User("Herbert", 1);
+        }
+
+        static IGraphQlDTO *createCar(){
+            std::vector<Wheel*> vw ;
+
+            Wheel* w1 = new Wheel(1);
+            vw.push_back(w1);
+            Wheel* w2 = new Wheel(2);
+            vw.push_back(w2);
+            Wheel* w3 = new Wheel(3);
+            vw.push_back(w3);
+            Wheel* w4 = new Wheel(4);
+            vw.push_back(w4);
+
+            return new Car(vw);
         }
         static vector<IGraphQlDTO *> createBooks(){
             Quote *q1 = new Quote(1, "Mit dem Wissen wächst der Zweifel.");

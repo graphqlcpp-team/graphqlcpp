@@ -15,7 +15,7 @@
 #include "../../src/graphqlparser/c/GraphQLAstToJSON.h"
 #include "../../include/graphqlcpp/RequestAstWrapper.h"
 #include "../../include/graphqlcpp/exceptions/WrongOperationException.h"
-#include "../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 
 
 using namespace std;
@@ -65,9 +65,8 @@ TEST(RequestAstWrapperTest, IsResolverNameValid) {
 
     Node *node = queryAst.get();
     RequestAstWrapper *raw = new RequestAstWrapper(node);
-    ResolverInfo * resolverInfo;
-    resolverInfo = raw->extractResolver();
-    std::string name = resolverInfo->getResolverName();
+    ResolverInfo resolverInfo = raw->extractResolver();
+    std::string name = resolverInfo.getResolverName();
     ASSERT_TRUE(name == "user");
 }
 
@@ -81,9 +80,8 @@ TEST(RequestAstWrapperTest, AreResolverArgumentsValid) {
 
     Node *node = queryAst.get();
     RequestAstWrapper *raw = new RequestAstWrapper(node);
-    ResolverInfo * resolverInfo;
-    resolverInfo = raw->extractResolver();
-    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ResolverInfo resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo.getArgs();
     ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
     ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "1");
 }
@@ -99,9 +97,8 @@ TEST(RequestAstWrapperTest, AreResolverArgumentsValidWithNoValue) {
 
     Node *node = queryAst.get();
     RequestAstWrapper *raw = new RequestAstWrapper(node);
-    ResolverInfo *resolverInfo;
-    resolverInfo = raw->extractResolver();
-    vector<ResolverArgument *> *resolverArguments = resolverInfo->getArgs();
+    ResolverInfo resolverInfo  = raw->extractResolver();
+    vector<ResolverArgument *> *resolverArguments = resolverInfo.getArgs();
     ASSERT_EQ(resolverArguments, nullptr);
 }
 
@@ -115,9 +112,8 @@ TEST(RequestAstWrapperTest, AreResolverArgumentsValidTrueValue) {
 
     Node *node = queryAst.get();
     RequestAstWrapper *raw = new RequestAstWrapper(node);
-    ResolverInfo * resolverInfo;
-    resolverInfo = raw->extractResolver();
-    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ResolverInfo resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo.getArgs();
     ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
     ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "true");
 }
@@ -132,9 +128,8 @@ TEST(RequestAstWrapperTest, AreResolverArgumentsValidFalseValue) {
 
     Node *node = queryAst.get();
     RequestAstWrapper *raw = new RequestAstWrapper(node);
-    ResolverInfo * resolverInfo;
-    resolverInfo = raw->extractResolver();
-    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ResolverInfo resolverInfo= raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo.getArgs();
     ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
     ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "false");
 }
@@ -149,9 +144,8 @@ TEST(RequestAstWrapperTest, AreResolverArgumentsValidTwoValues) {
 
     Node *node = queryAst.get();
     RequestAstWrapper *raw = new RequestAstWrapper(node);
-    ResolverInfo * resolverInfo;
-    resolverInfo = raw->extractResolver();
-    vector<ResolverArgument *> * resolverArguments = resolverInfo->getArgs();
+    ResolverInfo resolverInfo = raw->extractResolver();
+    vector<ResolverArgument *> * resolverArguments = resolverInfo.getArgs();
     ASSERT_TRUE(resolverArguments->at(0)->getArgName() == "id");
     ASSERT_TRUE(resolverArguments->at(0)->getArgValue() == "false");
     ASSERT_TRUE(resolverArguments->at(1)->getArgName() == "age");

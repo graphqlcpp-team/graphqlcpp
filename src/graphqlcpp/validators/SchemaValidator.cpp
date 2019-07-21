@@ -11,13 +11,13 @@ namespace graphqlcpp{
 namespace validators{
 
 SchemaValidator::SchemaValidator() {
-	// TODO Auto-generated constructor stub
-
-
+    //there is no need for schema validation at the moment
 }
+
 bool SchemaValidator::checkIfSchemaIsValid(
 		Node* schemaAst) {
 	return true;
+	//if you want to implement schema validation then you can implement it here
 }
 }
 }

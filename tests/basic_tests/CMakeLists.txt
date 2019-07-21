@@ -4,9 +4,8 @@ add_executable(runTests
         ResolverManagerTest.cpp
         GraphQlResolverTestData.cpp
         RequestAstWrapperTest.cpp
-        GraphqlCppApiTest.cpp
+        IntegrationTests.cpp
         DtoAndSerializerTest.cpp
-        JsonVisitorTests.cpp
         QueryValidatorTests.cpp
         SchemaAstWrapperTest.cpp
         RequestDispatcherTest.cpp
