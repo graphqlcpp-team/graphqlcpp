@@ -36,7 +36,7 @@ set(SOURCE_FILES
         ../../include/graphqlcpp/GraphQlDTOSingleRoot.h
         ../../include/graphqlcpp/utils/MySerializerRoot.h
         ../../include/graphqlcpp/utils/MySerializerChild.h
-        )
+        utils/StringUtils.cpp)
 
 
 add_library(graphqlcpp STATIC ${SOURCE_FILES})

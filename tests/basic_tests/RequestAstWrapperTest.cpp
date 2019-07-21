@@ -15,7 +15,7 @@
 #include "../../src/graphqlparser/c/GraphQLAstToJSON.h"
 #include "../../include/graphqlcpp/RequestAstWrapper.h"
 #include "../../include/graphqlcpp/exceptions/WrongOperationException.h"
-#include "../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 
 
 using namespace std;

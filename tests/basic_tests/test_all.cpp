@@ -1,13 +1,17 @@
 #include <iostream>
 using namespace std;
 #include "gtest/gtest.h"
-//#include "QueryValidatorTests.cpp"
 
-
+/***
+ * Run all Tests
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  //falls man nur bestimmte Tests ausfuehren will:
-  //::testing::GTEST_FLAG(filter) = "SchemaAst*";
+  testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
+//falls man nur bestimmte Tests ausfuehren will:
+//::testing::GTEST_FLAG(filter) = "SchemaAst*";
 

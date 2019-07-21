@@ -7,7 +7,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../graphqlparser/c/GraphQLAst.h"
 #include "../../../include/graphqlparser/Ast.h"
-#include "../../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 #include "../../../include/graphqlcpp/exceptions/WrongOperationException.h"
 #include "../../../include/graphqlcpp/exceptions/NoQuerySetException.h"
 

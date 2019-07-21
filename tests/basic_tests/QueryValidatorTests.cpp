@@ -9,7 +9,7 @@
 #include "../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
 #include "../../include/graphqlcpp/exceptions/WrongOperationException.h"
-#include "../../include/graphqlcpp/exceptions/InvalidQueryException.h"
+#include "../../include/graphqlcpp/exceptions/InvalidRequestException.h"
 
 using namespace std;
 using namespace facebook::graphql;
@@ -107,7 +107,7 @@ TEST(QueryValidatorTests, IsQueryValidWithNotValidQueryExpectError) {
 	SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
 	QueryValidator* qv = new QueryValidator(saw);
 
-	ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+	ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidRequestException);
 }
 
 TEST(QueryValidatorTests, IsArgumentTypeBoolValidExpectNoError) {
@@ -232,7 +232,7 @@ TEST(QueryValidatorTests, IsArgumentTypeBooleanValidExpectError) {
     SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
     QueryValidator* qv = new QueryValidator(saw);
 
-    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidRequestException);
 }
 
 TEST(QueryValidatorTests, IsArgumentValidExpectErrorBecauseNonNullType) {
@@ -252,7 +252,7 @@ TEST(QueryValidatorTests, IsArgumentValidExpectErrorBecauseNonNullType) {
     SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
     QueryValidator* qv = new QueryValidator(saw);
 
-    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidRequestException);
 }
 
 TEST(QueryValidatorTests, IsArgumentValidExpectErrorBecauseWrongArgumentName) {
@@ -272,7 +272,7 @@ TEST(QueryValidatorTests, IsArgumentValidExpectErrorBecauseWrongArgumentName) {
     SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
     QueryValidator* qv = new QueryValidator(saw);
 
-    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidRequestException);
 }
 
 TEST(QueryValidatorTests, IsArgumentValidExpectNoErrorTwoArguments) {
@@ -352,7 +352,7 @@ TEST(QueryValidatorTests, IsArgumentValidExpectErrorThreeAndThreeRequiredButOnly
     SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
     QueryValidator* qv = new QueryValidator(saw);
 
-    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidRequestException);
 }
 
 TEST(QueryValidatorTests, IsArgumentValidExpectNoErrorThreeAndTwoRequiredDiffrentOrder) {
@@ -393,5 +393,5 @@ TEST(QueryValidatorTests, IsArgumentValidExpectErrorThreeAndTwoRequiredOneWrongT
     SchemaAstWraper* saw = new SchemaAstWraper(schemaAst.get());
     QueryValidator* qv = new QueryValidator(saw);
 
-    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidQueryException);
+    ASSERT_THROW(qv->isQueryValid(queryAst.get()), InvalidRequestException);
 }
