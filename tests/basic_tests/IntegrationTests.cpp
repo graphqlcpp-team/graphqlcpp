@@ -6,6 +6,8 @@
 #include "../../include/graphqlcpp/GraphqlCppApi.h"
 #include "GraphQlResolverTestData.cpp"
 #include"gtest/gtest.h"
+#include <stdio.h>  /* defines FILENAME_MAX */
+#include <chrono>
 
 using namespace std;
 using namespace facebook::graphql;
@@ -29,10 +31,20 @@ TEST(IntegrationTest, singleChildTest){
     string schema = "schema {query: Query, mutation: Mutation} type Query { user(id: ID!): User} type User { id: ID! name: string!	age: Int}";
 
     string query = "query{user(id:1) {name}}";
+    cout << "Checking if Query is valid at: ";
+    auto start = std::chrono::system_clock::now();
     GraphqlCppApi *api = GraphqlCppApi::createInstance();
     api->setSchema(schema);
     api->registerResolver(new GraphQlResolverTestData::UserResolver());
     string response = (api->executeRequest(query));
+    auto end = std::chrono::system_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+    std::cout << "finished computation at " << std::ctime(&end_time)
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
     string expected = R"({"data":{"name":"Herbert"}})";
     ASSERT_EQ(expected, response);
     delete api;
