@@ -17,6 +17,11 @@ namespace graphqlcpp {
 
         class IGraphQlDTO {
         public:
+            /**
+             * This function must be overwritten by the user. It will serialize the GraphQLDTO object.
+             * @param serializer The MySerializer object.
+             * @return The modified MySerializer object.
+             */
             virtual MySerializer *serialize(MySerializer *serializer) = 0;
 
         };

@@ -50,7 +50,7 @@ public:
 	~GraphqlCppApi();
 
 	/**
-	 *
+	 * This function
 	 * @param schema
 	 */
 	void setSchema(const std::string &schema);
