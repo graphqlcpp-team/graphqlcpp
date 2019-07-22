@@ -40,13 +40,14 @@ namespace graphqlcpp {
             std::string introspectionSchema = "";
 
             /**
-             * The constructor of the GraphqlCpp Class. The Ctor is private. It should be created via the Factory Method
+             * The constructor of the GraphqlCpp Class. The Ctor is private. This class should be created
+             * via the Factory Method.
              */
             GraphqlCppApi();
 
             /***
-             * This method checks wether a request is valid or not
-             * @param rootNodeRequest The root node of the query ast
+             * This method checks whether a request is valid or not
+             * @param rootNodeRequest the root node of the query ast (abstract syntax tree)
              * @return true if the request is valid otherwise it returns false
              */
             bool checkIfRequestValid(Node *rootNodeRequest);
@@ -115,7 +116,7 @@ namespace graphqlcpp {
 
             /***
              * Factory method for GraphQlCppApi
-             * @return
+             * @return a new instance of this class
              */
             static GraphqlCppApi *createInstance();
         };
