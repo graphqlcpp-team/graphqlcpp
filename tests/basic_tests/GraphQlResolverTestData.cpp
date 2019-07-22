@@ -33,7 +33,7 @@ namespace GraphQlResolverTestData {
             dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createCustomer());
         }
 
-        IGraphQlDTO * getDtoObject() {
+        IGraphQlDTO *getDtoObject() {
             return dtoObject;
         }
 
@@ -55,7 +55,7 @@ namespace GraphQlResolverTestData {
             dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createUser());
         }
 
-        IGraphQlDTO * getDtoObject() {
+        IGraphQlDTO *getDtoObject() {
             return dtoObject;
         }
 
@@ -74,14 +74,14 @@ namespace GraphQlResolverTestData {
         IGraphQlDTO *dtoObject;
     public:
         AllUserResolver() {
-            vector<IGraphQlDTO*> users = vector<IGraphQlDTO*>();
+            vector<IGraphQlDTO *> users = vector<IGraphQlDTO *>();
             users.push_back(demo::TestDataGenerator::createUser());
             users.push_back(demo::TestDataGenerator::createUser());
             users.push_back(demo::TestDataGenerator::createUser());
             dtoObject = new GraphQlDTOMultiRoot(users);
         }
 
-        IGraphQlDTO * getDtoObject() {
+        IGraphQlDTO *getDtoObject() {
             return dtoObject;
         }
 
@@ -104,7 +104,7 @@ namespace GraphQlResolverTestData {
             this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createCar());
         }
 
-        IGraphQlDTO * getDtoObject() {
+        IGraphQlDTO *getDtoObject() {
             return dtoObject;
         }
 
@@ -123,11 +123,11 @@ namespace GraphQlResolverTestData {
         IGraphQlDTO *dtoObject;
     public:
         BookResolver() {
-            vector<IGraphQlDTO*> v = demo::TestDataGenerator::createBooks();
+            vector<IGraphQlDTO *> v = demo::TestDataGenerator::createBooks();
             dtoObject = new GraphQlDTOMultiRoot(v);
         }
 
-        IGraphQlDTO * getDtoObject() {
+        IGraphQlDTO *getDtoObject() {
             return dtoObject;
         }
 
@@ -161,4 +161,122 @@ namespace GraphQlResolverTestData {
 
     };
 
+    class LastTemperatureMeasurementsResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        LastTemperatureMeasurementsResolver() {
+        }
+
+        IGraphQlDTO *getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "lastTemperatureMeasurements";
+        }
+
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            for (auto i : *resolverArgs) {
+                if (i->getArgName() == "last") {
+                    int value = atoi(i->getArgValue().c_str());
+                    if (value == 2) {
+                        this->dtoObject = new GraphQlDTOMultiRoot(demo::TestDataGenerator::createTemperature());
+                    }
+
+                }
+            }
+            return dtoObject;
+        }
+
+    };
+    class LastAirPressureMeasurementsResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        LastAirPressureMeasurementsResolver() {
+        }
+
+        IGraphQlDTO *getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "lastAirPressureMeasurements";
+        }
+
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            for (auto i : *resolverArgs) {
+                if (i->getArgName() == "last") {
+                    int value = atoi(i->getArgValue().c_str());
+                    if (value == 2) {
+                        this->dtoObject = new GraphQlDTOMultiRoot(demo::TestDataGenerator::createAirPressure());
+                    }
+
+                }
+            }
+            return dtoObject;
+        }
+
+    };
+
+    class AverageTemperatureResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        AverageTemperatureResolver() {
+        }
+
+        IGraphQlDTO *getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "averageTemperature";
+        }
+
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            for (auto i : *resolverArgs) {
+                if (i->getArgName() == "date") {
+                    std::string value = i->getArgValue().c_str();
+                    if (value == "01.01.1970") {
+                        this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createAverageTemperature());
+                    }
+
+                }
+            }
+            return dtoObject;
+        }
+
+    };
+
+    class AverageAirPressureResolver : public graphqlcpp::resolver::IGraphQlResolver {
+    private:
+        IGraphQlDTO *dtoObject;
+    public:
+        AverageAirPressureResolver() {
+        }
+
+        IGraphQlDTO *getDtoObject() {
+            return dtoObject;
+        }
+
+        std::string getResolverName() override {
+            return "averageAirPressure";
+        }
+
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+            for (auto i : *resolverArgs) {
+                if (i->getArgName() == "date") {
+                    std::string value = i->getArgValue().c_str();
+                    if (value == "01.01.1970") {
+                        this->dtoObject = new GraphQlDTOSingleRoot(demo::TestDataGenerator::createAverageAirPressure());
+                    }
+
+                }
+            }
+            return dtoObject;
+        }
+
+    };
 }

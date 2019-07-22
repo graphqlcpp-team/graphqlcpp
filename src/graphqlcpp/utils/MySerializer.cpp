@@ -28,6 +28,12 @@ namespace graphqlcpp {
             }
         }
 
+        void MySerializer::setVal(std::string name, float val) {
+            if (wasFieldRequested(name)) {
+                this->writer->appendValue(name, val);
+            }
+        }
+
         void MySerializer::setVal(std::string name, vector<int> values){
             if (wasFieldRequested(name)) {
                 this->writer->appendValue(name, values);

@@ -46,6 +46,15 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
+        void MyWriter::appendValue(std::string name, float val) {
+            data.append("\"");
+            data.append(name);
+            data.append("\"");
+            data.append(":");
+            data.append(to_string(val));
+            data.append(separator);
+        }
+
         void MyWriter::appendValue(std::string name, std::string val) {
             data.append("\"");
             data.append(name);

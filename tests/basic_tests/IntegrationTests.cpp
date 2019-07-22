@@ -79,7 +79,7 @@ TEST(IntegrationTest, setSchemaTest) {
     delete api;
 }
 
-TEST(GraphqlApiTest, finalDemoTest) {
+TEST(IntegrationTest, finalDemoTest) {
     const char *schema = "schema {  query: Query }  type Query {  book(id: int!): Book  author(id: int!): Author }  type Book {  id: int!  title: String  published: String  price: String  authorOfBook: Author }  type Quote {  id: int!  quote: String }  type Author {  id: int!  firstName: String  lastName: String  quotes: [Quote] }";
 
     const char *query = "query{book(id:1){title, authorOfBook{firstName quotes{quote}}}}";
@@ -91,4 +91,57 @@ TEST(GraphqlApiTest, finalDemoTest) {
     std::string expected = R"({"data":{"title":"Faust. Eine Tragödie.","authorOfBook":{"firstName":"Johann Wolfgang","quotes":[{"quote":"Mit dem Wissen wächst der Zweifel."},{"quote":"Wo viel Licht ist, ist starker Schatten."}]}}})";
 
     ASSERT_EQ(response, expected);
+}
+
+TEST(IntegrationTest, lastTemperatureMeasurementsTest){
+    const char *schema = "schema {   query: Query }  type Temperature {   date: String   temperature: Float } type AirPressure {   date: String   pressure: Float }   type Query {   lastTemperatureMeasurements(last:Int!): [Temperature]   averageTemperature(date: String!): Temperature      lastAirPressureMeasurements(last:Int!): [AirPressure]   averageAirPressure(date: String!): AirPressure }";
+    const char *query = "query{lastTemperatureMeasurements(last:2){temperature}}";
+
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::LastTemperatureMeasurementsResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
+    std::string expected = R"({"data":[{"temperature":20.400000},{"temperature":28.000000}]})";
+
+    ASSERT_EQ(response, expected);
+}
+
+TEST(IntegrationTest, lastAirPressureMeasurementsTest){
+    const char *schema = "schema {   query: Query }  type Temperature {   date: String   temperature: Float } type AirPressure {   date: String   pressure: Float }   type Query {   lastTemperatureMeasurements(last:Int!): [Temperature]   averageTemperature(date: String!): Temperature      lastAirPressureMeasurements(last:Int!): [AirPressure]   averageAirPressure(date: String!): AirPressure }";
+    const char *query = "query{lastAirPressureMeasurements(last:2){pressure}}";
+
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::LastAirPressureMeasurementsResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
+    std::string expected = R"({"data":[{"pressure":10000.230469},{"pressure":99999.203125}]})";
+
+    ASSERT_EQ(response, expected);
+}
+
+TEST(IntegrationTest, averageTemperatureTest){
+    const char *schema = "schema {   query: Query }  type Temperature {   date: String   temperature: Float } type AirPressure {   date: String   pressure: Float }   type Query {   lastTemperatureMeasurements(last:Int!): [Temperature]   averageTemperature(date: String!): Temperature      lastAirPressureMeasurements(last:Int!): [AirPressure]   averageAirPressure(date: String!): AirPressure }";
+    const char *query = "query{averageTemperature(date:\"01.01.1970\"){temperature}}";
+
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::AverageTemperatureResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
+    std::string expected = R"({"data":{"temperature":20.400000}})";
+
+    ASSERT_EQ(response, expected);
+}
+
+TEST(IntegrationTest, averageAirPressureTest){
+    const char *schema = "schema {   query: Query }  type Temperature {   date: String   temperature: Float } type AirPressure {   date: String   pressure: Float }   type Query {   lastTemperatureMeasurements(last:Int!): [Temperature]   averageTemperature(date: String!): Temperature      lastAirPressureMeasurements(last:Int!): [AirPressure]   averageAirPressure(date: String!): AirPressure }";
+    const char *query = "query{averageAirPressure(date:\"01.01.1970\"){pressure}}";
+
+    GraphqlCppApi *api = GraphqlCppApi::createInstance();
+    api->setSchema(schema);
+    auto resolver = new GraphQlResolverTestData::AverageAirPressureResolver;
+    api->registerResolver(resolver);
+    std::string response = api->executeRequest(query);
 }

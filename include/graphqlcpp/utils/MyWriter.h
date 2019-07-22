@@ -61,6 +61,14 @@ namespace graphqlcpp {
 
             /**
              * Append a value to the data string in json format. A key with a value will be added.
+             * This function will add a boolean value as value.
+             * @param name The key of JSON element.
+             * @param val The value of the JSON element. (float)
+             */
+            void appendValue(std::string name, float val);
+
+            /**
+             * Append a value to the data string in json format. A key with a value will be added.
              * This function will add another MyWriter to the JSON. This will look like: key: {...}
              * @param name The key of JSON element.
              * @param writer The other WMyWriter. Its the nested JSON.
@@ -97,7 +105,7 @@ namespace graphqlcpp {
              * @param name The key of JSON element.
              * @param writers The array of nested MyWriter objects.
              */
-            void appendVectorWritersValue(std::string name, vector<MyWriter*> writers);
+            void appendVectorWritersValue(std::string name, vector<MyWriter *> writers);
 
             /**
              * This will return the resulting JSON element. It will add the closing } bracket.

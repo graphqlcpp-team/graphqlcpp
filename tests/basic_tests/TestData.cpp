@@ -17,6 +17,7 @@
 #include "../../../include/graphqlcpp/validators/QueryValidator.h"
 #include "../../src/graphqlparser/c/GraphQLAst.h"
 #include "../../include/graphqlcpp/validators/SchemaAstWraper.h"
+#include "../../include/graphqlcpp/GraphQlDTOMultiRoot.h"
 #include <vector>
 //using namespace Json;
 using namespace std;
@@ -88,7 +89,7 @@ namespace demo {
         int id;
         std::string name;
     public:
-        User(std::string name,int id) {
+        User(std::string name, int id) {
             this->name = name;
             this->id = id;
         }
@@ -117,19 +118,18 @@ namespace demo {
 
     class Car : public IGraphQlDTO {
     private:
-        vector<Wheel*> wheels;
+        vector<Wheel *> wheels;
     public:
-        Car(vector<Wheel*> wheels) {
+        Car(vector<Wheel *> wheels) {
             this->wheels = wheels;
         }
 
         MySerializer *serialize(MySerializer *serializer) override {
-            vector<IGraphQlDTO*> vec(wheels.begin(), wheels.end());
+            vector<IGraphQlDTO *> vec(wheels.begin(), wheels.end());
             serializer->setVal("wheels", vec);
             return serializer;
         }
     };
-
 
 
     class Quote : public IGraphQlDTO {
@@ -155,13 +155,13 @@ namespace demo {
         int id;
         std::string firstName;
         std::string lastName;
-        std::vector<IGraphQlDTO*> quotes;
+        std::vector<IGraphQlDTO *> quotes;
     public:
-        Author(int id, std::string firstName, std::string lastName, vector<IGraphQlDTO*> quotes) {
+        Author(int id, std::string firstName, std::string lastName, vector<IGraphQlDTO *> quotes) {
             this->id = id;
             this->firstName = firstName;
             this->lastName = lastName;
-            this->quotes = vector<IGraphQlDTO*>(quotes.begin(), quotes.end());
+            this->quotes = vector<IGraphQlDTO *>(quotes.begin(), quotes.end());
         }
 
         MySerializer *serialize(MySerializer *serializer) override {
@@ -199,41 +199,79 @@ namespace demo {
         }
     };
 
+    class Temperature : public IGraphQlDTO {
+    private:
+        std::string date;
+        float temperature;
+
+    public:
+        Temperature(std::string date, float temperature) {
+            this->date = date;
+            this->temperature = temperature;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("date", this->date);
+            serializer->setVal("temperature", this->temperature);
+            return serializer;
+        }
+    };
+
+    class AirPressure : public IGraphQlDTO {
+    private:
+        std::string date;
+        float pressure;
+
+    public:
+        AirPressure(std::string date, float pressure) {
+            this->date = date;
+            this->pressure = pressure;
+        }
+
+        MySerializer *serialize(MySerializer *serializer) override {
+            serializer->setVal("date", this->date);
+            serializer->setVal("pressure", this->pressure);
+            return serializer;
+        }
+    };
+
     class TestDataGenerator {
     public:
         static IGraphQlDTO *createCustomer() {
-            City *c = new City("Nuernberg", {90429} );
-            City *c2 = new City("Munic", {90429} );
+            City *c = new City("Nuernberg", {90429});
+            City *c2 = new City("Munic", {90429});
             Address *a1 = new Address(c, "Fuertherstr.");
             Address *a2 = new Address(c2, "Maximilanstr.");
             Customer *cu = new Customer("Sven Steuermann", 34, a1, a2);
             return cu;
         }
-        static IGraphQlDTO *createUser(){
+
+        static IGraphQlDTO *createUser() {
             return new User("Herbert", 1);
         }
 
-        static IGraphQlDTO *createCar(){
-            std::vector<Wheel*> vw ;
+        static IGraphQlDTO *createCar() {
+            std::vector<Wheel *> vw;
 
-            Wheel* w1 = new Wheel(1);
+            Wheel *w1 = new Wheel(1);
             vw.push_back(w1);
-            Wheel* w2 = new Wheel(2);
+            Wheel *w2 = new Wheel(2);
             vw.push_back(w2);
-            Wheel* w3 = new Wheel(3);
+            Wheel *w3 = new Wheel(3);
             vw.push_back(w3);
-            Wheel* w4 = new Wheel(4);
+            Wheel *w4 = new Wheel(4);
             vw.push_back(w4);
 
             return new Car(vw);
         }
-        static vector<IGraphQlDTO *> createBooks(){
+
+        static vector<IGraphQlDTO *> createBooks() {
             Quote *q1 = new Quote(1, "Mit dem Wissen wächst der Zweifel.");
             Quote *q2 = new Quote(2, "Wo viel Licht ist, ist starker Schatten.");
             vector<IGraphQlDTO *> qs;
             qs.push_back(q1);
             qs.push_back(q2);
-            Author * a1 = new Author(1, "Johann Wolfgang", "von Goethe", qs);
+            Author *a1 = new Author(1, "Johann Wolfgang", "von Goethe", qs);
             Book *b1 = new Book(1, "Faust. Eine Tragödie.", "1808", "unbezahlbar", a1);
             Book *b2 = new Book(2, "Faust. Der Tragödie zweiter Teil", "1832", "unbezahlbar", a1);
             vector<IGraphQlDTO *> bs;
@@ -245,7 +283,7 @@ namespace demo {
             vector<IGraphQlDTO *> qf;
             qf.push_back(q3);
             qf.push_back(q4);
-            Author * a2 = new Author(2, "Friedrich", "Schiller", qf);
+            Author *a2 = new Author(2, "Friedrich", "Schiller", qf);
             Book *b3 = new Book(3, "Die Räuber", "1782", "unbezahlbar", a2);
             Book *b4 = new Book(4, "Wallenstein", "1800", "unbezahlbar", a2);
             bs.push_back(b3);
@@ -253,6 +291,37 @@ namespace demo {
             return bs;
         }
 
+        static vector<IGraphQlDTO *> createTemperature() {
+            std::vector<IGraphQlDTO *> vw;
+
+            Temperature *w1 = new Temperature("01.01.1970", 20.4f);
+            vw.push_back(w1);
+            Temperature *w2 = new Temperature("02.01.1970", 28.0f);
+            vw.push_back(w2);
+
+
+            return vw;
+        }
+
+        static vector<IGraphQlDTO *> createAirPressure() {
+            std::vector<IGraphQlDTO *> vw;
+
+            AirPressure *w1 = new AirPressure("01.01.1970", 10000.23f);
+            vw.push_back(w1);
+            AirPressure *w2 = new AirPressure("02.01.1970", 99999.2f);
+            vw.push_back(w2);
+
+
+            return vw;
+        }
+
+        static IGraphQlDTO *createAverageTemperature() {
+            return new Temperature("01.01.1970", 20.4f);
+        }
+
+        static IGraphQlDTO *createAverageAirPressure() {
+            return new AirPressure("01.01.1970", 9999.4f);
+        }
     };
 
 

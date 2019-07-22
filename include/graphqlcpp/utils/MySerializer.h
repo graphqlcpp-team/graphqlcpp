@@ -34,6 +34,8 @@ namespace graphqlcpp {
 
             void setVal(std::string name, bool val);
 
+            void setVal(std::string name, float val);
+
             void setVal(std::string name, IGraphQlDTO *val);
 
             void setVal(std::string name, vector<int> values);
