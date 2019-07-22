@@ -60,15 +60,39 @@ namespace graphqlcpp {
         std::vector<ResolverArgument*> *getArgumentsOfSelectionSet(const SelectionSet* selectionSet);
 
         /**
-         *
-         * @return
+         * This function will generate a resolver argument object.
+         * The name and the value of an argument will be extracted. These are part of the resolver argument object.
+         * @return An instance of a resolverArgument object.
          */
         ResolverArgument* generateResolverArgument(const std::unique_ptr <Argument> &);
     public:
+        /**
+         * C'stor.
+         * This wraps all operation with the queryAst.
+         * @param queryRootNode The root node of the query AST.
+         */
         RequestAstWrapper(facebook::graphql::ast::Node *queryRootNode);
 
+        /**
+         * This function extracts the resolverInfo. The resolve Info is consisting of the resolver name and arguments.
+         * The resolver name is the name of the selectionSet of the rootNodeQuery.
+         * The resolver arguments are ResolverArguments. These are consisting of the name and the value. These are
+         * extracted out of the arguments of the selectionSet of the rootNodeQuery.
+         * @return
+         */
         ResolverInfo extractResolver();
+
+        /**
+         * This function will extract the operation of the request.
+         * @return The operation (query, mutation or subscription).
+         */
         std::string extractOperation();
+
+        /**
+         * This function will return the selection set one level under the root level selection set.
+         * This is used to iterate through the query AST.
+         * @return
+         */
         const SelectionSet* extractSelectionSetForSerialisation();
     };
 
