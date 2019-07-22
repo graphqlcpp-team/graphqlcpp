@@ -49,8 +49,8 @@ namespace graphqlcpp {
 
     //URL: https://stackoverflow.com/questions/29049584/heap-corruption-trying-to-add-elements-to-existing-stdvector
 
-    std::vector<ResolverArgument*> *RequestAstWrapper::getArgumentsOfSelectionSet(const SelectionSet* selectionSet) {
-        std::vector<ResolverArgument*> *vectorResolverArguments = new std::vector<ResolverArgument*>();
+    std::vector<ResolverArgument*> RequestAstWrapper::getArgumentsOfSelectionSet(const SelectionSet* selectionSet) {
+        std::vector<ResolverArgument*> vectorResolverArguments;
 
         const auto &selection = selectionSet->getSelections().at(0);
         //get the pointer to the field on place index in the list/array of Selections.
@@ -60,10 +60,10 @@ namespace graphqlcpp {
         auto field = (const Field *) graphQlField;
         auto arguments = field->getArguments();
         if (arguments == nullptr) {
-            return nullptr;
+            return vectorResolverArguments;
         }
         for(const auto &argument : *arguments) {
-            vectorResolverArguments->push_back(generateResolverArgument(argument));
+            vectorResolverArguments.push_back(generateResolverArgument(argument));
         }
         return vectorResolverArguments;
     }

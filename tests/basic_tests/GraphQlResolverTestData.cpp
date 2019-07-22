@@ -41,7 +41,7 @@ namespace GraphQlResolverTestData {
             return "user";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
             return dtoObject;
         }
 
@@ -63,7 +63,7 @@ namespace GraphQlResolverTestData {
             return "user";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
             return dtoObject;
         }
 
@@ -89,7 +89,7 @@ namespace GraphQlResolverTestData {
             return "allUsers";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
             return dtoObject;
         }
 
@@ -112,7 +112,7 @@ namespace GraphQlResolverTestData {
             return "car";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
             return dtoObject;
         }
 
@@ -135,8 +135,8 @@ namespace GraphQlResolverTestData {
             return "book";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-            for (auto i : *resolverArgs) {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
+            for (auto i : resolverArgs) {
                 if (i->getArgName() == "id") {
                     int value = atoi(i->getArgValue().c_str());
                     switch (value) {
@@ -176,8 +176,8 @@ namespace GraphQlResolverTestData {
             return "lastTemperatureMeasurements";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-            for (auto i : *resolverArgs) {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
+            for (auto i : resolverArgs) {
                 if (i->getArgName() == "last") {
                     int value = atoi(i->getArgValue().c_str());
                     if (value == 2) {
@@ -205,8 +205,8 @@ namespace GraphQlResolverTestData {
             return "lastAirPressureMeasurements";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-            for (auto i : *resolverArgs) {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
+            for (auto i : resolverArgs) {
                 if (i->getArgName() == "last") {
                     int value = atoi(i->getArgValue().c_str());
                     if (value == 2) {
@@ -235,8 +235,8 @@ namespace GraphQlResolverTestData {
             return "averageTemperature";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-            for (auto i : *resolverArgs) {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
+            for (auto i : resolverArgs) {
                 if (i->getArgName() == "date") {
                     std::string value = i->getArgValue().c_str();
                     if (value == "01.01.1970") {
@@ -265,8 +265,8 @@ namespace GraphQlResolverTestData {
             return "averageAirPressure";
         }
 
-        IGraphQlDTO *execute(const std::vector<ResolverArgument *> *resolverArgs) override {
-            for (auto i : *resolverArgs) {
+        IGraphQlDTO *execute(const std::vector<ResolverArgument *> resolverArgs) override {
+            for (auto i : resolverArgs) {
                 if (i->getArgName() == "date") {
                     std::string value = i->getArgValue().c_str();
                     if (value == "01.01.1970") {

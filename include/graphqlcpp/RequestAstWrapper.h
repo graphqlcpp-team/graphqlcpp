@@ -57,7 +57,7 @@ namespace graphqlcpp {
          * @param selectionSet The selection set, which arguments should be extracted.
          * @return An array of arguments.
          */
-        std::vector<ResolverArgument*> *getArgumentsOfSelectionSet(const SelectionSet* selectionSet);
+        std::vector<ResolverArgument*> getArgumentsOfSelectionSet(const SelectionSet* selectionSet);
 
         /**
          * This function will generate a resolver argument object.
