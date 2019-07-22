@@ -31,8 +31,8 @@ namespace graphqlcpp {
         void GraphqlCppApi::setSchema(const std::string &schema) {
             auto rootNode = parseSchemaStringToSchemaAst(schema);
             if (schemaValidator->checkIfSchemaIsValid(rootNode)) {
-                schemaWraper = new SchemaAstWraper(rootNode);
-                queryValidator = new QueryValidator(schemaWraper);
+                schemaWrapper = new SchemaAstWraper(rootNode);
+                queryValidator = new QueryValidator(schemaWrapper);
             } else {
                 throw InvalidSchemaException();
             }
@@ -80,14 +80,14 @@ namespace graphqlcpp {
 
 
         const char *GraphqlCppApi::printSchemaAsJson() {
-            if (schemaWraper != nullptr) {
-                return schemaWraper->printSchemaAsJson();
+            if (schemaWrapper != nullptr) {
+                return schemaWrapper->printSchemaAsJson();
             }
             throw NoSchemaSetException();
         }
 
         GraphqlCppApi::~GraphqlCppApi() {
-            delete schemaWraper;
+            delete schemaWrapper;
             delete schemaValidator;
             delete queryValidator;
             delete resolverManager;

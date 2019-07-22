@@ -32,7 +32,7 @@ namespace graphqlcpp {
 
         class GraphqlCppApi {
         private:
-            SchemaAstWraper *schemaWraper = nullptr;
+            SchemaAstWraper *schemaWrapper = nullptr;
             SchemaValidator *schemaValidator = nullptr;
             QueryValidator *queryValidator = nullptr;
             ResolverManager *resolverManager = nullptr;
