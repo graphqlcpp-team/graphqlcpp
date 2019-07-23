@@ -50,6 +50,7 @@ namespace graphqlcpp {
             if (checkIfRequestValid(requestAst)) {
                 graphqlcpp::RequestAstWrapper* requestWrapper = new graphqlcpp::RequestAstWrapper(requestAst);
                 std::string response = this->requestDispatcher->executeRequest(requestWrapper);
+                delete requestWrapper;
                 return response;
             }
             throw exceptions::InvalidRequestException();

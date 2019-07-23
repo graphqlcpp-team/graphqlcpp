@@ -32,7 +32,7 @@ namespace graphqlcpp {
              * @param resolverArgs The arguments for the callback function.
              * @return The resulting IGraphQlDTO object.
              */
-            virtual IGraphQlDTO *execute(const std::vector<ResolverArgument*> resolverArgs) = 0;
+            virtual IGraphQlDTO *execute(const std::vector<ResolverArgument> resolverArgs) = 0;
         };
     }
 }

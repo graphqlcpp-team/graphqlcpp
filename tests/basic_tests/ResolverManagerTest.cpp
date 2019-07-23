@@ -24,7 +24,7 @@ TEST(ResolverManager, IsOperationValid) {
     ResolverManager* rm = new ResolverManager();
     GraphQlResolverTestData::ResolverOne * resolver = new GraphQlResolverTestData::ResolverOne();
     rm->registerResolver(resolver);
-    IGraphQlDTO *dto = rm->executeResolver("user", std::vector<ResolverArgument *>());
+    IGraphQlDTO *dto = rm->executeResolver("user", std::vector<ResolverArgument>());
     IGraphQlDTO *validateDto = resolver->getDtoObject();
     ASSERT_EQ(dto, validateDto);
 }

@@ -103,6 +103,7 @@ TEST(IntegrationTest, finalDemoTest) {
     std::string expected = R"({"data":{"title":"Faust. Eine Tragödie.","authorOfBook":{"firstName":"Johann Wolfgang","quotes":[{"quote":"Mit dem Wissen wächst der Zweifel."},{"quote":"Wo viel Licht ist, ist starker Schatten."}]}}})";
 
     ASSERT_EQ(response, expected);
+    delete api;
 }
 
 TEST(IntegrationTest, lastTemperatureMeasurementsTest){
@@ -117,6 +118,7 @@ TEST(IntegrationTest, lastTemperatureMeasurementsTest){
     std::string expected = R"({"data":[{"temperature":20.400000},{"temperature":28.000000}]})";
 
     ASSERT_EQ(response, expected);
+    delete api;
 }
 
 TEST(IntegrationTest, lastAirPressureMeasurementsTest){
@@ -131,6 +133,7 @@ TEST(IntegrationTest, lastAirPressureMeasurementsTest){
     std::string expected = R"({"data":[{"pressure":10000.230469},{"pressure":99999.203125}]})";
 
     ASSERT_EQ(response, expected);
+    delete api;
 }
 
 TEST(IntegrationTest, averageTemperatureTest){
@@ -145,6 +148,8 @@ TEST(IntegrationTest, averageTemperatureTest){
     std::string expected = R"({"data":{"temperature":20.400000}})";
 
     ASSERT_EQ(response, expected);
+
+    delete api;
 }
 
 TEST(IntegrationTest, averageAirPressureTest){
@@ -156,4 +161,5 @@ TEST(IntegrationTest, averageAirPressureTest){
     auto resolver = new GraphQlResolverTestData::AverageAirPressureResolver;
     api->registerResolver(resolver);
     std::string response = api->executeRequest(query);
+    delete api;
 }

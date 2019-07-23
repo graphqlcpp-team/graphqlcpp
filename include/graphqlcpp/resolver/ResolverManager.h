@@ -49,7 +49,7 @@ namespace graphqlcpp {
              * @param args The arguments which should be passed to the resolver method.
              * @return The IGraphQLSto object.
              */
-            IGraphQlDTO *executeResolver(std::string resolverName, const std::vector<ResolverArgument*> args);
+            IGraphQlDTO *executeResolver(std::string resolverName, const std::vector<ResolverArgument> args);
 
         };
 
