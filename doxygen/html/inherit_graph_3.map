@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classgraphqlcpp_1_1exceptions_1_1_argument_not_valid_exception.html" title="graphqlcpp::exceptions\l::ArgumentNotValidException" alt="" coords="152,5,347,47"/>
+<area shape="rect" id="node3" href="$classgraphqlcpp_1_1exceptions_1_1_invalid_request_exception.html" title="graphqlcpp::exceptions\l::InvalidRequestException" alt="" coords="162,71,337,112"/>
+<area shape="rect" id="node4" href="$classgraphqlcpp_1_1exceptions_1_1_invalid_schema_exception.html" title="graphqlcpp::exceptions\l::InvalidSchemaException" alt="" coords="162,136,337,177"/>
+<area shape="rect" id="node5" href="$classgraphqlcpp_1_1exceptions_1_1_no_query_set_exception.html" title="graphqlcpp::exceptions\l::NoQuerySetException" alt="" coords="169,201,329,243"/>
+<area shape="rect" id="node6" href="$classgraphqlcpp_1_1exceptions_1_1_no_schema_set_exception.html" title="graphqlcpp::exceptions\l::NoSchemaSetException" alt="" coords="163,267,336,308"/>
+<area shape="rect" id="node7" href="$classgraphqlcpp_1_1exceptions_1_1_wrong_operation_exception.html" title="graphqlcpp::exceptions\l::WrongOperationException" alt="" coords="158,332,341,373"/>
+</map>
