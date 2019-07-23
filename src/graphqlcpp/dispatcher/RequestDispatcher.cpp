@@ -20,7 +20,7 @@ graphqlcpp::dispatcher::RequestDispatcher::executeRequest(graphqlcpp::RequestAst
         ResolverInfo resolver = requestAstWrapper->extractResolver();
         IGraphQlDTO* data = this->resolverManager->executeResolver(resolver.getResolverName(), resolver.getArgs());
         MySerializer * serializer = new MySerializerRoot(requestAstWrapper->extractSelectionSetForSerialisation());
-        std::string json = data->serialize(serializer)->createJson()->getJson();
+        std::string json = data->serialize(serializer)->createJson().getJson();
         delete serializer;
         return json;
     }

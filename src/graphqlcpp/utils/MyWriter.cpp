@@ -66,12 +66,12 @@ namespace graphqlcpp {
             data.append(separator);
         }
 
-        void MyWriter::appendValue(std::string name, MyWriter *writer) {
+        void MyWriter::appendValue(std::string name, MyWriter writer) {
             data.append("\"");
             data.append(name);
             data.append("\"");
             data.append(":");
-            data.append(writer->getJson());
+            data.append(writer.getJson());
             data.append(separator);
         }
 
@@ -150,7 +150,7 @@ namespace graphqlcpp {
 
         }
 
-        void MyWriter::appendVectorWritersValue(std::string name, vector<MyWriter*> writers) {
+        void MyWriter::appendVectorWritersValue(std::string name, vector<MyWriter> writers) {
             string sTrue = "true";
             string sFalse = "false";
             data.append("\"");
@@ -159,14 +159,17 @@ namespace graphqlcpp {
             data.append(":");
             data.append("[");
 
-            for(MyWriter* writer : writers){
-                data.append(writer->getJson());
+            for(MyWriter writer : writers){
+                data.append(writer.getJson());
                 data.append(",");
-                delete writer;
             }
             replaceLastSeparator();
             data.append("]");
             data.append(separator);
+        }
+
+        MyWriter::~MyWriter() {
+
         }
     }
 }

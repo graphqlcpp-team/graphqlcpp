@@ -18,7 +18,6 @@ namespace graphqlcpp {
         using namespace graphqlcpp::api;
 
         class MySerializer {
-        protected:
         public:
             /**
              * D'stor.
@@ -28,7 +27,7 @@ namespace graphqlcpp {
             /**
              * Instance of MyWriter. MyWrtier is the wrapper class for the creation of the JSON element.
              */
-            MyWriter *writer;
+            MyWriter writer;
 
             /**
              * This function will validate if the resolver field is requested.
@@ -129,7 +128,7 @@ namespace graphqlcpp {
              * This will create a MyWriter object, where the JSON element will be created.
              * @return A object of MyWriter.
              */
-            MyWriter *createJson();
+            MyWriter createJson();
         };
     }
 }
