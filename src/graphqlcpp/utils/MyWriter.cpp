@@ -104,13 +104,9 @@ namespace graphqlcpp {
             data.append(":");
             data.append("[");
             std::string tmpStringRepresentation;
-            int index = 0;
-            for (auto value = values.begin(); value != values.end(); ++value) {
-                tmpStringRepresentation += "\"" + values[index] + "\"";
-                if (value != values.end()) {
-                    tmpStringRepresentation += separator;
-                }
-                index++;
+            for (auto value : values) {
+                tmpStringRepresentation += "\"" + value + "\"";
+                tmpStringRepresentation += separator;
             }
             data.append(tmpStringRepresentation);
             replaceLastSeparator();

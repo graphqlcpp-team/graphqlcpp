@@ -67,7 +67,8 @@ TEST(DtoAndSerializerTest, stringVectorTest) {
     vector<string> array = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
     MyWriter writer= MyWriter();
     writer.appendValue("name", array);
-    EXPECT_TRUE(writer.getJson() ==  "{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]}");
+    string json = writer.getJson();
+    EXPECT_TRUE(json ==  "{\"name\":[\"Eins\",\"Zwei\",\"Drei\",\"Vier\",\"Fuenf\"]}");
 }
 TEST(DtoAndSerializerTest, multipleStringVectorTest) {
     vector<string> array = {"Eins", "Zwei", "Drei", "Vier", "Fuenf"};
